@@ -1,0 +1,19 @@
+{
+  "name": "nko3-stuttgart-js",
+  "version": "0.0.0",
+  "description": "Stuttgart.JS",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nko3/stuttgart-js.git"
+  },
+  "dependencies": {
+  },
+  "engines": {
+    "node": "0.8.x"
+  },
+  "subdomain": "stuttgart-js.nko3"
+}

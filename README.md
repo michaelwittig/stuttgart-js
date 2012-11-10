@@ -72,7 +72,8 @@ content:String
 title:String,
 loc: {lat:Float, lng:Float},
 distance:Float
-~~
+~~~
+
 
 ## Deploy instructions
 

@@ -8,9 +8,9 @@ define(["methodhandler"], function(methodhandler) {
 		handle: function(jsonrpc, callback) {
 			methodhandler.handle(jsonrpc.method, jsonrpc.params, function(err, res) {
 				if (err) {
-					callback(err, {result: res, error: err, id: jsonrpc.id});
+					callback(err, {result: null, error: err, id: jsonrpc.id});
 				} else {
-					callback(unefined, {result: res, error: undefined, id: jsonrpc.id});
+					callback(undefined, {result: res, error: null, id: jsonrpc.id});
 				}
 			});
 		}

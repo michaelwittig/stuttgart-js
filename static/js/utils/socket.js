@@ -1,5 +1,5 @@
 define(['socket.io'], function(io) {
-    var socket = io.connect('http://localhost');
+    var socket = io.connect('/');
 
     return socket;
 });

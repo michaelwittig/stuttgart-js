@@ -1,4 +1,4 @@
-define(['backbone', function(Backbone) {
+define(['backbone'], function(Backbone) {
 
     var Board = Backbone.Model.extend({
 
@@ -20,4 +20,4 @@ define(['backbone', function(Backbone) {
     });
 
     return Board;
-}]);
+});

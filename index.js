@@ -90,7 +90,7 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 				logger.debug("board:getall: error in JSON-RPC", err);
 			} else {
 				logger.debug("board:getall: success in JSON-RPC", res);
-				//getMessages(res.result[0]._id);
+				getMessages(res.result[0]._id);
 			}
 		});
 	}

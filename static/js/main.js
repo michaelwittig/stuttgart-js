@@ -1,6 +1,6 @@
 require.config({
     deps: [
-	'common/logger'
+	'common/logger',
     ],
     paths: {
 	jquery: ['http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min', 'libs/jquery-1.8.2'],
@@ -29,15 +29,19 @@ require.config({
         },
 	'socket.io': {
 	    exports: 'io'
-        }
+	},
+    'libs/moment': {
+	exports: 'moment'
+    }
     },
     baseUrl: 'js',
     hbs: {
 	disableI18n: true,
-	disableHelpers: true
+	disableHelpers: true,
+	helperPathCallback: function(name) {return 'helpers/' + name;}
     }
 });
 
-require(['app'], function(app) {
+require(['app', 'helpers/timeago'], function(app) {
     app.init();
 });

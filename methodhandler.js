@@ -42,7 +42,11 @@ define(["common/logger", "datastore", "authhandler"], function(logger, datastore
 			var fn = methods[method];
 			if (typeof fn === "function") {
 				params.push(callback);
-				fn.apply(undefined, params);
+				if (fn.length != params.length) {
+					callback(new Error(fn.length + " parameters are expected, you gave me " + params.length));
+				} else {
+					fn.apply(undefined, params);
+				}
 			} else {
 				callback(new Error("No JSON-RPC handler found for method " + method));
 			}

@@ -7,7 +7,7 @@ requirejs.config({
 	nodeRequire: require
 });
 
-requirejs(["server", "common/logger", "jsonrpchandler"], function(server, logger, jsonrpchandler) {
+requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], function(server, pubsub, cache, logger, jsonrpchandler) {
 	"use strict";
 
 	process.on("uncaughtException", function (err) {
@@ -43,10 +43,11 @@ requirejs(["server", "common/logger", "jsonrpchandler"], function(server, logger
 		});
 	}
 
-	function addMessage(boardId) {
+	function addMessage(boardId, message) {
+		message = message || "Uh yeah";
 		jsonrpchandler.handle({
 			method: "message:create",
-			params: [boardId, "Uh yeah", {type:"facebook", value: "TEST"}],
+			params: [boardId, message, {type:"happy", value: "TEST"}],
 			id: "1"
 		}, function(err, res) {
 			if (err) {
@@ -54,48 +55,79 @@ requirejs(["server", "common/logger", "jsonrpchandler"], function(server, logger
 			} else {
 				logger.debug("message:create: success in JSON-RPC", res);
 			}
-			setTimeout(getBoards, 500);
 		});
 	}
 
-	function addBoard() {
+	function addBoard(title, lng, lat) {
+		title = title || "Hello";
+		lng = lng || 48.742323;
+		lat = lat || 9.308228;
 		jsonrpchandler.handle({
 			method: "board:create",
-			params: [{title: "Hello", loc: {lng: 48.742323, lat: 9.308228}}, {type:"happy", value: "TEST"}],
+			params: [{title: title, loc: {lng: lng, lat: lat}}, {type:"happy", value: "TEST"}],
 			id: "1"
 		}, function(err, res) {
 			if (err) {
 				logger.debug("board:create: error in JSON-RPC", err);
 			} else {
 				logger.debug("board:create: success in JSON-RPC", res);
+				addMessage(res.result._id, "Alles super");
+				addMessage(res.result._id, "Find ich auch");
+				addMessage(res.result._id, "...");
 			}
 		});
 	}
 
-	function getBoards() {
+	function getBoards(lng, lat) {
+		lng = lng || 48.742323;
+		lat = lat || 9.308228;
 		jsonrpchandler.handle({
 			method: "board:getall",
-			params: [{lng: 48.742323, lat: 9.308228}, 5.0],
+			params: [{lng: lng, lat: lat}, 5.0],
 			id: "1"
 		}, function(err, res) {
 			if (err) {
 				logger.debug("board:getall: error in JSON-RPC", err);
 			} else {
 				logger.debug("board:getall: success in JSON-RPC", res);
-
 				setTimeout(getMessages(res.result[0]._id), 500);
 			}
 		});
 	}
 
+	function setUpDB() {
+		addBoard("Coworking", 48.771309, 9.157273);
+		addBoard("S-Bahn", 48.770268, 9.156514);
+		addBoard("REWE", 48.770901,9.15778);
+		addBoard("Farbenhaus", 48.772235, 9.15686);
+		addBoard("MG-Fitness", 48.772067,9.159118);
+	}
 
-    server.start(function(err) {
-        if (err) {
-            logger.error("can not start", err);
-            process.exit(1);
-        } else {
-            logger.notice("started");
-        }
-    });
+	pubsub.start(function(err) {
+		if (err) {
+			logger.error("can not start pubsub", err);
+			process.exit(1);
+		} else {
+			cache.start(function(err) {
+				if (err) {
+					logger.error("can not start cache", err);
+					process.exit(1);
+				} else {
+					server.start(function(err) {
+						if (err) {
+							logger.error("can not start server", err);
+							process.exit(1);
+						} else {
+							logger.notice("started");
+							setTimeout(function() {
+								//setUpDB();
+								//getBoards(48.771309, 9.157273);
+							}, 500);
+						}
+					});
+				}
+			});
+		}
+	});
 
 });

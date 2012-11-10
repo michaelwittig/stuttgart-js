@@ -24,6 +24,7 @@ define(['underscore', 'utils/socket', 'utils/registry'], function(_, socket, reg
             id: _.uniqueId()
         }, function(err, data) {
             if (err) {
+		logger('err', err)
                 options.error(err.message);
             } else {
                 logger('res', data)

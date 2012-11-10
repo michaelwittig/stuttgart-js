@@ -1,21 +1,33 @@
 /**
  * Invocations of methods (done by JSON-RPC) are handled here.
  */
-define(["common/logger"], function(logger) {
+define(["common/logger", "datastore", "authhandler"], function(logger, datastore, authhandler) {
 	"use strict";
 
 	var methods = {
-		"board:getall": function(distance, callback) {
-			callback(new Error("NOT IMPLEMENTED"), undefined);
+		"board:getall": function(loc, distance, callback) {
+			datastore.getBoards(loc, distance, callback);
 		},
 		"board:create": function(board, token, callback) {
-			callback(new Error("NOT IMPLEMENTED"), undefined);
+			authhandler.getUser(token, function(err, user) {
+				if (err) {
+					callback(err);
+				} else {
+					datastore.addBoard(user, board.title, board.loc, callback);
+				}
+			});
 		},
 		"message:getall": function(boardId, callback) {
-			callback(new Error("NOT IMPLEMENTED"), undefined);
+			datastore.getMessages(boardId, callback);
 		},
 		"message:create": function(boardId, message, token, callback) {
-			callback(new Error("NOT IMPLEMENTED"), undefined);
+			authhandler.getUser(token, function(err, user) {
+				if (err) {
+					callback(err);
+				} else {
+					datastore.addMessage(user, boardId, message, callback);
+				}
+			});
 		}
 	};
 

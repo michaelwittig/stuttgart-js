@@ -25,7 +25,7 @@ define(["node-static", "socket.io", "http", "common/logger", "config"], function
                 });
             });
             websocketServer.server.on("close", function() {
-                logger.info("Websocketserver has stopped!");
+                logger.notice("Websocketserver has stopped!");
             });
             callback();
         },

@@ -26,6 +26,24 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 	});
 	var Message = db.model("Message", messageSchema);
 
+	function messageView(message) {
+		return {
+			_id: message._id,
+			title: message.title,
+			user: message.user,
+			createdAt: message.createdAt
+		};
+	}
+
+	function boardView(board) {
+		return {
+			_id: board._id,
+			loc: board.loc,
+			user: board.user,
+			createdAt: board.createdAt
+		};
+	}
+
    return {
        /**
         * @param loc Loc
@@ -34,8 +52,23 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
         */
        getBoards: function(loc, distance, callback) {
 		   distance = distance * 0.0090053796;
-		   // TODO add distance to output array
-           Board.find({loc: { $near: [loc.lng, loc.lat], $maxDistance: distance}}, callback);
+           Board.find({loc: { $near: [loc.lng, loc.lat], $maxDistance: distance}}, function(err, res) {
+			   if (err) {
+				   callback(err);
+			   } else {
+				   if (Array.isArray(res)) {
+					   var view = [];
+					   logger.debug("modify boards");
+						res.forEach(function(board) {
+							var b = boardView(board);
+							b._distance = 1.0; // TODO add distance to output array
+							logger.debug("modify board", b);
+							view.push(b);
+						});
+				   }
+				   callback(undefined, view);
+			   }
+		   });
        },
        /**
 		* @param user User
@@ -68,7 +101,20 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 	   getMessages: function(boardId, callback) {
 		   Message.find({boardId: boardId}, null, {sort: {
 			   createdAt: 1
-		   }}, callback);
+		   }}, function(err, res) {
+			   if (err) {
+				   callback(err);
+			   } else {
+				   if (Array.isArray(res)) {
+					   var view = [];
+					   res.forEach(function(message) {
+						   var m =  messageView(message);
+						   view.push(m);
+					   });
+				   }
+				   callback(undefined, view);
+			   }
+		   });
 	   },
        /**
 		* @param user User

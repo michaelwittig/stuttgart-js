@@ -5,10 +5,11 @@ define(['backbone', 'jquery'], function(Backbone, $) {
             id: 0,
             name: '',
             photo: ''
+	    //loc: {lat: 0, lng: 0}
         },
 
         initialize: function() {
-            this.set('loc', {lat: 0, lng: 0});
+
     	    //get data from FB
         }
     });

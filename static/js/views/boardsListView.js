@@ -6,12 +6,16 @@ define(['backbone', 'hbs!templates/boardsListTemplate', 'utils/registry'], funct
 
     initialize: function() {
 	registry.boards.on('change', this.render, this);
-        this.render();
+	registry.boards.on('reset', this.render, this);
     },
 
     render: function() {
-	logger('board list render');
+	console.log('board list render',registry.boards.toJSON());
 	this.$el.html(template(registry.boards.toJSON()));
+    },
+
+    show: function() {
+	this.$el.show();
     }
     });
 

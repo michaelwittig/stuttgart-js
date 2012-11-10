@@ -26,7 +26,7 @@ define(['underscore', 'utils/socket', 'utils/registry'], function(_, socket, reg
 		logger('boards:getall', err)
                 options.error(err.message);
             } else {
-		logger('res', data.result)
+		logger('boards:getall success', data.result)
 		options.success(data.result);
             }
         });

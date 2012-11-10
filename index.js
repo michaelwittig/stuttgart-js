@@ -43,10 +43,11 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 		});
 	}
 
-	function addMessage(boardId) {
+	function addMessage(boardId, message) {
+		message = message || "Uh yeah";
 		jsonrpchandler.handle({
 			method: "message:create",
-			params: [boardId, "Uh yeah", {type:"happy", value: "TEST"}],
+			params: [boardId, message, {type:"happy", value: "TEST"}],
 			id: "1"
 		}, function(err, res) {
 			if (err) {
@@ -57,24 +58,32 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 		});
 	}
 
-	function addBoard() {
+	function addBoard(title, lng, lat) {
+		title = title || "Hello";
+		lng = lng || 48.742323;
+		lat = lat || 9.308228;
 		jsonrpchandler.handle({
 			method: "board:create",
-			params: [{title: "Hello", loc: {lng: 48.742323, lat: 9.308228}}, {type:"happy", value: "TEST"}],
+			params: [{title: title, loc: {lng: lng, lat: lat}}, {type:"happy", value: "TEST"}],
 			id: "1"
 		}, function(err, res) {
 			if (err) {
 				logger.debug("board:create: error in JSON-RPC", err);
 			} else {
 				logger.debug("board:create: success in JSON-RPC", res);
+				addMessage(res.result._id, "Alles super");
+				addMessage(res.result._id, "Find ich auch");
+				addMessage(res.result._id, "...");
 			}
 		});
 	}
 
-	function getBoards() {
+	function getBoards(lng, lat) {
+		lng = lng || 48.742323;
+		lat = lat || 9.308228;
 		jsonrpchandler.handle({
 			method: "board:getall",
-			params: [{lng: 48.742323, lat: 9.308228}, 5.0],
+			params: [{lng: lng, lat: lat}, 5.0],
 			id: "1"
 		}, function(err, res) {
 			if (err) {
@@ -84,6 +93,14 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 				setTimeout(getMessages(res.result[0]._id), 500);
 			}
 		});
+	}
+
+	function setUpDB() {
+		addBoard("Coworking", 48.771309, 9.157273);
+		addBoard("S-Bahn", 48.770268, 9.156514);
+		addBoard("REWE", 48.770901,9.15778);
+		addBoard("Farbenhaus", 48.772235, 9.15686);
+		addBoard("MG-Fitness", 48.772067,9.159118);
 	}
 
 	pubsub.start(function(err) {
@@ -102,6 +119,10 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 							process.exit(1);
 						} else {
 							logger.notice("started");
+							setTimeout(function() {
+								//setUpDB();
+								//getBoards(48.771309, 9.157273);
+							}, 500);
 						}
 					});
 				}

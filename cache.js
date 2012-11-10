@@ -35,14 +35,14 @@ define(["redis", "config", "common/logger", "pubsub"], function(redis, config, l
 		 * @param callback Callback
 		 */
 		put: function(key, value, expiry, callback) {
-			redisClient.setex(key, expiry, JSON.stringify(value), callback);
+			redisClient.setex("cache:" + key, expiry, JSON.stringify(value), callback);
 		},
 		/**
 		 * @param key Key (string)
 		 * @param callback Callback
 		 */
 		get: function(key, callback) {
-			redisClient.get(key, function(err, res) {
+			redisClient.get("cache:" + key, function(err, res) {
 				if (err) {
 					callback(err);
 				} else {

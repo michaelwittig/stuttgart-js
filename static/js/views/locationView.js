@@ -10,8 +10,8 @@ define(['backbone', 'underscore', 'utils/geo', 'utils/registry'], function(Backb
         },
 
         events: {
-            'click #update': 'searchLocation',
-            'click #mylocation': 'currentLocation'
+            'click #location-update': 'searchLocation',
+            'click #location-mylocation': 'currentLocation'
         },
 
         searchLocation: function(e) {

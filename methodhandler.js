@@ -13,8 +13,10 @@ define(["common/logger", "datastore", "authhandler"], function(logger, datastore
 			logger.debug("board:create", [board, token]);
 			authhandler.getUser(token, function(err, user) {
 				if (err) {
+                    logger.debug("board:create error");
 					callback(err);
 				} else {
+                    logger.debug("board:create success");
 					datastore.addBoard(user, board.title, board.loc, callback);
 				}
 			});

@@ -22,13 +22,26 @@
                     <form id="location-form">
                         <input type="text" id="location-input">
                     </form>
-                    <a href="" id="mylocation">Mein Standort</a>
-                    <a href="" id="update">Update</a>
+                    <a href="" id="location-mylocation">Mein Standort</a>
+                    <a href="" id="location-update">Update</a>
                 </div>
                 <div id="create-view">
-                    <p>
-                        Create new Board
-                    </p>
+                    <div id="create-notloggedin">
+                        <p>
+                            You must login before you can create a board.
+                        </p>
+                    </div>
+                    <div id="create-form">
+                        <form>
+                            <textarea id="board-description" name="title" rows="5" cols="100" placeholder="Board description"></textarea>
+                        </form>
+                        <ul id="create-expire">
+                            <li data-expires="48">48h</li>
+                            <li data-expires="168">1W</li>
+                            <li data-expires="0" class="current">Never</li>
+                        </ul>
+                        <a href="" id="create-board">Create</a>
+                    </div>
                 </div>
             </div>
     	</div>

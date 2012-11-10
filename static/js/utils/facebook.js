@@ -40,7 +40,7 @@ define(['underscore', 'common/logger', 'utils/registry'], function (_, logger, r
     Facebook.prototype.onStatusChange = function (response) {
         if (response.status === 'connected') {
             registry.user.set('fbtoken', response.authResponse.accessToken);
-            registry.user.set('id', response.authResponse.userID);
+            registry.user.set('fbid', response.authResponse.userID);
             this.token = response.authResponse.accessToken;
             this.setState(this.STATES.LOGGEDIN);
         } else {

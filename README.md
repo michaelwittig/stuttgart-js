@@ -59,6 +59,22 @@ params: [
 ]
 ~~~
 
+## Response
+###Message
+~~~json
+user:Int,
+timestamp:Int,
+content:String
+~~~
+
+###Board
+~~~json
+title:String,
+loc: {lat:Float, lng:Float},
+distance:Float
+~~~
+
+
 ## Deploy instructions
 
 ### GitHub — [Team][2], [Repo][3]

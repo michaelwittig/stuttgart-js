@@ -18,6 +18,7 @@
 		lon:Float,
 		lat:Float
 	}
+}
 ~~~
 
 ### Board
@@ -46,11 +47,11 @@ params: [boardId:String]
 #### create
 ~~~json
 method: "message:create",
-params: [{
+params: [
 	boardId:String,
 	message:String,
 	token:Token
-}]
+]
 ~~~
 
 ## Deploy instructions

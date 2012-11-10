@@ -1,4 +1,4 @@
-define(['backbone', function(Backbone) {
+define(['backbone'], function(Backbone) {
 
     var Message = Backbone.Model.extend({
         defaults: {
@@ -15,4 +15,4 @@ define(['backbone', function(Backbone) {
     });
 
     return Message;
-}]);
+});

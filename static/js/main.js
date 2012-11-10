@@ -38,10 +38,10 @@ require.config({
     hbs: {
 	disableI18n: true,
 	disableHelpers: true,
-	helperPathCallback: function(name) {return 'helpers/' + name;}
+	helperPathCallback: function(name) {return 'templates/helpers/' + name;}
     }
 });
 
-require(['app', 'helpers/timeago'], function(app) {
+require(['app', 'templates/helpers/timeago'], function(app) {
     app.init();
 });

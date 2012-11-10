@@ -10,24 +10,8 @@ define(
             this.headerView = new HeaderView();
             this.containerView = new ContainerView();
 
-            this.setPosition();
-        },
-
-        setPosition: function() {
-            if (!navigator.geolocation) return;
-            navigator.geolocation.getCurrentPosition(function(pos) {
-                registry.user.set('loc', {
-                    lat: pos.coords.latitude,
-                    lng: pos.coords.longitude
-                });
-            }, function(msg) {
-                registry.user.set('loc', {
-                    lat: 51,
-                    lng: -0.1
-                });
-            });
+            registry.user.setPosition();
         }
-
     });
 
     return AppView;

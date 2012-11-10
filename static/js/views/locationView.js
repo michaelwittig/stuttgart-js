@@ -30,12 +30,7 @@ define(['backbone', 'underscore', 'utils/geo', 'utils/registry'], function(Backb
 
         currentLocation: function(e) {
             e.preventDefault();
-            navigator.geolocation.getCurrentPosition(function(pos) {
-                registry.user.set('loc', {
-                    lat: pos.coords.latitude,
-                    lng: pos.coords.longitude
-                });
-            });
+            registry.user.setPosition();
         },
 
         updateInput: function() {

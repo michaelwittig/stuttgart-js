@@ -1,5 +1,10 @@
+/**
+ * The authhandler validates a token based on the type and converts it into an User.
+ */
 define(["request", "common/logger"], function(request, logger) {
 	"use strict";
+
+	// TODO cache the result in redis for a few hours
 
 	var types = {
 		"facebook": function(token, callback) {
@@ -14,6 +19,9 @@ define(["request", "common/logger"], function(request, logger) {
 					}
 				}
 			});
+		},
+		"happy": function(token, callback) {
+			callback(undefined, {"type": "happy", "id": token});
 		}
 	};
 

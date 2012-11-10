@@ -1,28 +1,28 @@
 define(["config", "common/logger", "mongoose"], function(config, logger, mongoose) {
     "use strict";
 
-    var db = mongoose.createConnection(config["mongo.host"], config["mongo.db"]);
+    var db = mongoose.createConnection(config["mongo.url"]);
 
     var boardSchema = new mongoose.Schema({
-        title: String,
-		expireAt: Date,
-		createdAt: {type: Date, default: Date.now},
+        title: {type: String, required: true},
+		expireAt: {type: Date, required: false}, // TODO implement expiry of boards
+		createdAt: {type: Date, required: true, default: Date.now},
 		user: {
-			type: String,
-			id: String
+			type: {type: String, required: true},
+			id: {type: String, required: true}
 		},
-		loc: {type: [Number], index: "2d"}
+		loc: {type: [Number], required: true, index: "2d"}
     });
     var Board = db.model("Board", boardSchema);
 
 	var messageSchema = new mongoose.Schema({
-		title: String,
-		createdAt: {type: Date, default: Date.now},
+		title: {type: String, required: true},
+		createdAt: {type: Date, required: true, default: Date.now, index: true},
 		user: {
-			type: String,
-			id: String
+			type: {type: String, required: true},
+			id: {type: String, required: true}
 		},
-		boardId: {type: mongoose.Schema.Types.ObjectId, index: 1}
+		boardId: {type: mongoose.Schema.Types.ObjectId, required: true, index: true}
 	});
 	var Message = db.model("Message", messageSchema);
 
@@ -55,6 +55,7 @@ define(["config", "common/logger", "mongoose"], function(config, logger, mongoos
                loc: [loc.lng, loc.lat]
            });
            b.save(callback);
+		   // TODO publish a message to redis that a new board was created
        },
 	   /**
 		* @param boardId board's id
@@ -79,6 +80,7 @@ define(["config", "common/logger", "mongoose"], function(config, logger, mongoos
 			   boardId: boardId
 		   });
 		   m.save(callback);
+		   // TODO publish a new message into the boards room
        }
    };
 });

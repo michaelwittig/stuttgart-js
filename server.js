@@ -7,30 +7,70 @@ define(["node-static", "socket.io", "redis", "http", "common/logger", "config", 
     var fileServer = new(nodestatic.Server)('./static');
     var webServer;
     var websocketServer;
+	var redisAuths = 0;
+
+	function startServer(redisPub, redisSub, redisClient, callback) {
+		webServer = http.createServer(function (request, response) {
+			if (request.url.indexOf("/socket.io") !== 0) {
+				request.addListener("end", function () {
+					fileServer.serve(request, response);
+				});
+			}
+		});
+		webServer.listen(config["webServer.port"]);
+		websocketServer = socketio.listen(webServer, {
+			transports: ["websocket", "flashsocket", "xhr-polling"],
+			store: new (socketio.RedisStore)({
+				redisPub : redisPub,
+				redisSub : redisSub,
+				redisClient : redisClient
+			})
+		});
+		websocketServer.sockets.on("connection", function (websocket) {
+			wshandler.handle(websocket);
+		});
+		websocketServer.server.on("close", function() {
+			logger.notice("Websocketserver has stopped!");
+		});
+		callback();
+	}
+
+	function redisAuthCB(err, redisPub, redisSub, redisClient, callback) {
+		if (err) {
+			logger.error("redis auth failure", err);
+			process.exit(1);
+		} else {
+			redisAuths += 1;
+			if (redisAuths === 3) {
+				startServer(redisPub, redisSub, redisClient, callback);
+			}
+		}
+	}
+
+	function redisAuth(redisPub, redisSub, redisClient, callback) {
+		redisAuths = 0;
+		redisPub.auth(config["redis.passwd"], function(err) {
+			redisAuthCB(err, redisPub, redisSub, redisClient, callback);
+		});
+		redisSub.auth(config["redis.passwd"], function(err) {
+			redisAuthCB(err, redisPub, redisSub, redisClient, callback);
+		});
+		redisClient.auth(config["redis.passwd"], function(err) {
+			redisAuthCB(err, redisPub, redisSub, redisClient, callback);
+		});
+	}
 
     return {
         start: function(callback) {
-            webServer = http.createServer(function (request, response) {
-                request.addListener("end", function () {
-                    fileServer.serve(request, response);
-                });
-            });
-            webServer.listen(config["webServer.port"]);
-            websocketServer = socketio.listen(webServer, {
-                transports: ["websocket", "flashsocket", "xhr-polling"],
-				store: new (socketio.RedisStore)({
-					redisPub : redis.createClient(config["redis.port"], config["redis.host"], {}),
-					redisSub : redis.createClient(config["redis.port"], config["redis.host"], {}),
-					redisClient : redis.createClient(config["redis.port"], config["redis.host"], {})
-				})
-            });
-            websocketServer.sockets.on("connection", function (websocket) {
-				wshandler.handle(websocket);
-            });
-            websocketServer.server.on("close", function() {
-                logger.notice("Websocketserver has stopped!");
-            });
-            callback();
+			var redisPub = redis.createClient(config["redis.port"], config["redis.host"], {});
+			var redisSub = redis.createClient(config["redis.port"], config["redis.host"], {});
+			var redisClient = redis.createClient(config["redis.port"], config["redis.host"], {});
+
+			if (config["redis.passwd"]) {
+				redisAuth(redisPub, redisSub, redisClient, callback);
+			} else {
+				startServer(redisPub, redisSub, redisClient, callback);
+			}
         },
         stop: function(callback) {
             webServer.close(callback);

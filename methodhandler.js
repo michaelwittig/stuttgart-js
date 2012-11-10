@@ -8,10 +8,9 @@ define(["common/logger"], function(logger) {
 		"board:getall": function(distance, callback) {
 			callback(new Error("NOT IMPLEMENTED"), undefined);
 		},
-		"board:create": function(board, message, token, callback) {
+		"board:create": function(board, token, callback) {
 			callback(new Error("NOT IMPLEMENTED"), undefined);
 		},
-
 		"message:getall": function(boardId, callback) {
 			callback(new Error("NOT IMPLEMENTED"), undefined);
 		},

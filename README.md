@@ -10,14 +10,17 @@
 	value:String
 }
 ~~~
+#### Location
+~~~json
+{
+	lng:Float,
+	lat:Float
+~~~
 #### Board
 ~~~json
 {
-	name:String,
-	loc:{
-		lon:Float,
-		lat:Float
-	}
+	title:String,
+	loc:Location
 }
 ~~~
 
@@ -33,7 +36,6 @@ params: [distance:Float]
 method: "board:create",
 params: [
 	board:Board,
-	message:String,
 	token:Token
 ]
 ~~~
@@ -41,7 +43,10 @@ params: [
 #### get all for board
 ~~~json
 method: "message:getall",
-params: [boardId:String]
+params: [
+	boardId:String,
+	loc:Location
+]
 ~~~
 
 #### create

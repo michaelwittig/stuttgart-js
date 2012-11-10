@@ -1,11 +1,22 @@
-define([], function() {
+define(["request", "common/logger"], function(request, logger) {
 	"use strict";
 
 	var types = {
 		"facebook": function(token, callback) {
-			callback(undefined, {"type": "facebook", "id": "XXX"})
+			request({url:"https://graph.facebook.com/me?access_token=" + token, json: true}, function (err, response, body) {
+				if (err) {
+					callback(err);
+				} else {
+					if (body.error) {
+						callback(new Error(body.error.message));
+					} else {
+						callback(undefined, {"type": "facebook", "id": body.id});
+					}
+				}
+			});
 		}
-	}
+	};
+
 	return {
 		/**
 		 * @param token Token

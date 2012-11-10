@@ -61,7 +61,7 @@ define(["config", "common/logger", "mongoose"], function(config, logger, mongoos
 		* @param callback Callback(err, res)
 		*/
 	   getMessages: function(boardId, callback) {
-		   Message.find({boardId: boardId}, callback);
+		   Message.find({boardId: boardId}, callback); // TODO order by createdAt
 	   },
        /**
 		* @param user User

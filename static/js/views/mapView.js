@@ -2,10 +2,10 @@ define(['backbone', 'leaflet'], function(Backbone, L) {
 
     var MapView = Backbone.View.extend({
 
-	el: '#map',
+	el: '#map-view',
 
 	initialize: function() {
-	    this.map = L.map(this.$el[0]);
+	    this.map = L.map('map');
 
 	    L.tileLayer(
 		'http://{s}.tile.cloudmade.com/56b3a5571a254061b9c6747f4a37bd75/997/256/{z}/{x}/{y}.png',
@@ -16,7 +16,7 @@ define(['backbone', 'leaflet'], function(Backbone, L) {
 	},
 
 	show: function() {
-
+	    this.$el.show();
 	}
     });
 

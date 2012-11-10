@@ -4,9 +4,10 @@ define([
     'models/appState' ,
     'models/user',
     'utils/router',
-    'views/appView'
+    'views/appView',
+    'collections/boards'
     ],
-    function ($, registry, AppState, User, Router, AppView) {
+    function ($, registry, AppState, User, Router, AppView, Boards) {
 
     var app = {};
 
@@ -15,6 +16,9 @@ define([
         registry.user = new User();
 
         new Router();
+
+	new Boards().fetch();
+
 
 	$(function() {
             new AppView();

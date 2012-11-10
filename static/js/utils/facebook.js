@@ -1,7 +1,28 @@
-define(['underscore', 'common/logger', 'models/appState'], function (_, log, appState) {
+define(['underscore', 'common/logger', 'utils/registry'], function (_, log, registry) {
 
     var Facebook = function () {
+        var that = this;
+
         this.setState(this.STATES.NOTREADY);
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '218338891631183',
+                /*channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html',*/ // Channel File for x-domain communication
+                status     : true,
+                cookie     : true,
+                xfbml      : true
+            });
+
+            that.init(FB);
+        };
+
+        (function(d, debug){
+            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement('script'); js.id = id; js.async = true;
+            js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
+            ref.parentNode.insertBefore(js, ref);
+        }(document, /*debug*/ false));
     };
 
     Facebook.prototype.STATES = {
@@ -16,26 +37,56 @@ define(['underscore', 'common/logger', 'models/appState'], function (_, log, app
         this.fb.Event.subscribe('auth.statusChange', _.bind(this.onStatusChange, this));
     };
 
-    Facebook.prototype.onStatusChange = function () {
-        log.notice('facebook status update');
+    Facebook.prototype.onStatusChange = function (response) {
+        if (response.status === 'connected') {
+            registry.user.set('fbtoken', response.authResponse.accessToken);
+            this.setState(this.STATES.LOGGEDIN);
+            log.notice('onStatusChange: facebook login success %s', response.authResponse.accessToken);
+        } else {
+            this.setState(this.STATES.INITIALIZED);
+            log.notice('onStatusChange: facebook login failed');
+        }
     };
 
     Facebook.prototype.setState = function (state) {
         this.state = state;
-        appState.set('facebook', state);
+        registry.state.set('facebook', state);
     };
 
-    Facebook.prototype.getUsers = function (userIds) {
+    Facebook.prototype.fetchUsers = function (userIds, cb) {
         if (this.state === this.STATES.NOTREADY) {
             return false;
         }
 
-        log.notice('get users');
-        return [];
+        var qryIds = [];
+        _.each(userIds, function(val) {
+            qryIds.push('uid=' + val);
+            log.notice(val);
+        });
+
+        this.fb.api({
+            method: 'fql.query',
+            query: 'SELECT uid, name, pic_square FROM user WHERE ' + qryIds.join(' OR ')
+        }, function (response) {
+            if (!response.error_msg) {
+                cb(null, response);
+            } else {
+                cb(new Error(response.error_msg))
+            }
+        });
+
+        return true;
     };
 
     Facebook.prototype.login = function () {
         log.notice('do login');
+        this.fb.login(function(response){
+            if (response.authResponse) {
+                log.notice('fb login succeeded');
+            } else {
+                log.notice('fb login failed');
+            }
+        });
     };
 
     return Facebook;

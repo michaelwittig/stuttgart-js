@@ -2,7 +2,11 @@ define([], function() {
     "use strict";
 
     function log(level, message, data) {
-        console.log(level + ":" + message, data);
+		if (data === undefined) {
+			console.log(new Date().toLocaleTimeString() + " " + level + ": " + message);
+		} else {
+			console.log(new Date().toLocaleTimeString() + " " + level + ": " + message, data);
+		}
     }
 
     return {

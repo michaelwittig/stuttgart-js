@@ -1,4 +1,4 @@
-define(['backbone', 'utils/geo', 'utils/registry'], function(Backbone, geo, registry) {
+define(['backbone', 'underscore', 'utils/geo', 'utils/registry'], function(Backbone, _, geo, registry) {
 
     var LocationView = Backbone.View.extend({
 
@@ -6,10 +6,12 @@ define(['backbone', 'utils/geo', 'utils/registry'], function(Backbone, geo, regi
 
         initialize: function() {
             this.$input = this.$('#location-input');
+            registry.user.on('change:loc', this.updateInput, this);
         },
 
         events: {
-            'click #update': 'searchLocation'
+            'click #update': 'searchLocation',
+            'click #mylocation': 'currentLocation'
         },
 
         searchLocation: function(e) {
@@ -21,9 +23,27 @@ define(['backbone', 'utils/geo', 'utils/registry'], function(Backbone, geo, regi
                     // TODO: Error Message anzeigen lassen.
                     logger('Location not found');
                 } else {
-                    registry.user.set({lat: lat, lng: lng});
+                    registry.user.set('loc', {lat: lat, lng: lng});
                 }
             });
+        },
+
+        currentLocation: function(e) {
+            e.preventDefault();
+            navigator.geolocation.getCurrentPosition(function(pos) {
+                registry.user.set('loc', {
+                    lat: pos.coords.latitude,
+                    lng: pos.coords.longitude
+                });
+            });
+        },
+
+        updateInput: function() {
+            var loc = registry.user.get('loc');
+            geo.coordsToAddress(loc.lat, loc.lng, _.bind(function(err, address) {
+                this.$input.val('');
+                this.$input.attr('placeholder', address);
+            }, this));
         },
 
         show: function() {

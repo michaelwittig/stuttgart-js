@@ -22,7 +22,8 @@ define(['backbone', 'leaflet', 'utils/registry', 'views/mapFooterView'], functio
     },
 
     locate: function() {
-        logger('locate')
+        logger('locate');
+
 	    this.map.setView(registry.user.get('loc'), 13);
     }
     });

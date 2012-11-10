@@ -11,6 +11,7 @@ define(['underscore', 'utils/socket', 'utils/registry'], function(_, socket, reg
         // case "update":  resp = update(model);                            break;
         // case "delete":  resp = destroy(model);                           break;
         }
+        return model;
     }
 
 

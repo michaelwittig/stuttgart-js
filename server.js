@@ -1,4 +1,4 @@
-define(["node-static", "socket.io", "http", "logger", "config"], function(nodestatic, socketio, http, logger, config) {
+define(["node-static", "socket.io", "http", "common/logger", "config"], function(nodestatic, socketio, http, logger, config) {
 	"use strict";
 
     var fileServer = new(nodestatic.Server)('./static');

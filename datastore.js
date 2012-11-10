@@ -1,4 +1,4 @@
-define(["config", "logger", "mongoose"], function(config, logger, mongoose) {
+define(["config", "common/logger", "mongoose"], function(config, logger, mongoose) {
     "use strict";
 
     var db = mongoose.createConnection(config["mongo.host"], config["mongo.db"]);

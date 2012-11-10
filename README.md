@@ -28,7 +28,10 @@
 #### get all
 ~~~json
 method: "board:getall",
-params: [distance:Float]
+params: [
+	loc:Location,
+	distance:Float
+]
 ~~~
 
 #### create
@@ -43,10 +46,7 @@ params: [
 #### get all for board
 ~~~json
 method: "message:getall",
-params: [
-	boardId:String,
-	loc:Location
-]
+params: [boardId:String]
 ~~~
 
 #### create
@@ -58,6 +58,22 @@ params: [
 	token:Token
 ]
 ~~~
+
+## Response
+###Message
+~~~json
+user:Int,
+timestamp:Int,
+content:String
+~~~
+
+###Board
+~~~json
+title:String,
+loc: {lat:Float, lng:Float},
+distance:Float
+~~~
+
 
 ## Deploy instructions
 

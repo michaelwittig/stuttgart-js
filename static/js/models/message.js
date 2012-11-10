@@ -1,18 +1,18 @@
 define(['backbone', function(Backbone) {
 
-  var Message = Backbone.Model.extend({
-    defaults: {
-      user: '',
-      timeago: '',
-      content: '',
-      photo: ''
-    },
+    var Message = Backbone.Model.extend({
+        defaults: {
+            user: '',
+            timeago: '',
+            content: '',
+            photo: ''
+        },
 
-    initialize: function() {
+        initialize: function() {
 
-    }
+        }
 
-  });
+    });
 
-  return Message;
+    return Message;
 }]);

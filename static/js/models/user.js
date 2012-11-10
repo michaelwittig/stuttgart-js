@@ -1,17 +1,17 @@
 define(['backbone', function(Backbone) {
 
-  var User = Backbone.Model.extend({
-    defaults: {
-      id: 0,
-      name: '',
-      photo: ''
-    },
+    var User = Backbone.Model.extend({
+        defaults: {
+            id: 0,
+            name: '',
+            photo: ''
+        },
 
-    initialize: function() {
+        initialize: function() {
 
-    }
+        }
 
-  });
+    });
 
-  return User;
+    return User;
 }]);

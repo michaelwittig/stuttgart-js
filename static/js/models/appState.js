@@ -1,10 +1,10 @@
 define(['backbone', function(Backbone) {
 
-  var AppState = Backbone.Model.extend({
-    initialize: function() {
+    var AppState = Backbone.Model.extend({
+        initialize: function() {
 
-    }
-  });
+        }
+    });
 
-  return AppState;
+    return AppState;
 }]);

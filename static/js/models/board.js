@@ -10,7 +10,10 @@ define(['backbone'], function(Backbone) {
                 lat: 0,
                 lng: 0
             },
-            distance: 0
+            distance: 0,
+            photo: '',
+            creator: ''
+            //expirationDate
         },
 
         initialize: function() {

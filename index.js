@@ -71,9 +71,9 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 				logger.debug("board:create: error in JSON-RPC", err);
 			} else {
 				logger.debug("board:create: success in JSON-RPC", res);
-				addMessage(res.result._id, "Alles super");
-				addMessage(res.result._id, "Find ich auch");
-				addMessage(res.result._id, "...");
+				//addMessage(res.result._id, "Alles super");
+				//addMessage(res.result._id, "Find ich auch");
+				//addMessage(res.result._id, "...");
 			}
 		});
 	}
@@ -119,10 +119,6 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 							process.exit(1);
 						} else {
 							logger.notice("started");
-							setTimeout(function() {
-								//setUpDB();
-								//getBoards(48.771309, 9.157273);
-							}, 500);
 						}
 					});
 				}

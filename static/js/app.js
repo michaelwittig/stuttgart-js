@@ -19,11 +19,7 @@ define([
 
         new Router();
 
-<<<<<<< HEAD
-        app.boards = new Boards();
-=======
-        new Boards().fetch();
->>>>>>> 48a52d0d2f33a093bb1e79b5ce4369f583f18f56
+    	app.boards = new Boards();
 
         $(function() {
             new AppView();

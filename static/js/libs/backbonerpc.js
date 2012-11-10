@@ -77,12 +77,17 @@
         },
         'socket.io': function(fn, params, callback, error, id) {
             var self = this;
+	    logger('action',this.action)
+	    logger('params',params)
+	    logger('id', id)
             this.socket.emit(this.action, {
                 jsonrpc     : '2.0',
                 method      : this.namespace? this.namespace + this.namespaceDelimiter + fn: fn,
                 id          : id,
                 params      : params
             }, function(error, data) {
+		logger('socket cb err', error)
+		logger('socket cb data', data)
                 if (data !== null && data.error !== undef) {
                     self.onError(callback, data);
                 } else {

@@ -1,5 +1,7 @@
 require.config({
-    deps: ['common/logger'],
+    deps: [
+	'common/logger'
+    ],
     paths: {
 	jquery: ['http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min', 'libs/jquery-1.8.2'],
 	leaflet: ['http://cdn.leafletjs.com/leaflet-0.4/leaflet', 'libs/leaflet'],

@@ -5,7 +5,7 @@ define([], function() {
     "use strict";
 
 	var conf = {};
-    if (process.env.mode === "prod") {
+    if (process.env.NODE_ENV === "production") {
 		conf["mongo.url"] = "mongodb://nodejitsu_nko3-stuttgart-js:2tpt0mq3omv1mtuk06q92bas0b@ds039267.mongolab.com:39267/nodejitsu_nko3-stuttgart-js_nodejitsudb9326938714";
 		conf["redis.host"] = "nodejitsudb3383330325.redis.irstack.com";
 		conf["redis.port"] = 6379;

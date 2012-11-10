@@ -10,6 +10,7 @@ define(['backbone', 'underscore', 'utils/geo', 'utils/registry'], function(Backb
         },
 
         events: {
+            'submit #location-form': 'searchLocation',
             'click #location-update': 'searchLocation',
             'click #location-mylocation': 'currentLocation'
         },

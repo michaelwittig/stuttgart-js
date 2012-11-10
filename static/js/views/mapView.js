@@ -29,9 +29,9 @@ define(['backbone', 'underscore', 'leaflet', 'utils/registry', 'views/mapFooterV
             var loc = registry.user.get('loc');
             this.map.setView(loc, 13);
             if (this.myLocationMarker) {
-                this.myLocationMarker.setLatLng(new L.LatLng(loc.lat, loc.lng));
+                this.myLocationMarker.setLatLng(loc);
             } else {
-                this.myLocationMarker = L.marker([loc.lat, loc.lng]).addTo(this.map);
+                this.myLocationMarker = L.marker(loc).addTo(this.map);
             }
         },
 

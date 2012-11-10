@@ -33,7 +33,8 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 		* @param callback Callback(err, res)
         */
        getBoards: function(loc, distance, callback) {
-           Board.find({loc: { $near: [loc.lng, loc.lat], $maxDistance: distance * 0.0090053796}}, callback);
+		   distance = distance * 0.0090053796;
+           Board.find({loc: { $near: [loc.lng, loc.lat], $maxDistance: distance}}, callback);
        },
        /**
 		* @param user User

@@ -1,8 +1,8 @@
 /**
  * We listen on a port for websocket and http requests.
  */
-define(["node-static", "socket.io", "redis", "http", "common/logger", "config", "wshandler", "pubsub", "cache"],
-	function(nodestatic, socketio, redis, http, logger, config, wshandler, pubsub, cache) {
+define(["node-static", "socket.io", "redis", "http", "common/logger", "config", "wshandler", "pubsub", "cache", "common/locroom"],
+	function(nodestatic, socketio, redis, http, logger, config, wshandler, pubsub, cache, locroom) {
 	"use strict";
 
     var fileServer = new(nodestatic.Server)('./static');
@@ -35,12 +35,14 @@ define(["node-static", "socket.io", "redis", "http", "common/logger", "config", 
 				logger.notice("Websocketserver has stopped!");
 			});
 			pubsub.sub("messages", function(message) {
-				logger.debug("send message to room board:" + message.boardId, message);
-				websocketServer.sockets.in("board:" + message.boardId).emit("update", message);
+				var room = "board:" + message.boardId;
+				logger.debug("send message to room " + room, message);
+				websocketServer.sockets.in(room).emit("update", message);
 			});
 			pubsub.sub("boards", function(message) {
-				logger.debug("send message to room loc:x-y", message); // TODO translate loc to a grid (x-y)
-				websocketServer.sockets.in("loc:x-y").emit("update", message);
+				var room = locroom.getRoom(message.loc);
+				logger.debug("send message to room " + room, message);
+				websocketServer.sockets.in(room).emit("update", message);
 			});
 			callback();
         },

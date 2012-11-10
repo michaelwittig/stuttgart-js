@@ -1,4 +1,4 @@
-define(['backbone', 'leaflet'], function(Backbone, L) {
+define(['backbone', 'leaflet', 'utils/registry'], function(Backbone, L, registry) {
 
     var MapView = Backbone.View.extend({
 
@@ -12,12 +12,18 @@ define(['backbone', 'leaflet'], function(Backbone, L) {
 		{maxZoom: 18}
 	    ).addTo(this.map);
 
-	    this.map.setView([51.505, -0.09], 13);
-	},
+        registry.user.on('change:loc', this.locate, this);
 
-	show: function() {
-	    this.$el.show();
-	}
+    },
+
+    show: function() {
+        this.$el.show();
+    },
+
+    locate: function() {
+        logger('locate')
+	    this.map.setView(registry.user.get('loc'), 13);
+    }
     });
 
     return MapView;

@@ -1,4 +1,4 @@
-define(['backbone'], function(Backbone) {
+define(['backbone', 'jquery'], function(Backbone, $) {
 
     var User = Backbone.Model.extend({
         defaults: {
@@ -8,9 +8,9 @@ define(['backbone'], function(Backbone) {
         },
 
         initialize: function() {
-	    //get data from FB
+            this.set('loc', {lat: 0, lng: 0});
+    	    //get data from FB
         }
-
     });
 
     return User;

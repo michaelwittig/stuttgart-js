@@ -17,7 +17,7 @@ define([
 
         new Router();
 
-	new Boards().fetch();
+        app.boards = new Boards();
 
 
 	$(function() {

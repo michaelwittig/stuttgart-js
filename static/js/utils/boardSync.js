@@ -17,18 +17,17 @@ define(['underscore', 'utils/socket', 'utils/registry'], function(_, socket, reg
     function find(model) {}
 
     function findAll(options) {
-        logger('loc', registry.user.get('loc'))
         socket.emit('jsonrpc', {
             method: 'board:getall',
             params: [registry.user.get('loc'), 50],
             id: _.uniqueId()
         }, function(err, data) {
             if (err) {
-		logger('err', err)
+		logger('boards:getall', err)
                 options.error(err.message);
             } else {
-                logger('res', data)
-                options.success(data.results);
+		logger('res', data.result)
+		options.success(data.result);
             }
         });
 

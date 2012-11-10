@@ -36,9 +36,9 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 			id: "1"
 		}, function(err, res) {
 			if (err) {
-				logger.debug("message:getall: error in JSON-RPC", err);
+				logger.debug("message:getal: error in JSON-RPC", err);
 			} else {
-				logger.debug("message:getall: success in JSON-RPC", res);
+				logger.debug("message:getal: success in JSON-RPC", res);
 			}
 		});
 	}
@@ -60,27 +60,27 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 
 	function addBoard(title, lng, lat) {
 		title = title || "Hello";
-		lng = lng || 9.308228;
-		lat = lat || 48.742323;
+		lng = lng || 48.742323;
+		lat = lat || 9.308228;
 		jsonrpchandler.handle({
 			method: "board:create",
-			params: [{title: title, loc: {lng: lng, lat: lat}}, {type:"happy", value: "TEST"}],
+			params: [{title: title, loc: {lng: lng, lat: lat}}, {type:"happy", value: "1476961015"}],
 			id: "1"
 		}, function(err, res) {
 			if (err) {
 				logger.debug("board:create: error in JSON-RPC", err);
 			} else {
 				logger.debug("board:create: success in JSON-RPC", res);
-				addMessage(res.result._id, "Alles super");
-				addMessage(res.result._id, "Find ich auch");
-				addMessage(res.result._id, "...");
+				//addMessage(res.result._id, "Alles super");
+				//addMessage(res.result._id, "Find ich auch");
+				//addMessage(res.result._id, "...");
 			}
 		});
 	}
 
 	function getBoards(lng, lat) {
-		lng = lng || 9.308228;
-		lat = lat || 48.742323;
+		lng = lng || 48.742323;
+		lat = lat || 9.308228;
 		jsonrpchandler.handle({
 			method: "board:getall",
 			params: [{lng: lng, lat: lat}, 5.0],
@@ -90,17 +90,17 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 				logger.debug("board:getall: error in JSON-RPC", err);
 			} else {
 				logger.debug("board:getall: success in JSON-RPC", res);
-				getMessages(res.result[0]._id);
+				setTimeout(getMessages(res.result[0]._id), 500);
 			}
 		});
 	}
 
 	function setUpDB() {
-		addBoard("Coworking", 9.157273, 48.771309);
-		addBoard("S-Bahn", 9.156514, 48.770268);
-		addBoard("REWE", 9.15778, 48.770901);
-		addBoard("Farbenhaus", 9.15686, 48.772235);
-		addBoard("MG-Fitness", 9.159118, 48.772067);
+		addBoard("Coworking", 48.771309, 9.157273);
+		addBoard("S-Bahn", 48.770268, 9.156514);
+		addBoard("REWE", 48.770901,9.15778);
+		addBoard("Farbenhaus", 48.772235, 9.15686);
+		addBoard("MG-Fitness", 48.772067,9.159118);
 	}
 
 	pubsub.start(function(err) {

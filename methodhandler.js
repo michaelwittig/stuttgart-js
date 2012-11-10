@@ -5,12 +5,17 @@ define(["common/logger"], function(logger) {
 	"use strict";
 
 	var methods = {
-		"test": function(param1, param2, callback) {
-			logger.debug("test", {a: param1, b: param2});
-			callback(undefined, {a: 10});
+		"board:getall": function(distance, callback) {
+			callback(new Error("NOT IMPLEMENTED"), undefined);
 		},
-		"board:create": function(board, callback) {
-			logger.debug("board:create", board);
+		"board:create": function(board, message, token, callback) {
+			callback(new Error("NOT IMPLEMENTED"), undefined);
+		},
+
+		"message:getall": function(boardId, callback) {
+			callback(new Error("NOT IMPLEMENTED"), undefined);
+		},
+		"message:create": function(boardId, message, token, callback) {
 			callback(new Error("NOT IMPLEMENTED"), undefined);
 		}
 	};

@@ -1,5 +1,58 @@
 # Hello Stuttgart.JS!
 
+## JSON-RPC definition
+
+### Types
+#### Token
+~~~json
+{
+	type:"facebook",
+	value:String
+}
+~~~
+#### Board
+~~~json
+{
+	name:String,
+	loc:{
+		lon:Float,
+		lat:Float
+	}
+~~~
+
+### Board
+#### get all
+~~~json
+method: "board:getall",
+params: [distance:Float]
+~~~
+
+#### create
+~~~json
+method: "board:create",
+params: [
+	board:Board,
+	message:String,
+	token:Token
+]
+~~~
+### Message
+#### get all for board
+~~~json
+method: "message:getall",
+params: [boardId:String]
+~~~
+
+#### create
+~~~json
+method: "message:create",
+params: [{
+	boardId:String,
+	message:String,
+	token:Token
+}]
+~~~
+
 ## Deploy instructions
 
 ### GitHub — [Team][2], [Repo][3]

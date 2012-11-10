@@ -7,7 +7,7 @@ requirejs.config({
 	nodeRequire: require
 });
 
-requirejs(["server", "common/logger", "jsonrpchandler"], function(server, logger, jsonrpchandler) {
+requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], function(server, pubsub, cache, logger, jsonrpchandler) {
 	"use strict";
 
 	process.on("uncaughtException", function (err) {
@@ -46,7 +46,7 @@ requirejs(["server", "common/logger", "jsonrpchandler"], function(server, logger
 	function addMessage(boardId) {
 		jsonrpchandler.handle({
 			method: "message:create",
-			params: [boardId, "Uh yeah", {type:"facebook", value: "TEST"}],
+			params: [boardId, "Uh yeah", {type:"happy", value: "TEST"}],
 			id: "1"
 		}, function(err, res) {
 			if (err) {
@@ -54,7 +54,6 @@ requirejs(["server", "common/logger", "jsonrpchandler"], function(server, logger
 			} else {
 				logger.debug("message:create: success in JSON-RPC", res);
 			}
-			setTimeout(getBoards, 500);
 		});
 	}
 
@@ -82,21 +81,32 @@ requirejs(["server", "common/logger", "jsonrpchandler"], function(server, logger
 				logger.debug("board:getall: error in JSON-RPC", err);
 			} else {
 				logger.debug("board:getall: success in JSON-RPC", res);
-
 				setTimeout(getMessages(res.result[0]._id), 500);
 			}
 		});
 	}
 
-
-    server.start(function(err) {
-        if (err) {
-            logger.error("can not start", err);
-            process.exit(1);
-        } else {
-            logger.notice("started");
-			setTimeout(getBoards, 500);
-        }
-    });
+	pubsub.start(function(err) {
+		if (err) {
+			logger.error("can not start pubsub", err);
+			process.exit(1);
+		} else {
+			cache.start(function(err) {
+				if (err) {
+					logger.error("can not start cache", err);
+					process.exit(1);
+				} else {
+					server.start(function(err) {
+						if (err) {
+							logger.error("can not start server", err);
+							process.exit(1);
+						} else {
+							logger.notice("started");
+						}
+					});
+				}
+			});
+		}
+	});
 
 });

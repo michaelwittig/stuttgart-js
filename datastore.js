@@ -1,4 +1,4 @@
-define(["config", "common/logger", "mongoose"], function(config, logger, mongoose) {
+define(["config", "common/logger", "mongoose", "pubsub"], function(config, logger, mongoose, pubsub) {
     "use strict";
 
     var db = mongoose.createConnection(config["mongo.url"]);
@@ -50,8 +50,14 @@ define(["config", "common/logger", "mongoose"], function(config, logger, mongoos
 			   },
                loc: [loc.lng, loc.lat]
            });
-           b.save(callback);
-		   // TODO publish a message to redis that a new board was created
+           b.save(function(err, res) {
+			   if (err) {
+				   callback(err, res);
+			   } else {
+				   pubsub.pub("boards", {loc: loc});
+				   callback(err, res);
+			   }
+		   });
        },
 	   /**
 		* @param boardId board's id
@@ -77,8 +83,14 @@ define(["config", "common/logger", "mongoose"], function(config, logger, mongoos
 			   },
 			   boardId: boardId
 		   });
-		   m.save(callback);
-		   // TODO publish a new message into the boards room
+		   m.save(function(err, res) {
+			   if (err) {
+				   callback(err, res);
+			   } else {
+					pubsub.pub("messages", {"boardId": boardId});
+					callback(err, res);
+			   }
+		   });
        }
    };
 });

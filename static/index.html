@@ -13,6 +13,32 @@
 	<link rel="stylesheet" href="css/main.css">
     </head>
     <body>
+    <div id="fb-root"></div>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '218338891631183',
+                /*channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html',*/ // Channel File for x-domain communication
+                status     : true,
+                cookie     : true,
+                xfbml      : true
+            });
+
+            define(['utils/registry'], function (registry) {
+                registry.facebook.init(FB);
+            });
+        };
+
+        (function(d, debug){
+            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement('script'); js.id = id; js.async = true;
+            js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
+            ref.parentNode.insertBefore(js, ref);
+        }(document, /*debug*/ false));
+    </script>
+
+
 	<div id="settings">
 	    <input type="text" id="name" value="Anonymous">
 	</div>

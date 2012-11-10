@@ -34,6 +34,7 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
         */
        getBoards: function(loc, distance, callback) {
 		   distance = distance * 0.0090053796;
+		   // TODO add distance to output array
            Board.find({loc: { $near: [loc.lng, loc.lat], $maxDistance: distance}}, callback);
        },
        /**

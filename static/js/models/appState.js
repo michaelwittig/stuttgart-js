@@ -1,4 +1,4 @@
-define(['backbone', function(Backbone) {
+define(['backbone'], function(Backbone) {
 
     var AppState = Backbone.Model.extend({
         initialize: function() {
@@ -7,4 +7,4 @@ define(['backbone', function(Backbone) {
     });
 
     return AppState;
-}]);
+});

@@ -1,4 +1,4 @@
-define(['backbone', function(Backbone) {
+define(['backbone'], function(Backbone) {
 
     var User = Backbone.Model.extend({
         defaults: {
@@ -8,10 +8,10 @@ define(['backbone', function(Backbone) {
         },
 
         initialize: function() {
-
+	    //get data from FB
         }
 
     });
 
     return User;
-}]);
+});

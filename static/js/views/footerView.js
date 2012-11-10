@@ -1,11 +1,11 @@
 define(['backbone'], function(Backbone) {
 
-    var HeaderView = Backbone.View.extend({
+    var FooterView = Backbone.View.extend({
 
 	initialize: function() {
 
 	}
     });
 
-    return HeaderView;
+    return FooterView;
 });

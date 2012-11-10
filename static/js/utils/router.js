@@ -1,4 +1,4 @@
-define(['utils/registry'], function (registry) {
+define(['backbone', 'utils/registry'], function (Backbone, registry) {
 
     var Router = Backbone.Router.extend({
         routes:{

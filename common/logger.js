@@ -9,17 +9,25 @@ define([], function() {
 		}
     }
 
-    return {
-        debug: function(message, data) {
-            log("debug", message, data);
-        },
-        notice: function(message, data) {
-            log("notice", message, data);
+    var logger = function(message, data) {
+	logger.debug.apply(this, arguments);
+    };
 
-        },
-        error: function(message, data) {
-            log("error", message, data);
+    logger.debug = function(message, data) {
+	log("debug", message, data);
+    };
 
-        }
-    }
+    logger.notice = function(message, data) {
+	log("notice", message, data);
+
+    };
+
+    logger.error = function(message, data) {
+	log("error", message, data);
+
+    };
+
+    if (window) window.logger = logger;
+
+    return logger;
 });

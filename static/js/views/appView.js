@@ -1,12 +1,12 @@
 define(
-    ['backbone', 'view/headerView', 'view/containerView', 'view/footerView'],
+    ['backbone', 'views/headerView', 'views/containerView', 'views/footerView'],
     function (Backbone, HeaderView, ContainerView, FooterView) {
 
         var AppView = Backbone.View.extend({
 
-            el:'body',
+	    el: 'body',
 
-            initialize:function () {
+	    initialize: function () {
                 this.headerView = new HeaderView();
                 this.containerView = new ContainerView();
                 this.footerView = new FooterView();
@@ -15,4 +15,4 @@ define(
         });
 
         return AppView;
-    });
+});

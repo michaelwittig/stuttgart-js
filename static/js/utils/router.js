@@ -8,6 +8,7 @@ define(['backbone', 'utils/registry'], function (Backbone, registry) {
             'boards':'boards',
             'board/:id':'board',
             'create':'create',
+            'create/:lat/:lng': 'create',
             '*404': 'goHome'
         },
 
@@ -31,8 +32,12 @@ define(['backbone', 'utils/registry'], function (Backbone, registry) {
             registry.state.trigger('route:board', id);
         },
 
-        create:function () {
-            registry.state.trigger('route:create');
+        create:function (lat, lng) {
+            if (lat && lng) {
+                registry.state.trigger('route:create', {lat:lat, lng:lng});
+            } else {
+                registry.state.trigger('route:create');
+            }
         }
     });
 

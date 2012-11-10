@@ -16,9 +16,9 @@ define([
         registry.state = new AppState();
         registry.user = new User();
         registry.facebook = new Facebook();
-	registry.boards = new Boards();
+        registry.boards = new Boards();
+        registry.router = new Router();
 
-        new Router();
 
         $(function() {
             new AppView();

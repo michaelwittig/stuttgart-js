@@ -1,4 +1,4 @@
-define(['backbone', 'utils/registry', 'jquery', 'utils/socket'], function(Backbone, registry, $, socket) {
+define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board'], function(Backbone, registry, $, socket, Board) {
 
     var CreateBoardView = Backbone.View.extend({
 
@@ -42,24 +42,15 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket'], function(Backbo
 
             ev.preventDefault();
 
-            if (!this.$('#board-description').val().length) {
+            if (!description.length) {
                 return false;
             }
 
-            socket.emit('jsonrpc', {
-                'jsonrpc': '2.0',
-                'method': 'board:create',
-                'params': [{
-                        'title': description,
-                        'loc': registry.user.get('loc')
-                    }, {
-                        type: "facebook",
-                        value: registry.user.get('fbtoken')
-                    }
-                ]
-            }, function(err, data) {
-                console.log(data);
-            });
+            var board = new Board({
+                title: description,
+                loc: registry.user.get('loc'),
+                expirationDate: expires
+            }).save();
 
             return true;
         }

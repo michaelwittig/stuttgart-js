@@ -36,6 +36,16 @@ define(['underscore', 'utils/socket', 'utils/registry'], function(_, socket, reg
     }
 
     function create(model) {
+        socket.emit('jsonrpc', {
+            'jsonrpc': '2.0',
+            'method': 'board:create',
+            'params': [model.toJSON(), {
+                type: "facebook",
+                value: registry.user.get('fbtoken')
+            }]
+        }, function(err, data) {
+            console.log(data);
+        });
         return model;
     }
 

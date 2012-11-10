@@ -27,7 +27,7 @@ define([], function() {
 
     };
 
-    if (window) window.logger = logger;
+    if (typeof window !== "undefined") window.logger = logger;
 
     return logger;
 });

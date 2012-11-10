@@ -2,11 +2,17 @@ define(['backbone', 'utils/registry'], function (Backbone, registry) {
 
     var Router = Backbone.Router.extend({
         routes: {
+	    '': 'goHome',
             '/home':'home',
             '/home/:lat/:lng': 'home',
             '/boards': 'boards',
             '/board/:id': 'board',
-            '/create': 'create'
+	    '/create': 'create',
+	    '*404': 'goHome'
+	},
+
+	goHome: function() {
+	    this.navigate('#/home', {trigger: true, replace: true});
         },
 
         home: function (lat, lng) {

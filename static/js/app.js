@@ -5,9 +5,10 @@ define([
     'models/user',
     'utils/router',
     'utils/facebook',
-    'views/appView'
+    'views/appView',
+    'collections/boards'
     ],
-    function ($, registry, AppState, User, Router, Facebook, AppView) {
+    function ($, registry, AppState, User, Router, Facebook, AppView, Boards) {
 
     var app = {};
 
@@ -18,10 +19,12 @@ define([
 
         new Router();
 
+        new Boards().fetch();
+
         $(function() {
             new AppView();
             Backbone.history.start();
-         });
+        });
     };
 
     return app;

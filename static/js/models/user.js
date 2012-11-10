@@ -13,24 +13,24 @@ define(['backbone', 'jquery'], function(Backbone, $) {
         },
 
         setPosition: function() {
-            function fallback() {
-                registry.user.set('loc', {
+            var fallback = _.bind(function() {
+                this.set('loc', {
                     lat: 51,
                     lng: -0.1
                 });
-            }
+            }, this);
 
             if (!navigator.geolocation) {
                 fallback();
                 return;
             }
 
-            navigator.geolocation.getCurrentPosition(function(pos) {
-                registry.user.set('loc', {
+            navigator.geolocation.getCurrentPosition(_.bind(function(pos) {
+                this.set('loc', {
                     lat: pos.coords.latitude,
                     lng: pos.coords.longitude
                 });
-            }, fallback);
+            }, this), fallback);
         }
 
 

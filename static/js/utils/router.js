@@ -1,14 +1,14 @@
-define(['utils/registry'], function(registry) {
+define(['utils/registry'], function (registry) {
 
-  var Router = Backbone.Router.extend({
-   routes: {
-      '/home': 'home'
-    },
+    var Router = Backbone.Router.extend({
+        routes:{
+            '/home':'home'
+        },
 
-    home: function() {
-      registry.state.trigger('route:home');
-    }
-  });
+        home:function () {
+            registry.state.trigger('route:home');
+        }
+    });
 
-  return Router;
+    return Router;
 });

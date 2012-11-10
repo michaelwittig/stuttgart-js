@@ -1,4 +1,4 @@
-define(['underscore', 'common/logger', 'utils/registry'], function (_, log, registry) {
+define(['underscore', 'common/logger', 'utils/registry'], function (_, logger, registry) {
 
     var Facebook = function () {
         var that = this;
@@ -40,11 +40,10 @@ define(['underscore', 'common/logger', 'utils/registry'], function (_, log, regi
     Facebook.prototype.onStatusChange = function (response) {
         if (response.status === 'connected') {
             registry.user.set('fbtoken', response.authResponse.accessToken);
+            this.token = response.authResponse.accessToken;
             this.setState(this.STATES.LOGGEDIN);
-            log.notice('onStatusChange: facebook login success %s', response.authResponse.accessToken);
         } else {
             this.setState(this.STATES.INITIALIZED);
-            log.notice('onStatusChange: facebook login failed');
         }
     };
 
@@ -61,7 +60,6 @@ define(['underscore', 'common/logger', 'utils/registry'], function (_, log, regi
         var qryIds = [];
         _.each(userIds, function(val) {
             qryIds.push('uid=' + val);
-            log.notice(val);
         });
 
         this.fb.api({
@@ -79,14 +77,7 @@ define(['underscore', 'common/logger', 'utils/registry'], function (_, log, regi
     };
 
     Facebook.prototype.login = function () {
-        log.notice('do login');
-        this.fb.login(function(response){
-            if (response.authResponse) {
-                log.notice('fb login succeeded');
-            } else {
-                log.notice('fb login failed');
-            }
-        });
+        this.fb.login();
     };
 
     return Facebook;

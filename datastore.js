@@ -33,11 +33,7 @@ define(["config", "common/logger", "mongoose"], function(config, logger, mongoos
 		* @param callback Callback(err, res)
         */
        getBoards: function(loc, distance, callback) {
-           // maxDistance=1.0 := 69 miles=111.044736km
-           // maxDistance=0.045026898 := 5km
-           // 48.742323, 9.308228 := Hafenmark1, Esslingen am Neckar
-           // 48.777361, 9.175018 := Calwer Straße 11, Stuttgart
-           Board.find({loc: { $near: [loc.lng, loc.lat], $maxDistance: 0.045026898}}, callback); // TODO distance
+           Board.find({loc: { $near: [loc.lng, loc.lat], $maxDistance: distance * 0.0090053796}}, callback);
        },
        /**
 		* @param user User
@@ -62,7 +58,9 @@ define(["config", "common/logger", "mongoose"], function(config, logger, mongoos
 		* @param callback Callback(err, res)
 		*/
 	   getMessages: function(boardId, callback) {
-		   Message.find({boardId: boardId}, callback); // TODO order by createdAt
+		   Message.find({boardId: boardId}, null, {sort: {
+			   createdAt: 1
+		   }}, callback);
 	   },
        /**
 		* @param user User

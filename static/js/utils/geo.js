@@ -17,7 +17,6 @@ define(['common/logger', 'jquery'], function (logger, $) {
     Geo.prototype.addressToCoords = function (address, cb) {
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({address: address}, function(results) {
-            console.log(results);
             if (results.length) {
                 cb(null, results[0].geometry.location.Za, results[0].geometry.location.$a);
             } else {

@@ -1,4 +1,7 @@
-define(["node-static", "socket.io", "redis", "http", "common/logger", "config"], function(nodestatic, socketio, redis, http, logger, config) {
+/**
+ * We listen on a port for websocket and http requests.
+ */
+define(["node-static", "socket.io", "redis", "http", "common/logger", "config", "wshandler"], function(nodestatic, socketio, redis, http, logger, config, wshandler) {
 	"use strict";
 
     var fileServer = new(nodestatic.Server)('./static');
@@ -22,11 +25,7 @@ define(["node-static", "socket.io", "redis", "http", "common/logger", "config"],
 				})
             });
             websocketServer.sockets.on("connection", function (websocket) {
-                logger.debug("server", "Websocket client connected");
-                websocket.on("jsonrpc", function(data, callback) {
-                    logger.debug("Websocket client registering");
-                    callback(); // TODO handle the request :)
-                });
+				wshandler.handle(websocket);
             });
             websocketServer.server.on("close", function() {
                 logger.notice("Websocketserver has stopped!");

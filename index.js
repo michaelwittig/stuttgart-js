@@ -1,3 +1,6 @@
+/**
+ * The server is started and some stuff around the process is done here.
+ */
 var requirejs = require("requirejs");
 
 requirejs.config({

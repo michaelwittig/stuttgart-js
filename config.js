@@ -1,3 +1,6 @@
+/**
+ * Configuration for dev and prod.
+ */
 define([], function() {
     "use strict";
 

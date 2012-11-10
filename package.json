@@ -14,7 +14,8 @@
 	  "mongoose": ">= 3.3.1",
 	  "node-static": ">= 0.6.4",
 	  "requirejs": ">= 2.1.1",
-	  "socket.io": ">= 0.9.11"
+	  "socket.io": ">= 0.9.11",
+	  "redis": ">= 0.8.2"
   },
   "engines": {
     "node": "0.8.x"

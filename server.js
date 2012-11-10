@@ -1,4 +1,4 @@
-define(["node-static", "socket.io", "http", "common/logger", "config"], function(nodestatic, socketio, http, logger, config) {
+define(["node-static", "socket.io", "redis", "http", "common/logger", "config"], function(nodestatic, socketio, redis, http, logger, config) {
 	"use strict";
 
     var fileServer = new(nodestatic.Server)('./static');
@@ -14,8 +14,12 @@ define(["node-static", "socket.io", "http", "common/logger", "config"], function
             });
             webServer.listen(config["webServer.port"]);
             websocketServer = socketio.listen(webServer, {
-                transports: ["websocket", "flashsocket", "xhr-polling"]
-				// TODO redis store
+                transports: ["websocket", "flashsocket", "xhr-polling"],
+				store: new (socketio.RedisStore)({
+					redisPub : redis.createClient(config["redis.port"], config["redis.host"], {}),
+					redisSub : redis.createClient(config["redis.port"], config["redis.host"], {}),
+					redisClient : redis.createClient(config["redis.port"], config["redis.host"], {})
+				})
             });
             websocketServer.sockets.on("connection", function (websocket) {
                 logger.debug("server", "Websocket client connected");

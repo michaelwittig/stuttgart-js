@@ -54,6 +54,6 @@ define(["redis", "config", "common/logger", "pubsub"], function(redis, config, l
 				}
 			});
 		},
-		"redisClient": redisClient
+		"redisClient": function() {return redisClient}
 	};
 });

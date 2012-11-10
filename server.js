@@ -23,9 +23,9 @@ define(["node-static", "socket.io", "redis", "http", "common/logger", "config", 
 				transports: ["websocket", "flashsocket", "xhr-polling"],
 				store: new (socketio.RedisStore)({
 					redis: redis,
-					redisPub : pubsub.redisPub,
-					redisSub : pubsub.redisSub,
-					redisClient : cache.redisClient
+					redisPub : pubsub.redisPub(),
+					redisSub : pubsub.redisSub(),
+					redisClient : cache.redisClient()
 				})
 			});
 			websocketServer.sockets.on("connection", function (websocket) {

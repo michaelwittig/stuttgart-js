@@ -1,4 +1,4 @@
-define(['backbone', 'leaflet', 'utils/registry'], function(Backbone, L, registry) {
+define(['backbone', 'leaflet', 'utils/registry', 'views/mapFooterView'], function(Backbone, L, registry, MapFooterView) {
 
     var MapView = Backbone.View.extend({
 
@@ -6,6 +6,7 @@ define(['backbone', 'leaflet', 'utils/registry'], function(Backbone, L, registry
 
 	initialize: function() {
 	    this.map = L.map('map');
+        this.mapFooterView = new MapFooterView();
 
 	    L.tileLayer(
 		'http://{s}.tile.cloudmade.com/56b3a5571a254061b9c6747f4a37bd75/997/256/{z}/{x}/{y}.png',
@@ -21,7 +22,8 @@ define(['backbone', 'leaflet', 'utils/registry'], function(Backbone, L, registry
     },
 
     locate: function() {
-        logger('locate')
+        logger('locate');
+
 	    this.map.setView(registry.user.get('loc'), 13);
     }
     });

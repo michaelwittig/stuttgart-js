@@ -9,7 +9,6 @@ define(
         initialize: function () {
             this.headerView = new HeaderView();
             this.containerView = new ContainerView();
-            this.footerView = new FooterView();
 
             this.setPosition();
         },

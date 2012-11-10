@@ -21,6 +21,7 @@ define(["node-static", "socket.io", "redis", "http", "common/logger", "config", 
 		websocketServer = socketio.listen(webServer, {
 			transports: ["websocket", "flashsocket", "xhr-polling"],
 			store: new (socketio.RedisStore)({
+				redis: redis,
 				redisPub : redisPub,
 				redisSub : redisSub,
 				redisClient : redisClient
@@ -60,12 +61,24 @@ define(["node-static", "socket.io", "redis", "http", "common/logger", "config", 
 		});
 	}
 
+	function setUpRedisListener(redisClient) {
+		redisClient.on("connect", function() {
+			logger.debug("redis connect");
+		});
+		redisClient.on("error", function(err) {
+			logger.error("redis error", err);
+			System.exit(1);
+		});
+	}
+
     return {
         start: function(callback) {
-			var redisPub = redis.createClient(config["redis.port"], config["redis.host"], {});
-			var redisSub = redis.createClient(config["redis.port"], config["redis.host"], {});
-			var redisClient = redis.createClient(config["redis.port"], config["redis.host"], {});
-
+			var redisPub = redis.createClient(config["redis.port"], config["redis.host"], {no_ready_check: true});
+			setUpRedisListener(redisPub);
+			var redisSub = redis.createClient(config["redis.port"], config["redis.host"], {no_ready_check: true});
+			setUpRedisListener(redisSub);
+			var redisClient = redis.createClient(config["redis.port"], config["redis.host"], {no_ready_check: true});
+			setUpRedisListener(redisClient);
 			if (config["redis.passwd"]) {
 				redisAuth(redisPub, redisSub, redisClient, callback);
 			} else {

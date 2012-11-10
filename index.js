@@ -87,7 +87,7 @@ requirejs(["server", "common/logger", "jsonrpchandler"], function(server, logger
 			}
 		});
 	}
-	setTimeout(addBoard, 500);
+
 
     server.start(function(err) {
         if (err) {
@@ -95,6 +95,7 @@ requirejs(["server", "common/logger", "jsonrpchandler"], function(server, logger
             process.exit(1);
         } else {
             logger.notice("started");
+			setTimeout(addBoard, 500);
         }
     });
 

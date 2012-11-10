@@ -21,7 +21,7 @@ define(['backbone', 'underscore', 'utils/geo', 'utils/registry'], function(Backb
                 logger(lat, lng);
                 if (err) {
                     // TODO: Error Message anzeigen lassen.
-                    logger('Location not found');
+                    logger('Location not found', err);
                 } else {
                     registry.user.set('loc', {lat: lat, lng: lng});
                 }

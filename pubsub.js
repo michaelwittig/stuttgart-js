@@ -119,8 +119,8 @@ define(["redis", "config", "common/logger"], function(redis, config, logger) {
 				logger.error("can not unsubscribe, no channel!");
 			}
 		},
-		"redisPub": redisPub,
-		"redisSub": redisSub,
+		"redisPub": function() {return redisPub},
+		"redisSub": function() {return redisSub},
 		"redisErrorListener": redisErrorListener
 	};
 });

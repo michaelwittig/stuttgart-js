@@ -31,13 +31,14 @@ define(
                 //TODO: handle err
                 if (err) return;
                 _.each(res, function(user) {
-                    var message = this.find(function(message) {
-                        return message.get('user')['id'] === user.uid;
-                    });
-                    message.set({
-                        photo: user.pic_square,
-                        username: user.name
-                    });
+					this.each(function (message) {
+						if (message.get('user')['id'] === user.uid) {
+							message.set({
+								photo: user.pic_square,
+								username: user.name
+							});
+						}
+					});
                 }, this);
                 this.trigger('update');
             }, this));

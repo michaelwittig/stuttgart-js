@@ -27,13 +27,13 @@ define(
         this.$el.html(boardTemplate({
             board: this.board.toJSON(),
             messages: this.messages.toJSON()
-        })).show();
+	}))
 
         registry.state.trigger('messages:updated');
     },
 
     show: function() {
-    // this.$el.show();
+	this.$el.show();
     },
 
     hide: function() {

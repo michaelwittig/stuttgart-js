@@ -1,0 +1,29 @@
+{{#with board}}
+    <li>
+        <div class="box author">
+            <img src="{{photo}}" width="50" height="50" alt="" />
+            <div class="block">
+                <p>{{title}}</p>
+                <h2>
+                    <strong>{{creator}}</strong> wrote {{timeago createdAt}}.
+                </h2>
+            </div>
+            <hr class="clear" />
+        </div>
+    </li>
+{{/with}}
+
+{{#each messages}}
+    <li>
+        <div class="box">
+            <img src="{{photo}}" width="50" height="50" alt="" />
+            <div class="block">
+                <p>{{title}}</p>
+                <h2>
+                    <strong>{{username}}</strong> wrote {{timeago createdAt}}
+                </h2>
+            </div>
+            <hr class="clear" />
+        </div>
+    </li>
+{{/each}}

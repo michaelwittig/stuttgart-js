@@ -1,11 +1,11 @@
-define(['backbone', 'utils/registry', 'views/boardsListView', 'views/boardView'], function(Backbone, registry, BoardsListView , BoardView) {
+define(['backbone', 'utils/registry', 'views/boardsListView', 'views/boardView', 'views/commentView'], function(Backbone, registry, BoardsListView , BoardView, CommentView) {
 
     var ContainerView = Backbone.View.extend({
 
         initialize: function() {
             this.isHidden = true;
             this.boardsListView = new BoardsListView();
-            this.boardView = new BoardView();
+	    this.boardView = new BoardView({commentView: new CommentView()});
         },
 
         displayView: function(view) {

@@ -7,19 +7,6 @@ define(
         model: Message,
 
         initialize: function(boardId) {
-            var deferred = $.Deferred();
-            this.loading = deferred.promise();
-            this.facebookDataLoaded = $.Deferred();
-
-            this.on('reset', function loading() {
-		logger('reset messages')
-                this.facebookDataLoaded.done(_.bind(function() {
-                    logger('resolve messages')
-                    deferred.resolve();
-                    this.off('reset', loading);
-                }, this));
-            }, this);
-
 
             this.boardId = boardId;
             this.on('reset', this.loadFacebookData, this);
@@ -33,12 +20,12 @@ define(
 
         loadFacebookData: function() {
             var ids = this.map(function(message,i) {
-		return message.get('user')['id'];
+                return message.get('user')['id'];
             });
 
-	    if (!ids.length) {
-		this.facebookDataLoaded.resolve();
-	    }
+            if (!ids.length) {
+                this.trigger('update');
+            }
 
             registry.facebook.fetchUsers(ids, _.bind(function(err, res) {
                 //TODO: handle err
@@ -52,7 +39,7 @@ define(
                         username: user.name
                     });
                 }, this);
-                this.facebookDataLoaded.resolve();
+                this.trigger('update');
             }, this));
         }
     });

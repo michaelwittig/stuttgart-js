@@ -11,7 +11,6 @@ define(['backbone', 'hbs!templates/boardsListTemplate', 'utils/registry'], funct
     },
 
     render: function() {
-	logger('render boards', registry.boards)
         this.$el.html(template(registry.boards.toJSON()));
     },
 

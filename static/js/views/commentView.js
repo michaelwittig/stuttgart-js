@@ -2,33 +2,45 @@ define(['backbone', 'models/message'], function(Backbone, Message) {
 
     var CommentView = Backbone.View.extend({
 
-	el: '#sub-comment',
+    el: '#sub-comment',
 
-	initialize: function(boardId) {
-	    this.boardId = boardId;
-	    this.$input = this.$('#comment-input');
-	},
+    initialize: function() {
+	this.boardId = undefined;
+	this.$input = this.$('#comment-input');
+    },
 
-	events: {
-	    'submit #comment-form': 'createMessage',
-	    'click #comment-submit': 'createMessage'
-	},
+    load: function(boardId) {
+	this.boardId = boardId;
+    },
 
-	createMessage: function(e) {
-	    e.preventDefault();
+    show: function() {
+	this.$el.show();
+    },
 
-	    logger('create message')
-	    var comment = this.$input.val();
+    hide: function() {
+	this.$el.hide();
+    },
 
-	    if (!comment.length) {
-		return;
-	    }
+    events: {
+	'submit #comment-form': 'createMessage',
+	'click #comment-submit': 'createMessage'
+    },
 
-	    new Message({
-		title: comment,
-		boardId: this.boardId
-	    }).save();
+    createMessage: function(e) {
+	e.preventDefault();
+
+	logger('create message')
+	var comment = this.$input.val();
+
+	if (!comment.length) {
+	return;
 	}
+
+	new Message({
+	title: comment,
+	boardId: this.boardId
+	}).save();
+    }
     });
 
 

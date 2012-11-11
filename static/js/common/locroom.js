@@ -21,7 +21,7 @@ define([], function() {
 		/**
 		 *
 		 * @param loc
-		 * @param distance Distance in km
+		 * @param distance Distance in miles
 		 * @return {Array}
 		 */
 		getRooms: function(loc, distance) {

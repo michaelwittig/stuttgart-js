@@ -42,6 +42,7 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
         },
 
         createBoard: function(ev) {
+            var $textarea = this.$textarea;
             var description = this.$textarea.val(),
                 expires = this.$('#create-expire li.current').data('expires');
 
@@ -54,12 +55,13 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
             var board = new Board({
                 title: description,
                 loc: registry.state.get('createloc') || registry.user.get('loc'),
-                expirationDate: expires
+                expireIn: expires
             }).save(null, {
                 success: function() {
                     logger('new board created');
                     registry.router.navigate('home', {trigger:true});
                     registry.state.trigger('closepopups');
+                    $textarea.val('');
                 },
                 error: function(err) {
                     logger('new board created error', err);

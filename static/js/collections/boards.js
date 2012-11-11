@@ -41,17 +41,17 @@ define(
             });
 
             registry.facebook.fetchUsers(ids, _.bind(function(err, res) {
-                logger('loadFacebookData', err)
                 //TODO: handle err
                 if (err) return;
                 _.each(res, function(user) {
-                    var board = this.find(function(board) {
-                        return board.get('user')['id'] === user.uid;
-                    });
-                    board.set({
-                        photo: user.pic_square,
-                        creator: user.name
-                    });
+					this.each(function (board) {
+						if (board.get('user')['id'] === user.uid) {
+							board.set({
+								photo: user.pic_square,
+								creator: user.name
+							});
+						}
+					});
                 }, this);
                 this.facebookDataLoaded.resolve();
             }, this));

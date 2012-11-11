@@ -4,9 +4,21 @@ define(['backbone', 'models/message'], function(Backbone, Message) {
 
 	el: '#sub-comment',
 
-	initialize: function(boardId) {
-	    this.boardId = boardId;
+	initialize: function() {
+	    this.boardId = undefined;
 	    this.$input = this.$('#comment-input');
+	},
+
+	load: function(boardId) {
+	    this.boardId = boardId;
+	},
+
+	show: function() {
+	    this.$el.show();
+	},
+
+	hide: function() {
+	    this.$el.hide();
 	},
 
 	events: {
@@ -17,17 +29,20 @@ define(['backbone', 'models/message'], function(Backbone, Message) {
 	createMessage: function(e) {
 	    e.preventDefault();
 
-	    logger('create message')
 	    var comment = this.$input.val();
 
-	    if (!comment.length) {
+	    if(!comment.length) {
 		return;
 	    }
 
 	    new Message({
 		title: comment,
 		boardId: this.boardId
-	    }).save();
+	    }).save(null, {
+		success: _.bind(function() {
+		    this.$input.val('');
+		}, this)
+	    });
 	}
     });
 

@@ -20,8 +20,8 @@ define(['backbone', 'jquery', 'utils/registry', 'common/logger'], function(Backb
         setPosition: function(loc) {
             var fallback = _.bind(function() {
                 this.set('loc', {
-                    lat: 51,
-                    lng: -0.1
+		    lat: 48.770998,
+		    lng: 9.157273
                 });
             }, this);
 

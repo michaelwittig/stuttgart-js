@@ -15,20 +15,14 @@ require.config({
     },
     shim: {
     leaflet: {
-        exports: 'L'
-        },
-    // handlebars: {
-    //     exports: 'Handlebars'
-    //     },
-    underscore: {
-        exports: '_'
-        },
+	exports: 'L'
+	},
     backbone: {
-        deps: ['underscore', 'jquery'],
-        exports: 'Backbone'
-        },
+	deps: ['underscore', 'jquery'],
+	exports: 'Backbone'
+	},
     'socket.io': {
-        exports: 'io'
+	exports: 'io'
     },
     'libs/moment': {
     exports: 'moment'
@@ -36,8 +30,8 @@ require.config({
     },
     baseUrl: 'js',
     hbs: {
-        disableI18n: true,
-        helperPathCallback: function(name) {return 'templates/helpers/' + name;}
+	disableI18n: true,
+	helperPathCallback: function(name) {return 'templates/helpers/' + name;}
     }
 });
 

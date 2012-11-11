@@ -4,13 +4,81 @@
 define(["common/logger", "datastore", "authhandler"], function(logger, datastore, authhandler) {
 	"use strict";
 
+	function isNonEmptyString(str, field) {
+		field = field || "str";
+		if (typeof str !== "string") {
+			throw new Error(field + " must be a string");
+		}
+		if (str.length === 0) {
+			throw new Error(field + " is empty");
+		}
+	}
+
+	function isPositiveInteger(integer, field) {
+		field = field || "int";
+		if (typeof integer !== "number") {
+			throw new Error(field + " must be a number");
+		}
+		if (integer < 0) {
+			throw new Error(field + " must be positive");
+		}
+	}
+
+	function isLoc(loc, field) {
+		field = field || "loc";
+		if (typeof loc.lng !== "number" || typeof loc.lat !== "number") {
+			throw new Error(field + ".lng and " + field + ".lat must be a number");
+		}
+		if (loc.lng < -180 || loc.lng >= 180) {
+			throw new Error(field + ".lng must be in [-180;180)");
+		}
+		if (loc.lat < -90 || loc.lat >= 90) {
+			throw new Error(field + ".lat must be in [-90;90)");
+		}
+	}
+
+	function isDistance(distance, field) {
+		field = field || "distance";
+		if (typeof distance !== "number") {
+			throw new Error(field + " must be a number");
+		}
+		if (distance < 1 || distance > 100) {
+			throw new Error(field + " must be in [1;100]");
+		}
+	}
+
+	function isBoard(board) {
+		isNonEmptyString(board.title, "board.title");
+		isLoc(board.loc, "board.loc");
+		if (board.expireIn !== undefined) {
+			isPositiveInteger(board.expireIn, "board.expireIn");
+		}
+	}
+
+	function isToken(token) {
+		isNonEmptyString(token.type, "token.type");
+		isNonEmptyString(token.value, "token.value");
+	}
+
+	function isBoardId(boardId) {
+		isNonEmptyString(boardId, "boardId");
+	}
+
+	function isMessage(message) {
+		isNonEmptyString(message, "message");
+	}
+
 	var methods = {
 		"board:getall": function(loc, distance, callback) {
 			logger.debug("board:getall", [loc, distance]);
+			isLoc(loc);
+			isDistance(distance);
 			datastore.getBoards(loc, distance, callback);
 		},
 		"board:create": function(board, token, callback) {
 			logger.debug("board:create", [board, token]);
+			isBoard(board);
+			isToken(token);
 			authhandler.getUser(token, function(err, user) {
 				if (err) {
                     logger.debug("board:create error");
@@ -23,10 +91,14 @@ define(["common/logger", "datastore", "authhandler"], function(logger, datastore
 		},
 		"message:getall": function(boardId, callback) {
 			logger.debug("message:getall", [boardId]);
+			isBoardId(boardId);
 			datastore.getMessages(boardId, callback);
 		},
 		"message:create": function(boardId, message, token, callback) {
 			logger.debug("message:create", [boardId, message, token]);
+			isBoardId(boardId);
+			isMessage(message);
+			isToken(token);
 			authhandler.getUser(token, function(err, user) {
 				if (err) {
 					callback(err);
@@ -37,6 +109,8 @@ define(["common/logger", "datastore", "authhandler"], function(logger, datastore
 		},
 		"demo:start": function(loc, distance, callback) {
 			logger.debug("demo:start", [loc, distance]);
+			isLoc(loc);
+			isDistance(distance);
 			// TODO implement #10
 			callback(undefined, true);
 		}

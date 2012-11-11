@@ -10,7 +10,6 @@ define(["request", "common/logger", "cache"], function(request, logger, cache) {
 
 	var types = {
 		"facebook": function(token, callback) {
-			cache.get()
 			request({url:"https://graph.facebook.com/me?access_token=" + token, json: true}, function (err, response, body) {
 				if (err) {
 					callback(err);

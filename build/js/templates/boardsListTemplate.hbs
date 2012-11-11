@@ -1,0 +1,9 @@
+<ul>
+{{#each this}}
+<li data-id="{{_id}}">
+<img src="{{photo}}">
+<p>{{title}}</p>
+<span>{{creator}} wrote {{timeago createdAt}}.</span>
+</li>
+{{/each}}
+</ul>

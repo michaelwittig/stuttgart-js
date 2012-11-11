@@ -58,22 +58,22 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 		});
 	}
 
-	function addBoard(title, lng, lat) {
+	function addBoard(title, lng, lat, expireIn) {
 		title = title || "Hello";
 		lng = lng || 48.742323;
 		lat = lat || 9.308228;
 		jsonrpchandler.handle({
 			method: "board:create",
-			params: [{title: title, loc: {lng: lng, lat: lat}}, {type:"happy", value: "1476961015"}],
+			params: [{title: title, expireIn: expireIn, loc: {lng: lng, lat: lat}}, {type:"happy", value: "1476961015"}],
 			id: "1"
 		}, function(err, res) {
 			if (err) {
 				logger.debug("board:create: error in JSON-RPC", err);
 			} else {
 				logger.debug("board:create: success in JSON-RPC", res);
-				//addMessage(res.result._id, "Alles super");
-				//addMessage(res.result._id, "Find ich auch");
-				//addMessage(res.result._id, "...");
+				addMessage(res.result._id, "Alles super");
+				addMessage(res.result._id, "Find ich auch");
+				addMessage(res.result._id, "...");
 			}
 		});
 	}
@@ -90,7 +90,7 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 				logger.debug("board:getall: error in JSON-RPC", err);
 			} else {
 				logger.debug("board:getall: success in JSON-RPC", res);
-				setTimeout(getMessages(res.result[0]._id), 500);
+				//setTimeout(getMessages(res.result[0]._id), 500);
 			}
 		});
 	}

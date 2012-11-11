@@ -45,12 +45,34 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 			},
 			user: board.user,
 			createdAt: board.createdAt,
-			expireAt: null // TODO implement expireAt
+			expireAt: board.expireAt
 		};
 	}
 
 	function distanc(locA, locB) {
 		return Math.sqrt(Math.pow(locA.lng - locB.lng, 2) + Math.pow(locA.lat - locB.lat, 2));
+	}
+
+	function removeBoard(board) {
+		board.remove(function(err) {
+			if (err) {
+				logger.error("can not remove board", err);
+			} else {
+				Message.find({boardId: board._id}, function(err, res) {
+					if (err) {
+						logger.error("can not remove board messages", err);
+					} else {
+						res.forEach(function(message) {
+							message.remove();
+						});
+					}
+				});
+				var b = boardView(board);
+				logger.debug("removed board", b);
+				pubsub.pub("messages", {"boardId": b._id});
+				pubsub.pub("boards", {loc: b.loc});
+			}
+		});
 	}
 
    return {
@@ -65,13 +87,18 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 			   if (err) {
 				   callback(err);
 			   } else {
+				   var time = new Date().getTime();
 				   if (Array.isArray(res)) {
 					   var view = [];
 					   logger.debug("modify boards");
 						res.forEach(function(board) {
 							var b = boardView(board);
 							b._distance = distanc(loc, b.loc) / 1.609344 / 0.0090053796;
-							view.push(b);
+							if (b.expireAt && b.expireAt.getTime() < time) {
+								removeBoard(board);
+							} else {
+								view.push(b);
+							}
 						});
 				   }
 				   callback(undefined, view);
@@ -86,14 +113,18 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 		* @param callback Callback(err, res)
         */
        addBoard: function(user, title, loc, expireIn, callback) {
-		   // TODO implement expiry of boards #4
+		   var expireAt;
+		   if (expireIn > 0) {
+			   expireAt = new Date(new Date().getTime() + (expireIn * 60 * 60 * 1000));
+		   }
            var b = new Board({
                title: title,
 			   user: {
 				   type: user.type,
 				   id: user.id
 			   },
-               loc: [loc.lng, loc.lat]
+               loc: [loc.lng, loc.lat],
+			   expireAt: expireAt
            });
            b.save(function(err, res) {
 			   if (err) {

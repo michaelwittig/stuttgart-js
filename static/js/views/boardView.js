@@ -15,10 +15,9 @@ define(
 
     load: function(boardId) {
         registry.boards.loading.done(_.bind(function() {
-	    logger('load bord view')
             this.board = registry.boards.get(boardId);
             this.messages = new Messages(boardId);
-	    this.messages.on('update', this.render, this);
+    	    this.messages.on('update', this.render, this);
         }, this));
 
 	this.commentView.load(boardId);

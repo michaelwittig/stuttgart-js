@@ -20,12 +20,12 @@ define(
 
         loadFacebookData: function() {
             var ids = this.map(function(message,i) {
-		return message.get('user')['id'];
+                return message.get('user')['id'];
             });
 
-	    if (!ids.length) {
-		this.trigger('update');
-	    }
+            if (!ids.length) {
+                this.trigger('update');
+            }
 
             registry.facebook.fetchUsers(ids, _.bind(function(err, res) {
                 //TODO: handle err
@@ -39,8 +39,7 @@ define(
                         username: user.name
                     });
                 }, this);
-		logger('update')
-		this.trigger('update');
+                this.trigger('update');
             }, this));
         }
     });

@@ -41,7 +41,6 @@ define(
             });
 
             registry.facebook.fetchUsers(ids, _.bind(function(err, res) {
-                logger('loadFacebookData', err)
                 //TODO: handle err
                 if (err) return;
                 _.each(res, function(user) {

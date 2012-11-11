@@ -55,7 +55,7 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
             var board = new Board({
                 title: description,
                 loc: registry.state.get('createloc') || registry.user.get('loc'),
-                expirationDate: expires
+                expireIn: expires
             }).save(null, {
                 success: function() {
                     logger('new board created');

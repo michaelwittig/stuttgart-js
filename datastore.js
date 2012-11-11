@@ -38,12 +38,14 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 	function boardView(board) {
 		return {
 			_id: board._id,
+			title: board.title,
 			loc: {
 				lng: board.loc[0],
 				lat: board.loc[1]
 			},
 			user: board.user,
-			createdAt: board.createdAt
+			createdAt: board.createdAt,
+			expireAt: null // TODO implement expireAt
 		};
 	}
 
@@ -58,7 +60,7 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 		* @param callback Callback(err, res)
         */
        getBoards: function(loc, distance, callback) {
-		   distance = distance * 0.0090053796;
+		   distance = distance * 1.609344 * 0.0090053796; // distance to km to lnglat
            Board.find({loc: { $near: [loc.lng, loc.lat], $maxDistance: distance}}, function(err, res) {
 			   if (err) {
 				   callback(err);
@@ -68,7 +70,7 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 					   logger.debug("modify boards");
 						res.forEach(function(board) {
 							var b = boardView(board);
-							b._distance = distanc(loc, b.loc) / 0.0090053796;
+							b._distance = distanc(loc, b.loc) / 1.609344 / 0.0090053796;
 							view.push(b);
 						});
 				   }
@@ -84,7 +86,7 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 		* @param callback Callback(err, res)
         */
        addBoard: function(user, title, loc, expireIn, callback) {
-		   // TODO implement expiry of boards
+		   // TODO implement expiry of boards #4
            var b = new Board({
                title: title,
 			   user: {
@@ -98,7 +100,7 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 				   callback(err, res);
 			   } else {
 				   pubsub.pub("boards", {loc: loc});
-				   callback(err, res);
+				   callback(err, boardView(res));
 			   }
 		   });
        },
@@ -144,7 +146,7 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 				   callback(err, res);
 			   } else {
 					pubsub.pub("messages", {"boardId": boardId});
-					callback(err, res);
+					callback(err, messageView(res));
 			   }
 		   });
        }

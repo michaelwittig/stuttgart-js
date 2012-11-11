@@ -15,76 +15,148 @@
 {
 	lng:Float,
 	lat:Float
+}
+~~~
+#### User
+~~~json
+{
+	type:"facebook",
+	id:String
+}
 ~~~
 #### Board
 ~~~json
 {
+	_id:String,
 	title:String,
-	expireIn:Integer (optional, ignored if <= 0),
+	loc:Location,
+	user:User,
+	createdAt:Date,
+	expireAt:Date //optional
+}
+~~~
+#### CreateBoard
+~~~json
+{
+	title:String,
+	expireIn:Integer, //optional, ignored if <= 0
 	loc:Location
+}
+~~~
+#### Message
+~~~json
+{
+	_id:String,
+	title:String,
+	user:User,
+	createdAt:Date
 }
 ~~~
 
 ### Demo
 #### start
+in:
 ~~~json
-method: "demo:start",
-params: [
-	loc:Location,
-	distance:Float
-]
+{
+	method:"demo:start",
+	params:[
+		loc:Location,
+		distance:Float //in miles
+	],
+	id:String
+}
+~~~
+out:
+~~~json
+{
+	result:true, //null if error !== null
+	error:null, //or Error
+	id:String
+}
 ~~~
 
 ### Board
 #### get all
+in:
 ~~~json
-method: "board:getall",
-params: [
-	loc:Location,
-	distance:Float
-]
+{
+	method:"board:getall",
+	params:[
+		loc:Location,
+		distance:Float //in miles
+	],
+	id:String
+}
+~~~
+out:
+~~~json
+{
+	result:[Board], //null if error !== null
+	error:null, //or Error
+	id:String
+}
 ~~~
 
 #### create
+in:
 ~~~json
-method: "board:create",
-params: [
-	board:Board,
-	token:Token
-]
+{
+	method:"board:create",
+	params:[
+		board:CreateBoard,
+		token:Token
+	],
+	id:String
+}
+~~~
+out:
+~~~json
+{
+	result:Board, //null if error !== null
+	error:null, //or Error
+	id:String
+}
 ~~~
 ### Message
 #### get all for board
+in:
 ~~~json
-method: "message:getall",
-params: [boardId:String]
+{
+	method:"message:getall",
+	params:[boardId:String],
+	id:String
+}
+~~~
+out:
+~~~json
+{
+	result:[Message], //null if error !== null
+	error:null, //or Error
+	id:String
+}
 ~~~
 
 #### create
+in:
 ~~~json
-method: "message:create",
-params: [
-	boardId:String,
-	message:String,
-	token:Token
-]
+{
+	method:"message:create",
+	params:[
+		boardId:String,
+		message:String,
+		token:Token
+	],
+	id:String
+}
 ~~~
-
-## Response
-###Message
+out:
 ~~~json
-user:Int,
-timestamp:Int,
-content:String
+{
+	result:Message, //null if error !== null
+	error:null, //or Error
+	id:String
+}
 ~~~
-
-###Board
-~~~json
-title:String,
-loc: {lat:Float, lng:Float},
-distance:Float
-~~~
-
 
 ## Deploy instructions
 

@@ -240,7 +240,7 @@ define(["datastore", "common/logger"], function(datastore, logger) {
 			if (err) {
 				logger.error("add board: error", err);
 			} else {
-				if (res.length < distance * 2) {
+				if (res.length < 10) {
 					datastore.addBoard(randomUser(), randomBoardTitle(), randomPosition(loc, distance), null, function(err, res) {
 						if (err) {
 							logger.debug("add board event: error", err);
@@ -275,7 +275,7 @@ define(["datastore", "common/logger"], function(datastore, logger) {
 			} else {
 				event(start, loc, distance, duration);
 			}
-		}, 20 * 1000);
+		}, rand(5, 15) * 1000);
 	}
 
 	return {

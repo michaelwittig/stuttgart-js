@@ -202,7 +202,7 @@ define(["datastore", "common/logger"], function(datastore, logger) {
 					if (boards.length > 1) {
 						var idx = boards.indexOf(board);
 						boards.splice(idx, 1);
-						pickBoardAndSendMessage(boards);
+						pickBoardAndSendMessage(loc, distance, boards);
 					} else {
 						logger.debug("add message event: no messages available, create board");
 						eventAddBoard(loc, distance);

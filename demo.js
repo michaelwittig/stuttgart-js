@@ -6,37 +6,103 @@ define(["datastore", "common/logger"], function(datastore, logger) {
 
 	// user 0 is the conversation starter, user 1 and 2 are the other guys :)
 	var conversations = {
-		"make pizza tonight?": [
+		"You're... Jimmie, right? This is your house?": [
 			{
 				user: 1,
-				message: "+1"
-			}, {
-				user: 2,
-				message: "very good idea"
-			}, {
-				user: 1,
-				message: "some friends of mine are also in town!"
+				message: "Sure is."
 			}, {
 				user: 0,
-				message: "so come at 9pm. drinks are free:)"
+				message: "I'm Winston Wolfe. I solve problems."
 			}, {
 				user: 1,
-				message: "yeay :)"
+				message: "Good, we got one."
+			}, {
+				user: 0,
+				message: "So I heard. May I come in?"
+			}, {
+				user: 1,
+				message: "Uh, yeah, please do."
 			}
 		],
-		"my hp printer for sale!": [
+		"So, I hear you're taking Mia out.": [
 			{
 				user: 1,
-				message: "can you give me some details?"
+				message: "At Marsellus's request."
 			}, {
 				user: 0,
-				message: "sure. 3yrs old, color printer."
+				message: "You met Mia yet?"
+			}, {
+				user: 1,
+				message: "No."
+			}, {
+				user: 0,
+				message: "What's so fucking funny?"
 			}, {
 				user: 2,
-				message: "can you send me a picture?"
+				message: "I gotta piss."
+			}, {
+				user: 1,
+				message: " Look, I'm not stupid. It's the Big Man's wife. I'm gonna sit across from her, chew my food with my mouth closed, laugh at her fucking jokes, and that's it."
+			}
+		],
+		"Whose motorcycle is this?": [
+			{
+				user: 1,
+				message: "It's a chopper, baby."
 			}, {
 				user: 0,
-				message: "ok. printer is sold to a friend of mine. thanks!"
+				message: "Whose chopper is this?"
+			}, {
+				user: 1,
+				message: "It's Zed's."
+			}, {
+				user: 0,
+				message: "Who's Zed?"
+			}, {
+				user: 1,
+				message: "Zed's dead, baby. Zed's dead."
+			}
+		],
+		"Where's my watch?": [
+			{
+				user: 1,
+				message: "It's there."
+			}, {
+				user: 0,
+				message: "No it's not."
+			}, {
+				user: 1,
+				message: "It should be."
+			}, {
+				user: 0,
+				message: "Yes, it most definitely should be but it's not here now, so where the fuck is it?"
+			}
+		],
+		"Maybe I can give you guys a ride. Where do you live?": [
+			{
+				user: 1,
+				message: "Redondo Beach."
+			}, {
+				user: 2,
+				message: "Inglewood."
+			}, {
+				user: 0,
+				message: "It's your future... I see a cab ride. Move out of the sticks, gentlemen."
+			}
+		],
+		"Vincent, do you still want to hear my Fox Force Five joke?": [
+			{
+				user: 1,
+				message: "Sure, but I think I'm still a little too petrified to laugh."
+			}, {
+				user: 0,
+				message: "No, you wont laugh, 'cus it's not funny. But if you still wanna hear it, I'll tell it."
+			}, {
+				user: 1,
+				message: "I can't wait. "
+			}, {
+				user: 0,
+				message: "Three tomatoes are walking down the street- a poppa tomato, a momma tomato, and a little baby tomato. Baby tomato starts lagging behind. Poppa tomato gets angry, goes over to the baby tomato, and smooshes him... and says, Catch up."
 			}
 		]
 	};
@@ -136,7 +202,7 @@ define(["datastore", "common/logger"], function(datastore, logger) {
 					if (boards.length > 1) {
 						var idx = boards.indexOf(board);
 						boards.splice(idx, 1);
-						pickBoardAndSendMessage(boards);
+						pickBoardAndSendMessage(loc, distance, boards);
 					} else {
 						logger.debug("add message event: no messages available, create board");
 						eventAddBoard(loc, distance);

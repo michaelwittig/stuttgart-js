@@ -123,13 +123,11 @@ define(["datastore", "common/logger"], function(datastore, logger) {
 	 * @return Location
 	 */
 	function randomPosition(loc, distance) {
-		distance = distance * 1.609344 * 0.0090053796; // distance to km to lnglat
-		distance /= 2.0;
-		var lngD = rand(-distance, distance);
-		var latD = rand(-distance, distance);
+		var lngD = rand(-0.005, 0.005);
+		var latD = rand(-0.005, 0.005);
 		return {
-			lng: loc.lng,
-			lat: loc.lat
+			lng: loc.lng + lngD,
+			lat: loc.lat + latD
 		};
 	}
 

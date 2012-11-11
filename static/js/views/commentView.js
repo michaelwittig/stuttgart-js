@@ -1,4 +1,4 @@
-define(['backbone'], function(Backbone) {
+define(['backbone', 'models/message'], function(Backbone, Message) {
 
     var CommentView = Backbone.View.extend({
 

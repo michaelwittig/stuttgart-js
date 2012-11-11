@@ -58,6 +58,12 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
         },
 
         createBoard: function(e) {
+
+            if (registry.state.get('facebook') !== registry.facebook.STATES.LOGGEDIN) {
+                registry.state.trigger('error', 'Login to create a board');
+                return;
+            }
+
             registry.state.set('createloc', e.latlng);
             registry.router.navigate('create', {trigger: true});
 

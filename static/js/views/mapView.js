@@ -25,15 +25,6 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
             registry.user.on('locate:me', this.locate, this);
 
             this.map.on('click', _.bind(this.createBoard, this));
-            this.map.on('popupclose', function() {
-                registry.state.set('createloc', false);
-                registry.router.navigate('home', {trigger: true});
-            });
-
-            registry.state.on('closepopups', _.bind(function() {
-                logger('close popup');
-                this.map.closePopup();
-            }, this));
 
             registry.boards.on('reset', this.updateBoardMarkers, this);
         },
@@ -62,10 +53,17 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
             registry.state.set('createloc', e.latlng);
             registry.router.navigate('create', {trigger: true});
 
-            L.popup()
-                .setLatLng(e.latlng)
-                .setContent('Create board')
-                .openOn(this.map);
+	    L.marker(e.latlang, {
+		icon: L.icon({
+		    iconUrl: 'img/icon-marker-create.png',
+		    iconSize: [27, 37],
+		    iconAnchor: [22, 94],
+		    popupAnchor: [-3, -76],
+		    shadowUrl: 'img/marker-shadow.png',
+		    shadowSize: [31, 31],
+		    shadowAnchor: [22, 94]
+		})
+	    }).addTo(this.map);
         },
 
         updateBoardMarkers: function() {

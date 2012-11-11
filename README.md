@@ -27,7 +27,8 @@
 
 ### Demo
 #### start
-in: ~~~json
+in:
+~~~json
 method: "demo:start",
 params: [
 	loc:Location,
@@ -35,7 +36,8 @@ params: [
 ],
 id:String
 ~~~
-out: ~~~json
+out:
+~~~json
 result: {}, (null if error !== null)
 error:null, (or Error)
 id:String
@@ -43,7 +45,8 @@ id:String
 
 ### Board
 #### get all
-in: ~~~json
+in:
+~~~json
 method: "board:getall",
 params: [
 	loc:Location,
@@ -51,14 +54,16 @@ params: [
 ],
 id:String
 ~~~
-out: ~~~json
+out:
+~~~json
 result: [], (null if error !== null) // TODO
 error:null, (or Error)
 id:String
 ~~~
 
 #### create
-in: ~~~json
+in:
+~~~json
 method: "board:create",
 params: [
 	board:Board,
@@ -66,26 +71,30 @@ params: [
 ],
 id:String
 ~~~
-out: ~~~json
+out:
+~~~json
 result: {}, (null if error !== null) // TODO
 error:null, (or Error)
 id:String
 ~~~
 ### Message
 #### get all for board
-in: ~~~json
+in:
+~~~json
 method: "message:getall",
 params: [boardId:String],
 id:String
 ~~~
-out: ~~~json
+out:
+~~~json
 result: [], (null if error !== null) // TODO
 error:null, (or Error)
 id:String
 ~~~
 
 #### create
-in: ~~~json
+in:
+~~~json
 method: "message:create",
 params: [
 	boardId:String,
@@ -94,7 +103,8 @@ params: [
 ],
 id:String
 ~~~
-out: ~~~json
+out:
+~~~json
 result: {}, (null if error !== null) // TODO
 error:null, (or Error)
 id:String

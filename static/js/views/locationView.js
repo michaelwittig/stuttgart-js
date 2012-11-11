@@ -25,8 +25,7 @@ define(['backbone', 'underscore', 'utils/geo', 'utils/registry'], function(Backb
             geo.addressToCoords(adress, function(err, lat, lng) {
                 logger(lat, lng);
                 if (err) {
-                    // TODO: Error Message anzeigen lassen.
-                    logger('Location not found', err);
+                    registry.state.trigger('error', 'Location not found :-(');
                 } else {
                     registry.user.set('loc', {lat: lat, lng: lng});
                 }
@@ -42,6 +41,7 @@ define(['backbone', 'underscore', 'utils/geo', 'utils/registry'], function(Backb
         updateInput: function() {
             var loc = registry.user.get('loc');
             geo.coordsToAddress(loc.lat, loc.lng, _.bind(function(err, address) {
+                registry.state.trigger('notice', 'Your location changed to: ' + address);
                 this.$input.val('');
                 this.$input.attr('placeholder', address);
             }, this));

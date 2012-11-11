@@ -102,7 +102,7 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
 
         hide: function() {
             this.$el.hide();
-	    // $('#content,#map').attr('style','');
+	       $('#content,#map').attr('style','');
 
         },
 

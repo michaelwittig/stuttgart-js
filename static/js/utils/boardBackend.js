@@ -48,6 +48,7 @@ define(['underscore', 'backbone', 'utils/socket', 'utils/registry', 'common/logg
     }
 
     function create(model, options) {
+	logger('loc',model.get('loc'))
         socket.emit('jsonrpc', {
             jsonrpc: '2.0',
             method: 'board:create',

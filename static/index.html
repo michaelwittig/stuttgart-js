@@ -15,6 +15,37 @@
     </head>
     <body>
 
+<!--
+	Overlay
+	-------
+    -->
+	<div id="overlay" style="display:none;">
+
+	    <div id="layer-init" class="layer">
+		<h2>
+		    This is a headline<br />
+		    <span>and this a Subline</span>
+		</h2>
+		<p>
+		    Leaflet is a modern open-source JavaScript library for mobile-friendly
+		    interactive maps. It is developed by Vladimir Agafonkin.
+		</p>
+		<ul>
+		    <li><a href="">Explore</a></li>
+		    <li><a href="">Demo</a></li>
+		</ul>
+	    </div>
+
+	    <div id="layer-vote" class="layer" style="display:none;">
+		<p>
+		    Leaflet is a modern open-source JavaScript library for mobile-friendly
+		    interactive maps. It is developed by Vladimir Agafonkin.
+		</p>
+		<iframe src="http://nodeknockout.com/iframe/stuttgart-js" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>
+	    </div>
+
+	</div><!-- #overlay -->
+
 
     <div id="container">
 
@@ -78,7 +109,7 @@
                         <a href="#">&nbsp;</a>
                     </div>
                     <form id="updatepos-form">
-                        <input type="text" placeholder="Kronenstraße 5, Stuttgart" />
+			<input type="text">
                     </form>
                     <div id="updatepos">
                         <a href="#"></a>
@@ -99,9 +130,9 @@
                     <div class="con">
                         <div class="column-left">
                             <h3>Message</h3>
-                            <textarea placeholder="Write a message...">In this tutorial, you’ll learn how to easily define your own icons for use by the markers you put the map. What if we need to create icons?</textarea>
+			    <textarea placeholder="Write a message..."></textarea>
                             <div class="count">
-                                37
+				count
                             </div>
                         </div>
                         <div class="column-right">

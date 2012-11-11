@@ -60,7 +60,7 @@ define(['backbone', 'models/message', 'utils/registry'], function(Backbone, Mess
                 registry.state.trigger('notice', 'Message has been added');
             }, this),
             error: function() {
-                registry.state.trigger('notice', 'Adding the Message failed');
+		registry.state.trigger('error', 'Login to join the conversation');
             }
 	    });
 	}

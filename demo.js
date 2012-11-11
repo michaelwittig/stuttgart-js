@@ -128,8 +128,8 @@ define(["datastore", "common/logger"], function(datastore, logger) {
 		var lngD = rand(-distance, distance);
 		var latD = rand(-distance, distance);
 		return {
-			lng: loc.lng + lngD,
-			lat: loc.lat + latD
+			lng: loc.lng,
+			lat: loc.lat
 		};
 	}
 

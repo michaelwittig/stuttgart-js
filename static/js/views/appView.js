@@ -13,6 +13,11 @@ define(
             this.layerInitView = new LayerInitView();
             this.layerVoteView = new LayerVoteView();
             this.notificationView = new NotificationView();
+
+            var $content = this.$('#content');
+            registry.state.on('messages:updated', function() {
+                $content.scrollTop($content.height());
+            });
         }
     });
 

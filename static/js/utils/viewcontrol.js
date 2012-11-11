@@ -21,9 +21,11 @@ define(['utils/registry', 'underscore'], function(registry, _) {
         });
     };
 
-    ViewControl.prototype.showViews = function(views) {
+    ViewControl.prototype.showViews = function(views, keepView) {
         var that = this;
-        this.hideAllViews();
+	if (!keepView) {
+	    this.hideAllViews();
+	}
         _.each(views, function(view) {
             if (that.allViews[view] && _.isFunction(that.allViews[view].show)) {
                 that.allViews[view].show();

@@ -6,14 +6,17 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
 
         events: {
             'click #create-board': 'createBoard',
-	    'click #create-expire li': 'updateExpire',
-            'click .dragme': 'close'
+	    	'click #create-expire li': 'updateExpire',
+            'click .dragme': 'close',
+			'change #create-board-title': 'updateCount',
+			'keyup #create-board-title': 'updateCount'
         },
 
         initialize: function() {
             this.$form = this.$('#create-form');
             this.$notloggedin = this.$('#create-notloggedin');
-            this.$textarea = this.$('textarea');
+            this.$textarea = this.$('#create-board-title');
+			this.$textareaCnt = this.$('#create-board-title-cnt');
             registry.state.on('change:facebook', this.updateLoginState, this);
         },
 
@@ -38,11 +41,26 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
         updateExpire: function(ev) {
             ev.preventDefault();
             this.$('#create-expire li').removeClass('current');
-	    $(ev.currentTarget).addClass('current');
+			$(ev.currentTarget).addClass('current');
         },
+
+		updateCount: function(ev) {
+			var cnt = 140 - this.$textarea.val().length;
+			if (cnt <= 0) {
+				cnt = 0;
+				// TODO make count red?
+				this.$textarea.val(this.$textarea.val().substring(0, 140));
+			} else if(cnt <= 10) {
+				// TODO make count yellow?
+			} else {
+				// TODO remove color?
+			}
+			this.$textareaCnt.html('' + cnt);
+		},
 
         createBoard: function(ev) {
             var $textarea = this.$textarea;
+			var $textareaCnt = this.$textareaCnt;
             var description = this.$textarea.val(),
                 expires = this.$('#create-expire li.current').data('expires');
 
@@ -62,6 +80,7 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
                     registry.router.navigate('home', {trigger:true});
                     registry.state.trigger('closepopups');
                     $textarea.val('');
+					$textareaCnt.html('140');
                 },
                 error: function(err) {
                     logger('new board created error', err);

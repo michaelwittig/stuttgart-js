@@ -14,7 +14,7 @@ define(['backbone', 'utils/registry', 'views/boardsListView', 'views/boardView']
                 this.displayView('boardsListView');
             }, this);
 
-	    registry.state.on('route:board', function() {
+            registry.state.on('route:board', function() {
                 this.displayView('boardView');
             }, this);
         },
@@ -42,11 +42,15 @@ define(['backbone', 'utils/registry', 'views/boardsListView', 'views/boardView']
 
         open: function(view) {
             //TODO: immediately show :view
+            this.boardsListView.$el.hide();
+            this.boardView.$el.hide();
+            this[view].$el.show();
         },
 
         switchTo: function(view) {
             //TODO: animated switching between the two views
             //      move container left or right
+            this.open(view);
         }
     });
 

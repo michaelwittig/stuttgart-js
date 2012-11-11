@@ -6,6 +6,8 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
 
         myLocationMarker: null,
 
+        boardMarkers: [],
+
         initialize: function() {
             this.map = L.map('map');
             this.mapFooterView = new MapFooterView();
@@ -23,6 +25,7 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
                 registry.router.navigate('home', {trigger: true});
             });
 
+            registry.boards.on('reset', this.updateBoardMarkers, this);
 
         },
 
@@ -48,6 +51,22 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
                         .openOn(this.map);
                 }
             }, this));
+        },
+
+        updateBoardMarkers: function() {
+            var that = this;
+            _.each(this.boardMarkers, function(marker) {
+                that.map.removeLayer(marker);
+            });
+            this.boardMarkers.length = 0;
+            registry.boards.each(function(board) {
+                var marker = L.marker(board.get('loc'));
+                marker.on('click', function() {
+                  registry.navigate('board/'+board.get('_id'), {trigger:true});
+                });
+                marker.addTo(that.map);
+                that.boardMarkers.push(marker);
+            });
         }
     });
 

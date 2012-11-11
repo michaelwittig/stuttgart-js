@@ -6,7 +6,9 @@
  *
  * 1km in long/lat 0.0090053796
  */
-define(["common/logger"], function(logger) {
+define([], function() {
+	"use strict";
+
 	function toRoom(x, y) {
 		return "loc:" + x + "_" + y;
 	}

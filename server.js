@@ -1,8 +1,7 @@
 /**
  * We listen on a port for websocket and http requests.
  */
-define(["node-static", "socket.io", "redis", "http", "common/logger", "config", "wshandler", "pubsub", "cache", "common/locroom"],
-	function(nodestatic, socketio, redis, http, logger, config, wshandler, pubsub, cache, locroom) {
+define(["events", "node-static", "socket.io", "redis", "http", "common/logger", "config", "wshandler", "pubsub", "cache", "common/locroom"], function(events, nodestatic, socketio, redis, http, logger, config, wshandler, pubsub, cache, locroom) {
 	"use strict";
 
     var fileServer = new(nodestatic.Server)(config["fileServer.dir"]);
@@ -46,26 +45,21 @@ define(["node-static", "socket.io", "redis", "http", "common/logger", "config", 
 			});
 			callback();
         },
-        stop: function(callback) {
-			webServer.close(function(err) {
+		stop:function (callback) {
+			webServer.close();
+			pubsub.stop(function (err) {
 				if (err) {
 					callback(err);
 				} else {
-					pubsub.stop(function(err) {
+					cache.stop(function (err) {
 						if (err) {
 							callback(err);
 						} else {
-							cache.stop(function(err) {
-								if (err) {
-									callback(err);
-								} else {
-									callback(undefined, true);
-								}
-							});
+							callback(undefined, true);
 						}
 					});
 				}
 			});
-        }
+		}
     };
 });

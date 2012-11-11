@@ -1,6 +1,6 @@
 define(
-    ['backbone', 'utils/registry', 'collections/messages', 'hbs!templates/boardTemplate'],
-    function(Backbone, registry, Messages, boardTemplate) {
+    ['backbone', 'utils/registry', 'collections/messages', 'hbs!templates/boardTemplate', 'views/commentView'],
+    function(Backbone, registry, Messages, boardTemplate, CommentView) {
 
     var BoardView = Backbone.View.extend({
 
@@ -21,23 +21,14 @@ define(
                 this.render();
             }, this));
         }, this));
+	new CommentView({boardId: boardId});
     },
 
     render: function() {
-        logger('render', this.messages.first().get('photo'))
         this.$el.html(boardTemplate({
             board: this.board.toJSON(),
             messages: this.messages.toJSON()
         }));
-    },
-
-    events: {
-        'submit #comment': 'createMessage'
-    },
-
-    createMessage: function(e) {
-        e.preventDefault();
-        logger('create message')
     }
     });
 

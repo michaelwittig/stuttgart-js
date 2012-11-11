@@ -1,4 +1,6 @@
 define(["redis", "config", "common/logger", "pubsub"], function(redis, config, logger, pubsub) {
+	"use strict";
+
 	var redisClient;
 
 	function init(callback) {

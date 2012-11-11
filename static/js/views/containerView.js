@@ -2,8 +2,6 @@ define(['backbone', 'utils/registry', 'views/boardsListView', 'views/boardView']
 
     var ContainerView = Backbone.View.extend({
 
-        el: '#container',
-
         initialize: function() {
             this.isHidden = true;
             this.boardsListView = new BoardsListView();

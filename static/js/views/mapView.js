@@ -26,7 +26,8 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
             });
 
             registry.boards.on('reset', this.updateBoardMarkers, this);
-
+            $(window).on('resize', this.updateMapSize);
+            this.updateMapSize();
         },
 
         locate: function() {
@@ -67,6 +68,11 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
                 marker.addTo(that.map);
                 that.boardMarkers.push(marker);
             });
+        },
+
+        updateMapSize: function() {
+            var mapHeight = ($(window).height()-$('#header').height()-$('#footer').height())+100;
+            $('#content,#map').css('height',mapHeight);
         }
     });
 

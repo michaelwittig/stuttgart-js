@@ -2,7 +2,7 @@ define(['backbone', 'hbs!templates/boardsListTemplate', 'utils/registry'], funct
 
     var BoardListView = Backbone.View.extend({
 
-    el: '#board-list',
+    el: '#list-view',
 
     initialize: function() {
         //TODO: reduce the re-rendering of the list

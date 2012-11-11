@@ -15,10 +15,6 @@ define(['backbone', 'hbs!templates/boardsListTemplate', 'utils/registry'], funct
         this.$el.html(template(registry.boards.toJSON()));
     },
 
-    show: function() {
-        this.$el.show();
-    },
-
     events: {
         'click li': 'openBoard'
     },

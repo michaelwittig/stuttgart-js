@@ -64,7 +64,6 @@ define(['underscore', 'backbone', 'utils/socket', 'utils/registry', 'common/logg
         }, function(err, data) {
             logger('boardSysnc:create:cb', data);
             if (!err && !data.error) {
-                logger('!!!success');
                 options.success && options.success(data);
             } else {
                 options.error && options.error(err);

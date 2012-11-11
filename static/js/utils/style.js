@@ -3,7 +3,7 @@ define(['jquery'], function() {
 
     //  Map
 	var mapHeight = ($(window).height()-$('#header').height()-$('#footer').height())+100;
-	$('#content,#map').css('height',mapHeight);
+	//$('#content,#map').css('height',mapHeight);
 
     //  Overlay
 	var tempHeight = mapHeight+$('#header').height()+$('#footer').height();

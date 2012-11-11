@@ -1,9 +1,10 @@
-define(['backbone', 'utils/registry', 'common/logger', 'utils/viewcontrol', 'jquery'], function (Backbone, registry, logger, viewcontrol, $) {
+define(['backbone', 'utils/registry', 'common/logger', 'utils/viewcontrol', 'jquery', 'utils/socket'], function (Backbone, registry, logger, viewcontrol, $, socket) {
 
     var Router = Backbone.Router.extend({
         routes:{
             '':'goStart',
             'start': 'start',
+            'demo': 'demo',
             'vote': 'vote',
             'home':'home',
             'home/:lat/:lng':'home',
@@ -17,6 +18,22 @@ define(['backbone', 'utils/registry', 'common/logger', 'utils/viewcontrol', 'jqu
             this.navigate('start', {trigger:true, replace:true});
         },
 
+        demo:function() {
+
+            socket.emit('jsonrpc', {
+                jsonrpc: '2.0',
+                method: 'demo:start',
+                id: _.uniqueId(),
+                params: [{
+                    loc: registry.state.get('loc'),
+                    distance: 2
+                }]
+            });
+
+            logger('demo');
+            this.navigate('home', {trigger:true, replace:true});
+        },
+
         start:function() {
             registry.viewControl.showViews(['mapView', 'locationView', 'layerInitView']);
             $('#footer').show();
@@ -24,7 +41,7 @@ define(['backbone', 'utils/registry', 'common/logger', 'utils/viewcontrol', 'jqu
         },
 
         vote:function() {
-	    registry.viewControl.showViews(['layerVoteView'], true);
+	        registry.viewControl.showViews(['layerVoteView'], true);
             $('#footer').show();
             this.setRoute('home');
         },

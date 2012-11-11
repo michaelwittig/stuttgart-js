@@ -1,6 +1,6 @@
 define(
-    ['backbone', 'views/headerView', 'views/containerView', 'views/footerView', 'utils/registry'],
-    function (Backbone, HeaderView, ContainerView, FooterView, registry) {
+    ['backbone', 'views/headerView', 'views/containerView', 'views/mapView', 'views/footerView', 'utils/registry'],
+    function (Backbone, HeaderView, ContainerView, MapView, FooterView, registry) {
 
     var AppView = Backbone.View.extend({
 

@@ -14,38 +14,38 @@
 	<link rel="stylesheet" href="css/main.css">
     </head>
     <body>
-    <div id="container">
-    	<div id="map-view">
-	        <div id="map" class="map"></div>
-            <div id="map-footer">
-                <div id="location-view">
-                    <form id="location-form">
-                        <input type="text" id="location-input">
-                    </form>
-                    <a href="" id="location-mylocation">Mein Standort</a>
-                    <a href="" id="location-update">Update</a>
+	<div id="map-view">
+        <div id="map" class="map"></div>
+        <div id="map-footer">
+            <div id="location-view">
+                <form id="location-form">
+                    <input type="text" id="location-input">
+                </form>
+                <a href="" id="location-mylocation">Mein Standort</a>
+                <a href="" id="location-update">Update</a>
+            </div>
+            <div id="create-view">
+                <div id="create-notloggedin">
+                    <p>
+                        You must login before you can create a board.
+                    </p>
                 </div>
-                <div id="create-view">
-                    <div id="create-notloggedin">
-                        <p>
-                            You must login before you can create a board.
-                        </p>
-                    </div>
-                    <div id="create-form">
-                        <form>
-                            <textarea id="board-description" name="title" rows="5" cols="100" placeholder="Board description"></textarea>
-                        </form>
-                        <ul id="create-expire">
-                            <li data-expires="48">48h</li>
-                            <li data-expires="168">1W</li>
-                            <li data-expires="0" class="current">Never</li>
-                        </ul>
-                        <a href="" id="create-board">Create</a>
-                    </div>
+                <div id="create-form">
+                    <form>
+                        <textarea id="board-description" name="title" rows="5" cols="100" placeholder="Board description"></textarea>
+                    </form>
+                    <ul id="create-expire">
+                        <li data-expires="48">48h</li>
+                        <li data-expires="168">1W</li>
+                        <li data-expires="0" class="current">Never</li>
+                    </ul>
+                    <a href="" id="create-board">Create</a>
                 </div>
             </div>
-    	</div>
-     <div id="board-list"></div>
+        </div>
+	</div>
+    <div id="container">
+        <div id="board-list"></div>
     </div>
 
         <div id="fb-root"></div>

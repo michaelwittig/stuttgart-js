@@ -13,6 +13,7 @@ define(
     },
 
     load: function(boardId) {
+
         registry.boards.loading.done(_.bind(function() {
             this.board = registry.boards.get(boardId);
             this.messages = new Messages(boardId);
@@ -32,10 +33,12 @@ define(
     },
 
     show: function() {
+        logger('show board view');
         this.$el.show();
     },
 
     hide: function() {
+        logger('hide board view');
         this.$el.hide();
     }
     });

@@ -35,19 +35,25 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
             }, this));
 
             registry.boards.on('reset', this.updateBoardMarkers, this);
-            $(window).on('resize', this.updateMapSize);
-
-            this.updateMapSize();
         },
 
         locate: function() {
-            logger('locate')
             var loc = registry.user.get('loc');
             this.map.setView(loc, 13);
             if (this.myLocationMarker) {
                 this.myLocationMarker.setLatLng(loc);
             } else {
-                this.myLocationMarker = L.marker(loc).addTo(this.map);
+                this.myLocationMarker = L.marker(loc, {
+                    icon: L.icon({
+                        iconUrl: 'img/marker-position.png',
+                        iconSize: [27, 37],
+                        iconAnchor: [22, 94],
+                        popupAnchor: [-3, -76],
+                        shadowUrl: 'img/marker-shadow.png',
+                        shadowSize: [68, 95],
+                        shadowAnchor: [22, 94]
+                    })
+                }).addTo(this.map);
             }
         },
 
@@ -55,14 +61,10 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
             registry.state.set('createloc', e.latlng);
             registry.router.navigate('create', {trigger: true});
 
-            geo.coordsToAddress(e.latlng.lat, e.latlng.lng, _.bind(function(err, data) {
-                if (!err) {
-                    L.popup()
-                        .setLatLng(e.latlng)
-                        .setContent('Create board here: <br/>' + data)
-                        .openOn(this.map);
-                }
-            }, this));
+            L.popup()
+                .setLatLng(e.latlng)
+                .setContent('Create board')
+                .openOn(this.map);
         },
 
         updateBoardMarkers: function() {
@@ -72,18 +74,23 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
             });
             this.boardMarkers.length = 0;
             registry.boards.each(function(board) {
-                var marker = L.marker(board.get('loc'));
+                var marker = L.marker(board.get('loc'), {
+                    icon: L.icon({
+                        iconUrl: 'img/marker-event.png',
+                        iconSize: [27, 37],
+                        iconAnchor: [22, 94],
+                        popupAnchor: [-3, -76],
+                        shadowUrl: 'img/marker-shadow.png',
+                        shadowSize: [68, 95],
+                        shadowAnchor: [22, 94]
+                    })}
+                );
                 marker.on('click', function() {
                   registry.router.navigate('board/'+board.get('_id'), {trigger:true});
                 });
                 marker.addTo(that.map);
                 that.boardMarkers.push(marker);
             });
-        },
-
-        updateMapSize: function() {
-            var mapHeight = ($(window).height()-$('#header').height()-$('#footer').height())+100;
-            $('#content,#map').css('height',mapHeight);
         },
 
         hide: function() {

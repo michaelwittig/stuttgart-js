@@ -2,7 +2,7 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
 
     var CreateBoardView = Backbone.View.extend({
 
-        el: '#create-view',
+        el: '#sub-create',
 
         events: {
             'click #create-board': 'createBoard',
@@ -10,6 +10,9 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
         },
 
         initialize: function() {
+            this.$form = this.$('#create-form');
+            this.$notloggedin = this.$('#create-notloggedin');
+            this.$textarea = this.$('textarea');
             registry.state.on('change:facebook', this.updateLoginState, this);
         },
 
@@ -23,11 +26,11 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
 
         updateLoginState: function(ev, val) {
             if (registry.facebook.STATES.LOGGEDIN === val) {
-                this.$('#create-form').show();
-                this.$('#create-notloggedin').hide();
+                this.$form.show();
+                this.$notloggedin.hide();
             } else {
-                this.$('#create-form').hide();
-                this.$('#create-notloggedin').show();
+                this.$form.hide();
+                this.$notloggedin.show();
             }
         },
 
@@ -37,7 +40,7 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
         },
 
         createBoard: function(ev) {
-            var description = this.$('#board-description').val(),
+            var description = this.$textarea.val(),
                 expires = this.$('#create-expire li.current').data('expires');
 
             ev.preventDefault();

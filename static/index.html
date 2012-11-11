@@ -15,54 +15,140 @@
     </head>
     <body>
 
-    <div id="header">
-        <ul>
-            <li id="facebook-login"><a href="">Login</a></li>
-        </ul>
-    </div>
 
-	<div id="map-view">
-        <div id="map" class="map"></div>
-        <div id="map-footer">
-            <div id="location-view">
-                <form id="location-form">
-                    <input type="text" id="location-input">
-                </form>
-                <a href="" id="location-mylocation">Mein Standort</a>
-                <a href="" id="location-update">Update</a>
+    <div id="container">
+
+    <div id="header">
+
+        <h1>Boards</h1>
+
+        <ul>
+            <li class="current"><a href="#"></a></li>
+            <li><a href="#"></a></li>
+        </ul>
+
+        <div id="facebook-login" class="button login">
+            <a href="#">Login</a>
+        </div>
+
+        <div class="button vote">
+            <a href="#">Vote</a>
+        </div>
+
+        <hr class="clear" /><!-- @clear -->
+
+    </div><!-- #header -->
+
+    <!-- ####################################################################################################### -->
+
+    <div id="content">
+    <!--
+                 Map
+                 ---
+         -->
+    <div id="map-view">
+        <div id="map"></div><!-- #map -->
+    </div>
+    <!--
+                 Listview
+                 --------
+         -->
+    <div id="list-view" style="display:none;"></div>
+
+    <!--
+                 Boardview
+                 ---------
+         -->
+    <div id="board-view" style="display:none;"></div>
+
+    </div><!-- #content -->
+
+    <!-- ####################################################################################################### -->
+
+    <div id="footer">
+
+        <div id="subcontent">
+            <!--
+                   Subcontent for Position
+                   -----------------------
+           -->
+            <div id="sub-position" style="display:none;">
+                <div class="con">
+                    <div id="getpos">
+                        <a href="#">&nbsp;</a>
+                    </div>
+                    <input type="text" placeholder="Kronenstraße 5, Stuttgart" />
+                    <div id="updatepos">
+                        <a href="#"></a>
+                    </div>
+                </div>
             </div>
-            <div id="create-view">
+            <!--
+                   Subcontent for Create
+                   ---------------------
+           -->
+            <div id="sub-create" style="display:none;">
+                <div id="create-form">
+                    <div class="dragme">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="con">
+                        <div class="column-left">
+                            <h3>Message</h3>
+                            <textarea placeholder="Write a message...">In this tutorial, you’ll learn how to easily define your own icons for use by the markers you put the map. What if we need to create icons?</textarea>
+                            <div class="count">
+                                37
+                            </div>
+                        </div>
+                        <div class="column-right">
+                            <h3>Expiration</h3>
+                            <ul id="create-expire">
+                                <li data-expires="48" class="current"><a href="#">2 <span>Days</span></a></li>
+                                <li data-expires="168"><a href="#">7 <span>Days</span></a></li>
+                                <li data-expires="0"><a href="#">&nbsp;</a></li>
+                            </ul>
+                            <div class="publish-button">
+                                <a href="">Publish</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="create-notloggedin">
                     <p>
                         You must login before you can create a board.
                     </p>
                 </div>
-                <div id="create-form">
-                    <form>
-                        <textarea id="board-description" name="title" rows="5" cols="100" placeholder="Board description"></textarea>
-                    </form>
-                    <ul id="create-expire">
-                        <li data-expires="48">48h</li>
-                        <li data-expires="168">1W</li>
-                        <li data-expires="0" class="current">Never</li>
-                    </ul>
-                    <a href="" id="create-board">Create</a>
+            </div>
+
+        </div>
+        <!--
+                  Subcontent for Comments
+                  -----------------------
+          -->
+        <div id="sub-comment" style="display:none;">
+            <div class="con">
+                <input type="text" placeholder="Write a comment..." />
+                <div id="addcomment">
+                    <a href="#"></a>
                 </div>
             </div>
         </div>
-	</div>
-    <div id="container">
-        <h2>container</h2>
-        <div id="board-list"></div>
-	<div id="board">
-	    <div id="board-head"></div>
-	    <div id="messages"></div>
-	    <form id="comment">
-		<input type="text">
-		<button>submit</button>
-	    </form>
-	</div>
-    </div>
+        <!--
+                  Footer Navigation
+                  -----------------
+          -->
+        <ul id="navigation" style="display:none;">
+            <li><a href="#">Position</a></li>
+            <li><a href="#">Create</a></li>
+            <li><a href="#">Login</a></li>
+        </ul>
+
+    </div><!-- #footer -->
+
+    </div><!-- #container -->
+
 
         <div id="fb-root"></div>
 	   <script src="js/libs/require.js" data-main="js/main"></script>

@@ -2,8 +2,6 @@ define(['backbone', 'utils/registry', 'views/boardsListView', 'views/boardView']
 
     var ContainerView = Backbone.View.extend({
 
-        el: '#container',
-
         initialize: function() {
             this.isHidden = true;
             this.boardsListView = new BoardsListView();
@@ -16,7 +14,7 @@ define(['backbone', 'utils/registry', 'views/boardsListView', 'views/boardView']
                 this.displayView('boardsListView');
             }, this);
 
-            registry.state.on('route:boards', function() {
+	    registry.state.on('route:board', function() {
                 this.displayView('boardView');
             }, this);
         },

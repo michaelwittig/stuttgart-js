@@ -1,9 +1,22 @@
 <ul>
 {{#each this}}
 <li data-id="{{_id}}">
-<img src="{{photo}}">
-<p>{{title}}</p>
-<span>{{creator}} wrote {{timeago createdAt}}.</span>
+    <a href="#">
+        <img src="{{photo}}" width="50" height="50" alt="" />
+        <div class="block">
+            <p>
+                {{title}}
+            </p>
+            <h2>
+                <strong>{{creator}}</strong> wrote {{timeago createdAt}}
+            </h2>
+        </div>
+        <hr class="clear" />
+    </a>
+    <div class="distance">
+        3 Miles
+    </div>
+    <img src="img/icon-next.png" width="10" height="10" alt="" class="next" />
 </li>
 {{/each}}
 </ul>

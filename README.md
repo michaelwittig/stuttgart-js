@@ -20,6 +20,7 @@
 ~~~json
 {
 	title:String,
+	expireIn:Integer (optional, ignored if <= 0)
 	loc:Location
 }
 ~~~

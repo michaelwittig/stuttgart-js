@@ -6,40 +6,37 @@ define(
 
     el: '#board-view',
 
-    initialize: function() {
+    initialize: function(options) {
+	this.commentView = options.commentView;
         this.messages = undefined;
         this.board = undefined;
         registry.state.on('route:board', this.load, this);
     },
 
     load: function(boardId) {
-
         registry.boards.loading.done(_.bind(function() {
+	    logger('load bord view')
             this.board = registry.boards.get(boardId);
             this.messages = new Messages(boardId);
-            this.messages.loading.done(_.bind(function() {
-	logger('load board', boardId)
-                this.messages.on('reset', this.render, this);
-                this.render();
-            }, this));
+	    this.messages.on('update', this.render, this);
         }, this));
-	new CommentView({boardId: boardId});
+
+	this.commentView.load(boardId);
     },
 
     render: function() {
         this.$el.html(boardTemplate({
             board: this.board.toJSON(),
             messages: this.messages.toJSON()
-        }));
+	})).show();
+
     },
 
     show: function() {
-        logger('show board view');
-        this.$el.show();
+	// this.$el.show();
     },
 
     hide: function() {
-        logger('hide board view');
         this.$el.hide();
     }
     });

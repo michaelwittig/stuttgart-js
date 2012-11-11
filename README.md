@@ -15,12 +15,14 @@
 {
 	lng:Float,
 	lat:Float
+}
 ~~~
 #### User
 ~~~json
 {
 	type:"facebook",
 	id:String
+}
 ~~~
 #### Board
 ~~~json

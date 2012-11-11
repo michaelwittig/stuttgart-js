@@ -100,7 +100,7 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 				   callback(err, res);
 			   } else {
 				   pubsub.pub("boards", {loc: loc});
-				   callback(err, res);
+				   callback(err, boardView(res));
 			   }
 		   });
        },
@@ -146,7 +146,7 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 				   callback(err, res);
 			   } else {
 					pubsub.pub("messages", {"boardId": boardId});
-					callback(err, res);
+					callback(err, messageView(res));
 			   }
 		   });
        }

@@ -29,6 +29,14 @@ define(
             board: this.board.toJSON(),
             messages: this.messages.toJSON()
         }));
+    },
+
+    show: function() {
+        this.$el.show();
+    },
+
+    hide: function() {
+        this.$el.hide();
     }
     });
 

@@ -21,10 +21,6 @@ define(['backbone', 'underscore', 'leaflet', 'utils/registry', 'views/mapFooterV
 
         },
 
-        show: function() {
-            this.$el.show();
-        },
-
         locate: function() {
             var loc = registry.user.get('loc');
             this.map.setView(loc, 13);

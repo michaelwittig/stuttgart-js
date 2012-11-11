@@ -16,11 +16,11 @@ require.config({
     shim: {
     leaflet: {
 	exports: 'L'
-        },
+	},
     backbone: {
 	deps: ['underscore', 'jquery'],
 	exports: 'Backbone'
-        },
+	},
     'socket.io': {
 	exports: 'io'
     },

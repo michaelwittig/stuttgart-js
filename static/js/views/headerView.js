@@ -11,6 +11,10 @@ define(['backbone', 'utils/registry', 'common/logger'], function(Backbone, regis
         initialize: function() {
             this.$facebookLogin = this.$('#facebook-login');
             registry.state.on('change:facebook', this.updateLogin, this);
+            registry.state.on('route:boards', this.currentBoards, this);
+            registry.state.on('route:board', this.currentBoards, this);
+            registry.state.on('route:home', this.currentMap, this);
+            registry.state.on('route:create', this.currentMap, this);
         },
 
         updateLogin: function(ev, state) {
@@ -26,6 +30,16 @@ define(['backbone', 'utils/registry', 'common/logger'], function(Backbone, regis
             ev.preventDefault();
             //alert('do login');
             registry.facebook.login();
+        },
+
+        currentBoards: function() {
+            this.$('#home-button').removeClass('current');
+            this.$('#boards-button').addClass('current');
+        },
+
+        currentMap: function() {
+            this.$('#home-button').addClass('current');
+            this.$('#boards-button').removeClass('current');
         }
     });
 

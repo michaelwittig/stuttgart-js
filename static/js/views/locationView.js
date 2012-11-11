@@ -16,7 +16,6 @@ define(['backbone', 'underscore', 'utils/geo', 'utils/registry'], function(Backb
         },
 
         searchLocation: function(e) {
-            logger('sear')
             e.preventDefault();
 
             geo.addressToCoords(this.$input.val(), function(err, lat, lng) {

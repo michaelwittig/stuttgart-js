@@ -23,8 +23,8 @@
         <h1>Boards</h1>
 
         <ul>
-            <li class="current"><a href="#"></a></li>
-            <li><a href="#"></a></li>
+            <li id="home-button"><a href="#/home"></a></li>
+            <li id="boards-button"><a href="#/boards"></a></li>
         </ul>
 
         <div id="facebook-login" class="button login">
@@ -131,9 +131,11 @@
           -->
         <div id="sub-comment" style="display:none;">
             <div class="con">
-                <input type="text" placeholder="Write a comment..." />
+		<form id="comment-form">
+		    <input id="comment-input" type="text" placeholder="Write a comment..." />
+		</form>
                 <div id="addcomment">
-                    <a href="#"></a>
+		    <a href="#" id="comment-submit"></a>
                 </div>
             </div>
         </div>

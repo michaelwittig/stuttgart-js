@@ -35,6 +35,12 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
 
             registry.boards.on('reset', this.updateBoardMarkers, this);
             $(window).on('resize', this.updateMapSize);
+
+            registry.state.on('route:boards', this.hide, this);
+            registry.state.on('route:board', this.hide, this);
+            registry.state.on('route:home', this.show, this);
+            registry.state.on('route:home', this.show, this);
+
             this.updateMapSize();
         },
 
@@ -81,7 +87,16 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
         updateMapSize: function() {
             var mapHeight = ($(window).height()-$('#header').height()-$('#footer').height())+100;
             $('#content,#map').css('height',mapHeight);
+        },
+
+        hide: function() {
+            this.$el.hide();
+        },
+
+        show: function() {
+            this.$el.show();
         }
+
     });
 
     return MapView;

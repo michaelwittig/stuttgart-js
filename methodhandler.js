@@ -1,7 +1,7 @@
 /**
  * Invocations of methods (done by JSON-RPC) are handled here.
  */
-define(["common/logger", "datastore", "authhandler"], function(logger, datastore, authhandler) {
+define(["common/logger", "datastore", "authhandler", "demo"], function(logger, datastore, authhandler, demo) {
 	"use strict";
 
 	function isNonEmptyString(str, field) {
@@ -111,7 +111,7 @@ define(["common/logger", "datastore", "authhandler"], function(logger, datastore
 			logger.debug("demo:start", [loc, distance]);
 			isLoc(loc);
 			isDistance(distance);
-			// TODO implement #10
+			demo.start(loc, distance, 5);
 			callback(undefined, true);
 		}
 	};

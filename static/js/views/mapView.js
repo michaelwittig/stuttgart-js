@@ -25,6 +25,11 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
                 registry.router.navigate('home', {trigger: true});
             });
 
+            registry.state.on('closepopups', _.bind(function() {
+                logger('close popup');
+                this.map.closePopup();
+            }, this));
+
             registry.boards.on('reset', this.updateBoardMarkers, this);
             $(window).on('resize', this.updateMapSize);
             this.updateMapSize();

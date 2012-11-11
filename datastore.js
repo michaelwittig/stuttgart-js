@@ -38,10 +38,17 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 	function boardView(board) {
 		return {
 			_id: board._id,
-			loc: board.loc,
+			loc: {
+				lng: board.loc[0],
+				lat: board.loc[1]
+			},
 			user: board.user,
 			createdAt: board.createdAt
 		};
+	}
+
+	function distanc(locA, locB) {
+		return Math.sqrt(Math.pow(locA.lng - locB.lng, 2) + Math.pow(locA.lat - locB.lat, 2));
 	}
 
    return {
@@ -61,8 +68,7 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 					   logger.debug("modify boards");
 						res.forEach(function(board) {
 							var b = boardView(board);
-							b._distance = 1.0; // TODO add distance to output array
-							logger.debug("modify board", b);
+							b._distance = distanc(loc, b.loc) / 0.0090053796;
 							view.push(b);
 						});
 				   }

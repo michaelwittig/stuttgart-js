@@ -50,7 +50,7 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
 
             var board = new Board({
                 title: description,
-                loc: registry.user.get('loc'),
+                loc: registry.user.get('createloc') || registry.user.get('loc'),
                 expirationDate: expires
             }).save({
                 success: function() {

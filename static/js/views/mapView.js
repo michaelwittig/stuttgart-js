@@ -1,4 +1,4 @@
-define(['backbone', 'underscore', 'leaflet', 'utils/registry', 'views/mapFooterView', 'common/logger'], function(Backbone, _, L, registry, MapFooterView, logger) {
+define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/geo', 'views/mapFooterView', 'common/logger'], function(Backbone, _, $, L, registry, geo, MapFooterView, logger) {
 
     var MapView = Backbone.View.extend({
 
@@ -18,7 +18,9 @@ define(['backbone', 'underscore', 'leaflet', 'utils/registry', 'views/mapFooterV
             registry.user.on('change:loc', this.locate, this);
 
             this.map.on('click', _.bind(this.createBoard, this));
-
+            this.map.on('popupclose', function() {
+                registry.state.set('createloc', false);
+            });
         },
 
         locate: function() {
@@ -32,7 +34,17 @@ define(['backbone', 'underscore', 'leaflet', 'utils/registry', 'views/mapFooterV
         },
 
         createBoard: function(e) {
-            registry.router.navigate('create/' + e.latlng.lat + '/' + e.latlng.lng, {trigger: true, replace: false});
+            registry.state.set('createloc', e.latlng);
+            registry.router.navigate('create', {trigger: true});
+
+            geo.coordsToAddress(e.latlng.lat, e.latlng.lng, _.bind(function(err, data) {
+                if (!err) {
+                    L.popup()
+                        .setLatLng(e.latlng)
+                        .setContent('Create board here: <br/>' + data)
+                        .openOn(this.map);
+                }
+            }, this));
         }
     });
 

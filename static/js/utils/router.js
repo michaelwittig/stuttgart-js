@@ -25,7 +25,7 @@ define(['backbone', 'utils/registry', 'common/logger', 'utils/viewcontrol', 'jqu
                 method: 'demo:start',
                 id: _.uniqueId(),
                 params: [{
-                    loc: registry.state.get('loc'),
+                    loc: registry.user.get('loc'),
                     distance: 2
                 }]
             });

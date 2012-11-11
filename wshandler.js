@@ -17,14 +17,15 @@ define(["common/logger", "jsonrpchandler", "common/locroom"], function(logger, j
 							callback(err);
 						} else {
 							if (roomsToLeave) {
-								logger.debug("leave loc rooms " + roomsToLeave);
+								roomsToLeave = JSON.parse(roomsToLeave);
+								logger.debug("leave loc rooms", roomsToLeave);
 								roomsToLeave.forEach(function(roomToLeave) {
 									websocket.leave(roomToLeave);
 								});
 							}
 							var roomsToJoin = locroom.getRooms(jsonrpc.params[0], jsonrpc.params[1]);
-							logger.debug("join loc rooms " + roomsToJoin);
-							websocket.set("joined:locs", roomsToJoin, function () {
+							logger.debug("join loc rooms", roomsToJoin);
+							websocket.set("joined:locs", JSON.stringify(roomsToJoin), function () {
 								roomsToJoin.forEach(function(roomToJoin) {
 									websocket.join(roomToJoin);
 								});
@@ -38,11 +39,11 @@ define(["common/logger", "jsonrpchandler", "common/locroom"], function(logger, j
 							callback(err);
 						} else {
 							if (roomToLeave) {
-								logger.debug("leave board room " + roomToLeave);
+								logger.debug("leave board room", roomToLeave);
 								websocket.leave(roomToLeave);
 							}
 							var roomToJoin = "board:" + jsonrpc.params[0];
-							logger.debug("join board room " + roomToJoin);
+							logger.debug("join board room", roomToJoin);
 							websocket.set("joined:board", roomToJoin, function () {
 								websocket.join(roomToJoin);
 							});

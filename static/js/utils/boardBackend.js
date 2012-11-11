@@ -4,10 +4,10 @@ define(['underscore', 'backbone', 'utils/socket', 'utils/registry', 'common/logg
 
     var boardBackend = _.extend(Backbone.Events, {
         init: function() {
-            socket.on('update', function() {
+            socket.on('update', _.bind(function() {
                 logger('boardbackend trigger update')
                 this.trigger('update');
-            });
+            }, this));
         },
 
         sync: function(method, model, options) {

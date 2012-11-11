@@ -23,7 +23,7 @@ define(["common/logger"], function(logger) {
 		 * @return {Array}
 		 */
 		getRooms: function(loc, distance) {
-			distance = distance * 0.0090053796;
+			distance = distance * 1.609344 * 0.0090053796; // distance to km to lnglat
 			var rooms = [];
 			var xMin = round(loc.lng - distance);
 			var xMax = round(loc.lng + distance);

@@ -58,7 +58,7 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 		* @param callback Callback(err, res)
         */
        getBoards: function(loc, distance, callback) {
-		   distance = distance * 0.0090053796;
+		   distance = distance * 1.609344 * 0.0090053796; // distance to km to lnglat
            Board.find({loc: { $near: [loc.lng, loc.lat], $maxDistance: distance}}, function(err, res) {
 			   if (err) {
 				   callback(err);
@@ -68,7 +68,7 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 					   logger.debug("modify boards");
 						res.forEach(function(board) {
 							var b = boardView(board);
-							b._distance = distanc(loc, b.loc) / 0.0090053796;
+							b._distance = distanc(loc, b.loc) / 1.609344 / 0.0090053796;
 							view.push(b);
 						});
 				   }

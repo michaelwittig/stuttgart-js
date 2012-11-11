@@ -31,7 +31,7 @@
 method: "demo:start",
 params: [
 	loc:Location,
-	distance:Float
+	distance:Float (in miles)
 ]
 ~~~
 
@@ -41,7 +41,7 @@ params: [
 method: "board:getall",
 params: [
 	loc:Location,
-	distance:Float
+	distance:Float (in miles)
 ]
 ~~~
 
@@ -82,7 +82,7 @@ content:String
 ~~~json
 title:String,
 loc: {lat:Float, lng:Float},
-distance:Float
+distance:Float (in miles)
 ~~~
 
 

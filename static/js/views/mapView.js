@@ -11,8 +11,9 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
         initialize: function() {
             this.map = L.map('map', {
                 zoomControl: false,
-                attributionControl: false
-            });
+                attributionControl: false,
+				dragging: false
+			});
             this.mapFooterView = new MapFooterView();
 
             L.tileLayer(

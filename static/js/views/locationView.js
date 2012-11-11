@@ -10,12 +10,13 @@ define(['backbone', 'underscore', 'utils/geo', 'utils/registry'], function(Backb
         },
 
         events: {
-            'submit #location-form': 'searchLocation',
+            'submit #updatepos-form': 'searchLocation',
             'click #updatepos': 'searchLocation',
             'click #getpos': 'currentLocation'
         },
 
         searchLocation: function(e) {
+            logger('sear')
             e.preventDefault();
 
             geo.addressToCoords(this.$input.val(), function(err, lat, lng) {

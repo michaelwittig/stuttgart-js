@@ -17,6 +17,12 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
 
             registry.user.on('change:loc', this.locate, this);
 
+            registry.boards.fetch({
+               success: function() {
+                   console.log('fetch success');
+               }
+            });
+
             this.map.on('click', _.bind(this.createBoard, this));
             this.map.on('popupclose', function() {
                 registry.state.set('createloc', false);

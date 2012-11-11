@@ -6,9 +6,22 @@ define(['backbone', 'views/locationView', 'views/createBoardView', 'utils/regist
             this.locationView = new LocationView();
             this.createBoardView = new CreateBoardView();
 
-            registry.state.on('route:home', this.showLocationView, this);
-            registry.state.on('route:create', this.showCreateView, this);
+            //registry.state.on('route:home', this.showLocationView, this);
+            //registry.state.on('route:create', this.showCreateView, this);
         },
+
+        /*
+        show: function() {
+            this.$el.show();
+            this.showCreateView();
+        },
+
+        hide: function() {
+            this.$el.hide();
+            this.locationView.hide();
+            this.createBoardView.hide();
+        },
+        */
 
         showCreateView: function() {
             this.createBoardView.show();
@@ -16,7 +29,6 @@ define(['backbone', 'views/locationView', 'views/createBoardView', 'utils/regist
         },
 
         showLocationView: function() {
-            logger('show location view');
             this.locationView.show();
             this.createBoardView.hide();
         }

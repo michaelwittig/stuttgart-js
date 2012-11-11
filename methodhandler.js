@@ -34,6 +34,11 @@ define(["common/logger", "datastore", "authhandler"], function(logger, datastore
 					datastore.addMessage(user, boardId, message, callback);
 				}
 			});
+		},
+		"demo:start": function(loc, distance, callback) {
+			logger.debug("demo:start", [loc, distance]);
+			// TODO implement
+			callback(undefined, true);
 		}
 	};
 

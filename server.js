@@ -19,13 +19,13 @@ define(["events", "node-static", "socket.io", "redis", "http", "common/logger", 
 			});
 			webServer.listen(config["webServer.port"]);
 			websocketServer = socketio.listen(webServer, {
-				transports: ["websocket", "flashsocket", "xhr-polling"],
+				transports: ["websocket", "flashsocket", "xhr-polling"]/*,
 				store: new (socketio.RedisStore)({
 					redis: redis,
 					redisPub : pubsub.redisPub(),
 					redisSub : pubsub.redisSub(),
 					redisClient : cache.redisClient()
-				})
+				})*/
 			});
 			websocketServer.sockets.on("connection", function (websocket) {
 				wshandler.handle(websocket);

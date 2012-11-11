@@ -1,4 +1,4 @@
-define(["redis", "config", "common/logger"], function(redis, config, logger) {
+define(["events", "redis", "config", "common/logger"], function(events, redis, config, logger) {
 	"use strict";
 
 	function redisErrorListener(redisClient) {
@@ -8,6 +8,7 @@ define(["redis", "config", "common/logger"], function(redis, config, logger) {
 		});
 	}
 
+	var emitter = new events.EventEmitter();
 	var redisPub;
 	var redisSub;
 	var subscriptions = {};
@@ -59,6 +60,8 @@ define(["redis", "config", "common/logger"], function(redis, config, logger) {
 
 	return {
 		start: function(callback) {
+			callback(undefined, true);
+			return;
 			var connectCnt = 0;
 			redisPub = redis.createClient(config["redis.port"], config["redis.host"], {no_ready_check: true});
 			redisErrorListener(redisPub);
@@ -80,12 +83,16 @@ define(["redis", "config", "common/logger"], function(redis, config, logger) {
 			});
 		},
 		stop: function(callback) {
+			callback(undefined, true);
+			return;
 			redisPub.end();
 			redisSub.end();
 			callback(undefined, true);
 		},
 		"pub": function(channel, message) {
 			logger.debug("redis pub", [channel, message]);
+			emitter.emit(channel, message);
+			return;
 			redisPub.publish(channel, JSON.stringify(message));
 		},
 		/**
@@ -93,6 +100,8 @@ define(["redis", "config", "common/logger"], function(redis, config, logger) {
 		 * @param messageCB function(message)
 		 */
 		"sub": function(channel, messageCB) {
+			emitter.on(channel, messageCB);
+			return;
 			if (!subscriptions[channel]) {
 				subscriptions[channel] = [];
 				logger.debug("redis sub", channel);
@@ -105,6 +114,8 @@ define(["redis", "config", "common/logger"], function(redis, config, logger) {
 		 * @param messageCB function(message)
 		 */
 		"unsub": function(channel, messageCB) {
+			emitter.removeListener(channel, messageCB);
+			return;
 			var s = subscriptions[channel];
 			if (s) {
 				var idx = s.indexOf(messageCB);

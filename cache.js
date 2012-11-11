@@ -2,6 +2,7 @@ define(["redis", "config", "common/logger", "pubsub"], function(redis, config, l
 	"use strict";
 
 	var redisClient;
+	var cache = {};
 
 	function init(callback) {
 		if (config["redis.passwd"]) {
@@ -19,6 +20,8 @@ define(["redis", "config", "common/logger", "pubsub"], function(redis, config, l
 
 	return {
 		start: function(callback) {
+			callback(undefined, true);
+			return;
 			redisClient = redis.createClient(config["redis.port"], config["redis.host"], {no_ready_check: true});
 			pubsub.redisErrorListener(redisClient);
 			redisClient.on("connect", function() {
@@ -27,6 +30,8 @@ define(["redis", "config", "common/logger", "pubsub"], function(redis, config, l
 			});
 		},
 		stop: function(callback) {
+			callback(undefined, true);
+			return;
 			redisClient.end();
 			callback(undefined, true);
 		},
@@ -37,6 +42,9 @@ define(["redis", "config", "common/logger", "pubsub"], function(redis, config, l
 		 * @param callback Callback
 		 */
 		put: function(key, value, expiry, callback) {
+			cache[key] = value;
+			callback(undefined, true);
+			return;
 			redisClient.setex("cache:" + key, expiry, JSON.stringify(value), callback);
 		},
 		/**
@@ -44,6 +52,8 @@ define(["redis", "config", "common/logger", "pubsub"], function(redis, config, l
 		 * @param callback Callback
 		 */
 		get: function(key, callback) {
+			callback(undefined, cache[key]);
+			return;
 			redisClient.get("cache:" + key, function(err, res) {
 				if (err) {
 					callback(err);

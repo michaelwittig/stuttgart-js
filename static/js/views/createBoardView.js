@@ -6,7 +6,8 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
 
         events: {
             'click #create-board': 'createBoard',
-            'click #create-expire li a': 'updateExpire'
+            'click #create-expire li a': 'updateExpire',
+            'click .dragme': 'close'
         },
 
         initialize: function() {
@@ -66,6 +67,11 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
             });
 
             return true;
+        },
+
+        close: function() {
+            registry.router.navigate('home', {trigger:true});
+            registry.state.trigger('closepopups');
         }
     });
 

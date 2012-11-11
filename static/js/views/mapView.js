@@ -10,11 +10,8 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
 
 	iconDefaults: {
 	    iconSize: [27, 37],
-	    iconAnchor: [22, 94],
-	    popupAnchor: [-3, -76],
 	    shadowUrl: 'img/marker-shadow.png',
-	    shadowSize: [31, 31],
-	    shadowAnchor: [22, 94]
+	    shadowSize: [31, 31]
 	},
 
         initialize: function() {
@@ -34,6 +31,8 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
             registry.user.on('locate:me', this.locate, this);
 
             this.map.on('click', _.bind(this.createBoard, this));
+            $(window).on('resize', _.bind(this.windowResize, this));
+            this.windowResize();
 
             registry.boards.on('reset', this.updateBoardMarkers, this);
 
@@ -60,6 +59,12 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
         },
 
         createBoard: function(e) {
+
+            if (registry.state.get('facebook') !== registry.facebook.STATES.LOGGEDIN) {
+                registry.state.trigger('error', 'Login to create a board');
+                return;
+            }
+
             registry.state.set('createloc', e.latlng);
             registry.router.navigate('create', {trigger: true});
 
@@ -100,8 +105,16 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
 
         show: function() {
             this.$el.show();
-            this.map.invalidateSize(true)
+            this.map.invalidateSize(true);
+        },
+
+        windowResize: function() {
+            var mapHeight = ($(window).height()-$('#header').height()-$('#footer').height())+100;
+            if (registry.state.get('route') !== 'board' && registry.state.get('route') !== 'boards') {
+                $('#content,#map').css('height',mapHeight);
+            }
         }
+
 
     });
 

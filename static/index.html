@@ -21,28 +21,29 @@
     -->
 	<div id="overlay" style="display:none;">
 
-	    <div id="layer-init" class="layer">
-		<h2>
-		    This is a headline<br />
-		    <span>and this a Subline</span>
-		</h2>
-		<p>
-		    Leaflet is a modern open-source JavaScript library for mobile-friendly
-		    interactive maps. It is developed by Vladimir Agafonkin.
-		</p>
-		<ul>
-		    <li><a href="">Explore</a></li>
-		    <li><a href="">Demo</a></li>
-		</ul>
-	    </div>
+        <div id="layer-init" class="layer">
+            <h2>
+                This is a headline<br />
+                <span>and this a Subline</span>
+            </h2>
+            <p>
+                Leaflet is a modern open-source JavaScript library for mobile-friendly
+                interactive maps. It is developed by Vladimir Agafonkin.
+            </p>
+            <ul>
+                <li><a href="#/home">Explore</a></li>
+                <li><a href="#/demo">Demo</a></li>
+            </ul>
+        </div>
 
-	    <div id="layer-vote" class="layer" style="display:none;">
-		<p>
-		    Leaflet is a modern open-source JavaScript library for mobile-friendly
-		    interactive maps. It is developed by Vladimir Agafonkin.
-		</p>
-		<iframe src="http://nodeknockout.com/iframe/stuttgart-js" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>
-	    </div>
+        <div id="layer-vote" class="layer" style="display:none;">
+            <a href="#/home"></a>
+            <p>
+                Leaflet is a modern open-source JavaScript library for mobile-friendly
+                interactive maps. It is developed by Vladimir Agafonkin.
+            </p>
+            <iframe src="http://nodeknockout.com/iframe/stuttgart-js" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>
+        </div>
 
 	</div><!-- #overlay -->
 
@@ -63,7 +64,7 @@
         </div>
 
         <div class="button vote">
-            <a href="#">Vote</a>
+            <a href="#/vote">Vote</a>
         </div>
 
         <hr class="clear" /><!-- @clear -->
@@ -73,6 +74,11 @@
     <!-- ####################################################################################################### -->
 
     <div id="content">
+
+    <div id="notification" class="red" style="display:none">
+        This is some alert message!
+        <!-- class="green" Loading content, please wait... -->
+    </div><!-- #notification -->
     <!--
                  Map
                  ---

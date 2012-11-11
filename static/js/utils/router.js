@@ -2,17 +2,31 @@ define(['backbone', 'utils/registry', 'common/logger', 'utils/viewcontrol', 'jqu
 
     var Router = Backbone.Router.extend({
         routes:{
-            '':'goHome',
+            '':'goStart',
+            'start': 'start',
+            'vote': 'vote',
             'home':'home',
             'home/:lat/:lng':'home',
             'boards':'boards',
             'board/:id':'board',
             'create':'create',
-            '*404': 'goHome'
+            '*404': 'goStart'
         },
 
-        goHome:function () {
-            this.navigate('home', {trigger:true, replace:true});
+        goStart:function () {
+            this.navigate('start', {trigger:true, replace:true});
+        },
+
+        start:function() {
+            registry.viewControl.showViews(['mapView', 'locationView', 'layerInitView']);
+            $('#footer').show();
+            this.setRoute('home');
+        },
+
+        vote:function() {
+            registry.viewControl.showViews(['mapView', 'locationView', 'layerVoteView']);
+            $('#footer').show();
+            this.setRoute('home');
         },
 
         home:function (lat, lng) {

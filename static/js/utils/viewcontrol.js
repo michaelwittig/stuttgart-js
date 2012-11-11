@@ -3,6 +3,8 @@ define(['utils/registry', 'underscore'], function(registry, _) {
     var ViewControl = function() {
         this.allViews =  {
             'mapView': registry.appView.mapView,
+            'layerInitView': registry.appView.layerInitView,
+            'layerVoteView': registry.appView.layerVoteView,
             'locationView': registry.appView.mapView.mapFooterView.locationView,
             'createBoardView': registry.appView.mapView.mapFooterView.createBoardView,
             'boardsListView': registry.appView.containerView.boardsListView,

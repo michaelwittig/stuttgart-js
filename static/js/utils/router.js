@@ -24,10 +24,10 @@ define(['backbone', 'utils/registry', 'common/logger', 'utils/viewcontrol', 'jqu
                 jsonrpc: '2.0',
                 method: 'demo:start',
                 id: _.uniqueId(),
-                params: [{
-                    loc: registry.user.get('loc'),
-                    distance: 2
-                }]
+                params: [
+                    registry.user.get('loc'),
+                    1
+                ]
             });
 
             logger('demo');

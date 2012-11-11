@@ -1,6 +1,6 @@
 define(['underscore', 'backbone', 'utils/socket', 'utils/registry', 'common/logger'], function(_, Backbone, socket, registry, logger) {
 
-    var DISTANCE = 5;
+    var DISTANCE = 1;
 
     var boardBackend = _.extend(Backbone.Events, {
         init: function() {

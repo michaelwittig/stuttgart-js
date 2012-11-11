@@ -17,7 +17,7 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
 
             L.tileLayer(
 	    'http://{s}.tile.cloudmade.com/b39618c7e2854b999658e0505efc4f0c/997/256/{z}/{x}/{y}.png',
-	    {maxZoom: 18, detectRetina:true}
+	    {minZoom: 15, maxZoom: 17, detectRetina:true}
             ).addTo(this.map);
 
             registry.user.on('change:loc', this.locate, this);

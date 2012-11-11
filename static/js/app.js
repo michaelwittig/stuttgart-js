@@ -1,5 +1,6 @@
 define([
     'jquery',
+    'backbone',
     'utils/registry',
     'models/appState',
     'models/user',
@@ -8,7 +9,7 @@ define([
     'views/appView',
     'collections/boards'
     ],
-    function ($, registry, AppState, User, Router, Facebook, AppView, Boards) {
+    function ($, Backbone, registry, AppState, User, Router, Facebook, AppView, Boards) {
 
     var app = {};
 
@@ -19,6 +20,16 @@ define([
         registry.boards = new Boards();
         registry.router = new Router();
 
+        var cb = function(ev, data) {
+            if (data.name === 'home' && typeof data.params !== 'undefined') {
+                registry.user.setPosition(data.params);
+            } else {
+                registry.user.setPosition();
+            }
+            registry.state.off('change:route', cb);
+        };
+
+        registry.state.on('change:route', cb);
 
         $(function() {
             new AppView();

@@ -1,4 +1,4 @@
-define(['backbone', 'utils/registry'], function (Backbone, registry) {
+define(['backbone', 'utils/registry', 'common/logger'], function (Backbone, registry, logger) {
 
     var Router = Backbone.Router.extend({
         routes:{
@@ -17,22 +17,30 @@ define(['backbone', 'utils/registry'], function (Backbone, registry) {
 
         home:function (lat, lng) {
             if (lat && lng) {
-                registry.state.trigger('route:home', {lat:lat, lng:lng});
+                this.setRoute('home', {lat:lat, lng:lng});
             } else {
-                registry.state.trigger('route:home');
+                this.setRoute('home');
             }
         },
 
         boards:function () {
-            registry.state.trigger('route:boards');
+            this.setRoute('boards');
         },
 
         board:function (id) {
-            registry.state.trigger('route:board', id);
+            this.setRoute('board', id);
         },
 
-        create:function (lat, lng) {
-            registry.state.trigger('route:create');
+        create:function () {
+            this.setRoute('create');
+        },
+
+        setRoute: function(name, params) {
+            registry.state.trigger('route:' + name, params);
+            registry.state.set('route', {
+                name: name,
+                params: params
+            });
         }
     });
 

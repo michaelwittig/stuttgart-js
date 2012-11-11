@@ -17,7 +17,7 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
             this.$notloggedin = this.$('#create-notloggedin');
             this.$textarea = this.$('#create-board-title');
 			this.$textareaCnt = this.$('#create-board-title-cnt');
-            registry.state.on('change:facebook', this.updateLoginState, this);
+            //registry.state.on('change:facebook', this.updateLoginState, this);
         },
 
         show: function() {

@@ -10,6 +10,11 @@ define(['backbone', 'jquery', 'utils/registry', 'common/logger'], function(Backb
 
         initialize: function() {
     	    //TODO: get data from FB
+            this.initLoc = $.Deferred();
+            this.on('change:loc', function initLocation() {
+                this.initLoc.resolve();
+                this.off('change:loc', initLocation);
+            }, this);
         },
 
         setPosition: function(loc) {

@@ -18,7 +18,11 @@ define(['backbone', 'underscore', 'utils/geo', 'utils/registry'], function(Backb
         searchLocation: function(e) {
             e.preventDefault();
 
-            geo.addressToCoords(this.$input.val(), function(err, lat, lng) {
+            var adress = this.$input.val();
+
+            if (!adress.length) return;
+
+            geo.addressToCoords(adress, function(err, lat, lng) {
                 logger(lat, lng);
                 if (err) {
                     // TODO: Error Message anzeigen lassen.
@@ -32,6 +36,7 @@ define(['backbone', 'underscore', 'utils/geo', 'utils/registry'], function(Backb
         currentLocation: function(e) {
             e.preventDefault();
             registry.user.setPosition();
+            registry.user.trigger('locate:me');
         },
 
         updateInput: function() {

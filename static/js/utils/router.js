@@ -24,7 +24,7 @@ define(['backbone', 'utils/registry', 'common/logger', 'utils/viewcontrol', 'jqu
         },
 
         vote:function() {
-            registry.viewControl.showViews(['mapView', 'locationView', 'layerVoteView']);
+	    registry.viewControl.showViews(['layerVoteView'], true);
             $('#footer').show();
             this.setRoute('home');
         },

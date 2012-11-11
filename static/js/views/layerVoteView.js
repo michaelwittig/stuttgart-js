@@ -12,8 +12,16 @@ define(['backbone', 'common/logger'], function(Backbone, logger) {
         hide: function () {
             this.$el.parent().hide();
             this.$el.hide();
-        }
+	},
 
+	events: {
+	    'click #close-layer-vote': 'openLastView'
+	},
+
+	openLastView: function(e) {
+	    e.preventDefault();
+	    window.history.back();
+	}
 
     });
 

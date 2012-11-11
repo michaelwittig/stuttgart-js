@@ -9,7 +9,6 @@ define(
         initialize: function() {
 
             registry.user.on('change:loc', this.fetch, this);
-	    registry.user.on('change:loc', boardBackend.init, boardBackend);
 
             registry.state.on('change:facebook', function() {
                 if (registry.state.get('facebook') !== 'NOTREADY') {
@@ -17,11 +16,11 @@ define(
                 }
             }, this);
 
-	    boardBackend.on('update', this.fetch, this);
+            boardBackend.on('update', this.fetch, this);
 
         },
 
-	sync: boardBackend.sync,
+        sync: boardBackend.sync,
 
         loadFacebookData: function() {
             var ids = this.map(function(board,i) {

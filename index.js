@@ -4,7 +4,11 @@
 var requirejs = require("requirejs");
 
 requirejs.config({
-	nodeRequire: require
+	nodeRequire: require,
+	paths: {
+		"common/logger": "./static/js/common/logger",
+		"common/locroom": "./static/js/common/locroom"
+	}
 });
 
 requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], function(server, pubsub, cache, logger, jsonrpchandler) {

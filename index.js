@@ -33,6 +33,21 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 		});
 	});
 
+	function startDemo(lng, lat) {
+		lng = lng || 48.742323;
+		lat = lat || 9.308228;
+		jsonrpchandler.handle({
+			method: "demo:start",
+			params: [{lng: lng, lat: lat}, 5.0],
+			id: "1"
+		}, function(err, res) {
+			if (err) {
+				logger.debug("demo:start: error in JSON-RPC", err);
+			} else {
+				logger.debug("demo:start: success in JSON-RPC", res);
+			}
+		});
+	}
 	function getMessages(boardId) {
 		jsonrpchandler.handle({
 			method: "message:getall",
@@ -123,6 +138,7 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 							process.exit(1);
 						} else {
 							logger.notice("started");
+							startDemo(9.308139, 48.742072);
 						}
 					});
 				}

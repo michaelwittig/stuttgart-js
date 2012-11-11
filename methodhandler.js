@@ -17,7 +17,7 @@ define(["common/logger", "datastore", "authhandler"], function(logger, datastore
 					callback(err);
 				} else {
                     logger.debug("board:create success");
-					datastore.addBoard(user, board.title, board.loc, callback);
+					datastore.addBoard(user, board.title, board.loc, board.expireIn, callback);
 				}
 			});
 		},
@@ -34,6 +34,11 @@ define(["common/logger", "datastore", "authhandler"], function(logger, datastore
 					datastore.addMessage(user, boardId, message, callback);
 				}
 			});
+		},
+		"demo:start": function(loc, distance, callback) {
+			logger.debug("demo:start", [loc, distance]);
+			// TODO implement
+			callback(undefined, true);
 		}
 	};
 

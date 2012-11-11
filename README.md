@@ -20,8 +20,19 @@
 ~~~json
 {
 	title:String,
+	expireIn:Integer (optional, ignored if <= 0),
 	loc:Location
 }
+~~~
+
+### Demo
+#### start
+~~~json
+method: "demo:start",
+params: [
+	loc:Location,
+	distance:Float
+]
 ~~~
 
 ### Board

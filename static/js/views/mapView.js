@@ -11,7 +11,7 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
             this.mapFooterView = new MapFooterView();
 
             L.tileLayer(
-            'http://{s}.tile.cloudmade.com/56b3a5571a254061b9c6747f4a37bd75/997/256/{z}/{x}/{y}.png',
+	    'http://{s}.tile.cloudmade.com/b39618c7e2854b999658e0505efc4f0c/997/256/{z}/{x}/{y}.png',
             {maxZoom: 18}
             ).addTo(this.map);
 

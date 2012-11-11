@@ -1,5 +1,7 @@
 define(['underscore', 'common/logger', 'utils/registry'], function (_, logger, registry) {
 
+	var cache = {};
+
     var Facebook = function () {
         var that = this;
 
@@ -58,21 +60,36 @@ define(['underscore', 'common/logger', 'utils/registry'], function (_, logger, r
             return false;
         }
 
+		var cached = [];
         var qryIds = [];
         _.each(userIds, function(val) {
-            qryIds.push('uid=' + val);
+			var c = cache[val];
+			if (!c) {
+            	qryIds.push('uid=' + val);
+			} else {
+				cached.push(c);
+			}
         });
-
-        this.fb.api({
-            method: 'fql.query',
-            query: 'SELECT uid, name, pic_square FROM user WHERE ' + qryIds.join(' OR ')
-        }, function (response) {
-            if (!response.error_msg) {
-                cb(null, response);
-            } else {
-                cb(new Error(response.error_msg))
-            }
-        });
+		if (qryIds.length === 0) {
+			logger("facebook cache hit", cached);
+			cb(null, cached);
+		} else {
+			this.fb.api({
+				method: 'fql.query',
+				query: 'SELECT uid, name, pic_square FROM user WHERE ' + qryIds.join(' OR ')
+			}, function (response) {
+				logger("fb", response);
+				if (!response.error_msg) {
+					_.each(response, function(user) {
+						cache[user.uid] = user;
+					});
+					logger("facebook cache miss", cache);
+					cb(null, cached.concat(response));
+				} else {
+					cb(new Error(response.error_msg))
+				}
+			});
+		}
 
         return true;
     };

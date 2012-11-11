@@ -16,7 +16,7 @@ define(['underscore', 'backbone', 'utils/socket', 'utils/registry'], function(_,
 		model.id !== undefined ? find(model, options) : findAll(model, options);
 		break;
 	    case "create":
-		create(model);
+		create(model, options);
 		break;
 		// case "update":  resp = update(model);                            break;
 		// case "delete":  resp = destroy(model);                           break;
@@ -46,7 +46,7 @@ define(['underscore', 'backbone', 'utils/socket', 'utils/registry'], function(_,
 	return [];
     }
 
-    function create(model) {
+    function create(model, options) {
 	socket.emit('jsonrpc', {
 	    jsonrpc: '2.0',
 	    method: 'message:create',
@@ -60,8 +60,14 @@ define(['underscore', 'backbone', 'utils/socket', 'utils/registry'], function(_,
 		}
 	    ]
 	}, function(err, data) {
-	    logger('boardSysnc:create:cb', data);
-	});
+	logger('messageBackend:create:cb', data);
+	if (!err && !data.error) {
+	    logger('!!!success');
+	    options.success && options.success(data);
+	} else {
+	    options.error && options.error(err);
+	}
+    });
 	return model;
     }
 
@@ -73,7 +79,7 @@ define(['underscore', 'backbone', 'utils/socket', 'utils/registry'], function(_,
 	return model;
     }
 
-    messageBackend.listen()
+    messageBackend.listen();
 
     return messageBackend;
 });

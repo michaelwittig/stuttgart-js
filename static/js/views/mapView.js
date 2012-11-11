@@ -20,7 +20,10 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
             this.map.on('click', _.bind(this.createBoard, this));
             this.map.on('popupclose', function() {
                 registry.state.set('createloc', false);
+                registry.router.navigate('home', {trigger: true});
             });
+
+
         },
 
         locate: function() {

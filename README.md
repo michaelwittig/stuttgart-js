@@ -25,6 +25,16 @@
 }
 ~~~
 
+### Demo
+#### start
+~~~json
+method: "demo:start",
+params: [
+	loc:Location,
+	distance:Float
+]
+~~~
+
 ### Board
 #### get all
 ~~~json

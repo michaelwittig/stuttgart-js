@@ -2,6 +2,7 @@
  * The demo module can make some noice to impress the jury :)
  */
 define(["datastore", "common/logger"], function(datastore, logger) {
+	"use strict";
 
 	// user 0 is the conversation starter, user 1 and 2 are the other guys :)
 	var conversations = {
@@ -45,8 +46,25 @@ define(["datastore", "common/logger"], function(datastore, logger) {
 		return array[rand];
 	}
 
+	function rand(lower, upper) {
+		return Math.random() * (upper - lower) + lower;
+	}
+
+	/**
+	 *
+	 * @param loc Location
+	 * @param distance Distance (in miles)
+	 * @return Location
+	 */
 	function randomPosition(loc, distance) {
-		return loc; // TODO implement random position
+		distance = distance * 1.609344 * 0.0090053796; // distance to km to lnglat
+		distance /= 2.0;
+		var lngD = rand(-distance, distance);
+		var latD = rand(-distance, distance);
+		return {
+			lng: loc.lng + lngD,
+			lat: loc.lat + latD
+		};
 	}
 
 	function randomBoardTitle() {

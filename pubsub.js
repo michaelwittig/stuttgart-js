@@ -1,4 +1,5 @@
 define(["redis", "config", "common/logger"], function(redis, config, logger) {
+	"use strict";
 
 	function redisErrorListener(redisClient) {
 		redisClient.on("error", function(err) {
@@ -9,7 +10,6 @@ define(["redis", "config", "common/logger"], function(redis, config, logger) {
 
 	var redisPub;
 	var redisSub;
-
 	var subscriptions = {};
 
 	function init(callback) {

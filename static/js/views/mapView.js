@@ -62,7 +62,7 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
             registry.boards.each(function(board) {
                 var marker = L.marker(board.get('loc'));
                 marker.on('click', function() {
-                  registry.navigate('board/'+board.get('_id'), {trigger:true});
+                  registry.router.navigate('board/'+board.get('_id'), {trigger:true});
                 });
                 marker.addTo(that.map);
                 that.boardMarkers.push(marker);

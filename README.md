@@ -16,12 +16,38 @@
 	lng:Float,
 	lat:Float
 ~~~
+#### User
+~~~json
+{
+	type:"facebook",
+	id:String
+~~~
 #### Board
 ~~~json
 {
+	_id:String,
 	title:String,
-	expireIn:Integer (optional, ignored if <= 0),
+	loc:Location,
+	user:User,
+	createdAt:Date,
+	expireAt:Date //optional
+}
+~~~
+#### CreateBoard
+~~~json
+{
+	title:String,
+	expireIn:Integer, //optional, ignored if <= 0
 	loc:Location
+}
+~~~
+#### Message
+~~~json
+{
+	_id:String,
+	title:String,
+	user:User,
+	createdAt:Date
 }
 ~~~
 
@@ -29,85 +55,105 @@
 #### start
 in:
 ~~~json
-method: "demo:start",
-params: [
-	loc:Location,
-	distance:Float (in miles)
-],
-id:String
+{
+	method:"demo:start",
+	params:[
+		loc:Location,
+		distance:Float //in miles
+	],
+	id:String
+}
 ~~~
 out:
 ~~~json
-result: {}, (null if error !== null)
-error:null, (or Error)
-id:String
+{
+	result:true, //null if error !== null
+	error:null, //or Error
+	id:String
+}
 ~~~
 
 ### Board
 #### get all
 in:
 ~~~json
-method: "board:getall",
-params: [
-	loc:Location,
-	distance:Float (in miles)
-],
-id:String
+{
+	method:"board:getall",
+	params:[
+		loc:Location,
+		distance:Float //in miles
+	],
+	id:String
+}
 ~~~
 out:
 ~~~json
-result: [], (null if error !== null) // TODO
-error:null, (or Error)
-id:String
+{
+	result:[Board], //null if error !== null
+	error:null, //or Error
+	id:String
+}
 ~~~
 
 #### create
 in:
 ~~~json
-method: "board:create",
-params: [
-	board:Board,
-	token:Token
-],
-id:String
+{
+	method:"board:create",
+	params:[
+		board:CreateBoard,
+		token:Token
+	],
+	id:String
+}
 ~~~
 out:
 ~~~json
-result: {}, (null if error !== null) // TODO
-error:null, (or Error)
-id:String
+{
+	result:Board, //null if error !== null
+	error:null, //or Error
+	id:String
+}
 ~~~
 ### Message
 #### get all for board
 in:
 ~~~json
-method: "message:getall",
-params: [boardId:String],
-id:String
+{
+	method:"message:getall",
+	params:[boardId:String],
+	id:String
+}
 ~~~
 out:
 ~~~json
-result: [], (null if error !== null) // TODO
-error:null, (or Error)
-id:String
+{
+	result:[Message], //null if error !== null
+	error:null, //or Error
+	id:String
+}
 ~~~
 
 #### create
 in:
 ~~~json
-method: "message:create",
-params: [
-	boardId:String,
-	message:String,
-	token:Token
-],
-id:String
+{
+	method:"message:create",
+	params:[
+		boardId:String,
+		message:String,
+		token:Token
+	],
+	id:String
+}
 ~~~
 out:
 ~~~json
-result: {}, (null if error !== null) // TODO
-error:null, (or Error)
-id:String
+{
+	result:Message, //null if error !== null
+	error:null, //or Error
+	id:String
+}
 ~~~
 
 ## Deploy instructions

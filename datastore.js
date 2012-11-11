@@ -38,12 +38,14 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 	function boardView(board) {
 		return {
 			_id: board._id,
+			title: board.title,
 			loc: {
 				lng: board.loc[0],
 				lat: board.loc[1]
 			},
 			user: board.user,
-			createdAt: board.createdAt
+			createdAt: board.createdAt,
+			expireAt: null // TODO implement expireAt
 		};
 	}
 

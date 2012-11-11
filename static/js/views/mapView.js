@@ -45,6 +45,7 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
         },
 
         locate: function() {
+            logger('locate')
             var loc = registry.user.get('loc');
             this.map.setView(loc, 13);
             if (this.myLocationMarker) {
@@ -95,6 +96,7 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
 
         show: function() {
             this.$el.show();
+            this.map.invalidateSize(true)
         }
 
     });

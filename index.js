@@ -139,7 +139,6 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 							process.exit(1);
 						} else {
 							logger.notice("started");
-							startDemo(9.157273, 48.771309);
 						}
 					});
 				}

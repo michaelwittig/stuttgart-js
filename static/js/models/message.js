@@ -1,12 +1,17 @@
-define(['backbone'], function(Backbone) {
+define(['backbone', 'utils/messageBackend'], function(Backbone, messageBackend) {
 
     var Message = Backbone.Model.extend({
+
+	idAttribute: '_id',
+
         defaults: {
             user: '',
-            timeago: '',
+	    createdAt: '',
             content: '',
             photo: ''
         },
+
+	sync: messageBackend.sync,
 
         initialize: function() {
 

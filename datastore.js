@@ -5,7 +5,7 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 
     var boardSchema = new mongoose.Schema({
         title: {type: String, required: true},
-		expireAt: {type: Date, required: false}, // TODO implement expiry of boards
+		expireAt: {type: Date, required: false},
 		createdAt: {type: Date, required: true, default: Date.now},
 		user: {
 			type: {type: String, required: true},
@@ -80,9 +80,11 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 		* @param user User
         * @param title title of the board
         * @param loc Loc
+		* @param expireIn (in hours)
 		* @param callback Callback(err, res)
         */
-       addBoard: function(user, title, loc, callback) {
+       addBoard: function(user, title, loc, expireIn, callback) {
+		   // TODO implement expiry of boards
            var b = new Board({
                title: title,
 			   user: {

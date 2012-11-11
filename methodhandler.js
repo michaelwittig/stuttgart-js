@@ -17,7 +17,7 @@ define(["common/logger", "datastore", "authhandler"], function(logger, datastore
 					callback(err);
 				} else {
                     logger.debug("board:create success");
-					datastore.addBoard(user, board.title, board.loc, callback);
+					datastore.addBoard(user, board.title, board.loc, board.expireIn, callback);
 				}
 			});
 		},

@@ -27,64 +27,78 @@
 
 ### Demo
 #### start
-~~~json
+in: ~~~json
 method: "demo:start",
 params: [
 	loc:Location,
 	distance:Float (in miles)
-]
+],
+id:String
+~~~
+out: ~~~json
+result: {}, (null if error !== null)
+error:null, (or Error)
+id:String
 ~~~
 
 ### Board
 #### get all
-~~~json
+in: ~~~json
 method: "board:getall",
 params: [
 	loc:Location,
 	distance:Float (in miles)
-]
+],
+id:String
+~~~
+out: ~~~json
+result: [], (null if error !== null) // TODO
+error:null, (or Error)
+id:String
 ~~~
 
 #### create
-~~~json
+in: ~~~json
 method: "board:create",
 params: [
 	board:Board,
 	token:Token
-]
+],
+id:String
+~~~
+out: ~~~json
+result: {}, (null if error !== null) // TODO
+error:null, (or Error)
+id:String
 ~~~
 ### Message
 #### get all for board
-~~~json
+in: ~~~json
 method: "message:getall",
-params: [boardId:String]
+params: [boardId:String],
+id:String
+~~~
+out: ~~~json
+result: [], (null if error !== null) // TODO
+error:null, (or Error)
+id:String
 ~~~
 
 #### create
-~~~json
+in: ~~~json
 method: "message:create",
 params: [
 	boardId:String,
 	message:String,
 	token:Token
-]
+],
+id:String
 ~~~
-
-## Response
-###Message
-~~~json
-user:Int,
-timestamp:Int,
-content:String
+out: ~~~json
+result: {}, (null if error !== null) // TODO
+error:null, (or Error)
+id:String
 ~~~
-
-###Board
-~~~json
-title:String,
-loc: {lat:Float, lng:Float},
-distance:Float (in miles)
-~~~
-
 
 ## Deploy instructions
 

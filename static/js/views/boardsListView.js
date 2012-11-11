@@ -28,7 +28,16 @@ define(['backbone', 'hbs!templates/boardsListTemplate', 'utils/registry'], funct
 
         var boardId = $(e.currentTarget).attr('data-id');
         registry.router.navigate('board/' + boardId, {trigger: true});
-    }
+    },
+
+     show: function() {
+         this.$el.show();
+     },
+
+     hide: function() {
+        this.$el.hide();
+     }
+
     });
 
     return BoardListView;

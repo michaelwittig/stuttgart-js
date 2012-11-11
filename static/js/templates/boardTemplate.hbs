@@ -1,3 +1,4 @@
+<ul>
 {{#with board}}
     <li>
         <div class="box author">
@@ -10,6 +11,10 @@
             </div>
             <hr class="clear" />
         </div>
+	<div class="expiresin">
+	    Expires {{timeago expireAt}}
+	</div>
+
     </li>
 {{/with}}
 
@@ -27,3 +32,4 @@
         </div>
     </li>
 {{/each}}
+</ul>

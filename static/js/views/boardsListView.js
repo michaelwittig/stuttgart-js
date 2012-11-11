@@ -11,12 +11,8 @@ define(['backbone', 'hbs!templates/boardsListTemplate', 'utils/registry'], funct
     },
 
     render: function() {
-        logger('render')
+	logger('render boards', registry.boards)
         this.$el.html(template(registry.boards.toJSON()));
-    },
-
-    show: function() {
-        this.$el.show();
     },
 
     events: {
@@ -24,9 +20,20 @@ define(['backbone', 'hbs!templates/boardsListTemplate', 'utils/registry'], funct
     },
 
     openBoard: function(e) {
+        e.preventDefault();
+
         var boardId = $(e.currentTarget).attr('data-id');
-        registry.router.navigate('board/' + boardId);
-    }
+        registry.router.navigate('board/' + boardId, {trigger: true});
+    },
+
+     show: function() {
+         this.$el.show();
+     },
+
+     hide: function() {
+        this.$el.hide();
+     }
+
     });
 
     return BoardListView;

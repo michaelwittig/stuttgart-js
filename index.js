@@ -40,9 +40,9 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 			id: "1"
 		}, function(err, res) {
 			if (err) {
-				logger.debug("message:getal: error in JSON-RPC", err);
+				logger.debug("message:getall: error in JSON-RPC", err);
 			} else {
-				logger.debug("message:getal: success in JSON-RPC", res);
+				logger.debug("message:getall: success in JSON-RPC", res);
 			}
 		});
 	}

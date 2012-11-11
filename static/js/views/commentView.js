@@ -23,7 +23,23 @@ define(['backbone', 'models/message', 'utils/registry'], function(Backbone, Mess
 
 	events: {
 	    'submit #comment-form': 'createMessage',
-	    'click #comment-submit': 'createMessage'
+	    'click #comment-submit': 'createMessage',
+		'change #comment-input': 'updateCount',
+		'keyup #comment-input': 'updateCount'
+	},
+
+	updateCount: function() {
+		var cnt = 140 - this.$input.val().length;
+		if (cnt <= 0) {
+			cnt = 0;
+			// TODO make count red?
+			this.$input.val(this.$input.val().substring(0, 140));
+		} else if(cnt <= 10) {
+			// TODO make count yellow?
+		} else {
+			// TODO remove color?
+		}
+		//this.$textareaCnt.html('' + cnt); // TODO show cnt
 	},
 
 	createMessage: function(e) {

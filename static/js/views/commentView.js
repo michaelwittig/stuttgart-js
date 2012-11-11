@@ -29,7 +29,6 @@ define(['backbone', 'models/message', 'utils/registry'], function(Backbone, Mess
 	},
 
 	updateCount: function() {
-		logger("input length", this.$input.val().length);
 		var cnt = 140 - this.$input.val().length;
 		if (cnt <= 0) {
 			cnt = 0;

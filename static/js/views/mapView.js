@@ -8,12 +8,20 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
 
         boardMarkers: [],
 
+	iconDefaults: {
+	    iconSize: [27, 37],
+	    iconAnchor: [22, 94],
+	    popupAnchor: [-3, -76],
+	    shadowUrl: 'img/marker-shadow.png',
+	    shadowSize: [31, 31],
+	    shadowAnchor: [22, 94]
+	},
+
         initialize: function() {
             this.map = L.map('map', {
                 zoomControl: false,
-                attributionControl: false,
-				dragging: false
-			});
+		attributionControl: false
+	    });
             this.mapFooterView = new MapFooterView();
 
             L.tileLayer(
@@ -27,6 +35,13 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
             this.map.on('click', _.bind(this.createBoard, this));
 
             registry.boards.on('reset', this.updateBoardMarkers, this);
+
+	    registry.state.on('closepopups', function() {
+		if (this.myMarker) {
+		    this.map.removeLayer(this.myMarker);
+		    delete this.myMarker;
+		}
+	    }, this);
         },
 
         locate: function() {
@@ -36,15 +51,9 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
                 this.myLocationMarker.setLatLng(loc);
             } else {
                 this.myLocationMarker = L.marker(loc, {
-                    icon: L.icon({
-                        iconUrl: 'img/marker-position.png',
-                        iconSize: [27, 37],
-                        iconAnchor: [22, 94],
-                        popupAnchor: [-3, -76],
-                        shadowUrl: 'img/marker-shadow.png',
-                        shadowSize: [31, 31],
-                        shadowAnchor: [22, 94]
-                    })
+		    icon: L.icon(_.extend(this.iconDefaults, {
+			iconUrl: 'img/marker-position.png'
+		    }))
                 }).addTo(this.map);
             }
         },
@@ -53,17 +62,15 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
             registry.state.set('createloc', e.latlng);
             registry.router.navigate('create', {trigger: true});
 
-	    L.marker(e.latlang, {
-		icon: L.icon({
-		    iconUrl: 'img/icon-marker-create.png',
-		    iconSize: [27, 37],
-		    iconAnchor: [22, 94],
-		    popupAnchor: [-3, -76],
-		    shadowUrl: 'img/marker-shadow.png',
-		    shadowSize: [31, 31],
-		    shadowAnchor: [22, 94]
-		})
-	    }).addTo(this.map);
+	    if (this.myMarker) {
+		this.myMarker.setLatLng(e.latlng);
+	    } else {
+		this.myMarker = L.marker(e.latlng, {
+		    icon: L.icon(_.extend(this.iconDefaults, {
+			iconUrl: 'img/icon-marker-create.png'
+		    }))
+		}).addTo(this.map);
+	    }
         },
 
         updateBoardMarkers: function() {
@@ -74,22 +81,16 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
             this.boardMarkers.length = 0;
             registry.boards.each(function(board) {
                 var marker = L.marker(board.get('loc'), {
-                    icon: L.icon({
-                        iconUrl: 'img/marker-event.png',
-                        iconSize: [27, 37],
-                        iconAnchor: [22, 94],
-                        popupAnchor: [-3, -76],
-                        shadowUrl: 'img/marker-shadow.png',
-                        shadowSize: [31, 31],
-                        shadowAnchor: [22, 94]
-                    })}
+		    icon: L.icon(_.extend(this.iconDefaults, {
+			iconUrl: 'img/marker-event.png'
+		    }))}
                 );
                 marker.on('click', function() {
                   registry.router.navigate('board/'+board.get('_id'), {trigger:true});
                 });
                 marker.addTo(that.map);
                 that.boardMarkers.push(marker);
-            });
+	    }, this);
         },
 
         hide: function() {

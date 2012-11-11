@@ -41,6 +41,7 @@ define(
                 return id;
                 // return board.get('user')['id'];
             });
+logger('ids',this)
             registry.facebook.fetchUsers(ids, _.bind(function(err, res) {
                 logger('loadFacebookData', err)
                 //TODO: handle err

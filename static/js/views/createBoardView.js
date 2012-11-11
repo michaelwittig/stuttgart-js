@@ -6,7 +6,7 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
 
         events: {
             'click #create-board': 'createBoard',
-            'click #create-expire li a': 'updateExpire',
+	    'click #create-expire li': 'updateExpire',
             'click .dragme': 'close'
         },
 
@@ -38,7 +38,7 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
         updateExpire: function(ev) {
             ev.preventDefault();
             this.$('#create-expire li').removeClass('current');
-            $(ev.target).parent().addClass('current');
+	    $(ev.currentTarget).addClass('current');
         },
 
         createBoard: function(ev) {

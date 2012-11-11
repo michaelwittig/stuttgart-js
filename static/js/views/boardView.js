@@ -18,6 +18,7 @@ define(
             this.board = registry.boards.get(boardId);
             this.messages = new Messages(boardId);
             this.messages.loading.done(_.bind(function() {
+	logger('load board', boardId)
                 this.messages.on('reset', this.render, this);
                 this.render();
             }, this));

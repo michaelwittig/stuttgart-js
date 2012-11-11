@@ -24,16 +24,16 @@ define(
     },
 
     render: function() {
-        this.$el.html(boardTemplate({
-            board: this.board.toJSON(),
-            messages: this.messages.toJSON()
-        })).show();
+	this.$el.html(boardTemplate({
+	    board: this.board.toJSON(),
+	    messages: this.messages.toJSON()
+	}));
 
-        registry.state.trigger('messages:updated');
+	registry.state.trigger('messages:updated');
     },
 
     show: function() {
-    // this.$el.show();
+	this.$el.show();
     },
 
     hide: function() {

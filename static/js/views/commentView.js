@@ -57,7 +57,7 @@ define(['backbone', 'models/message', 'utils/registry'], function(Backbone, Mess
 	    }).save(null, {
             success: _.bind(function() {
                 this.$input.val('');
-                registry.state.trigger('notice', 'Message has been added');
+		// registry.state.trigger('notice', 'Message has been added');
             }, this),
             error: function() {
 		registry.state.trigger('error', 'Login to join the conversation');

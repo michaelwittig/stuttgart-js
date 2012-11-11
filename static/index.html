@@ -193,5 +193,16 @@
 
         <div id="fb-root"></div>
 	   <script src="js/libs/require.js" data-main="js/main"></script>
+       <script>
+
+	    //  Hide Top @ iPhone
+	    window.addEventListener("load",function() {
+	      // Set a timeout...
+	      setTimeout(function(){
+		// Hide the address bar!
+		window.scrollTo(0, 1);
+	      }, 0);
+	    });
+       </script>
     </body>
 </html>

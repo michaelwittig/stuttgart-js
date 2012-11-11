@@ -48,15 +48,15 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
 			var cnt = 140 - this.$textarea.val().length;
 			if (cnt <= 0) {
 				cnt = 0;
-				this.$textarea.removeClass();
-				this.$textarea.addClass("count count-red");
+				this.$textareaCnt.removeClass();
+				this.$textareaCnt.addClass("count count-red");
 				this.$textarea.val(this.$textarea.val().substring(0, 140));
 			} else if(cnt <= 10) {
-				this.$textarea.removeClass();
-				this.$textarea.addClass("count count-yellow");
+				this.$textareaCnt.removeClass();
+				this.$textareaCnt.addClass("count count-yellow");
 			} else {
-				this.$textarea.removeClass();
-				this.$textarea.addClass("count");
+				this.$textareaCnt.removeClass();
+				this.$textareaCnt.addClass("count");
 			}
 			this.$textareaCnt.html('' + cnt);
 		},

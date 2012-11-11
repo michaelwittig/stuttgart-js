@@ -7,7 +7,8 @@ requirejs.config({
 	nodeRequire: require,
 	paths: {
 		"common/logger": "./static/js/common/logger",
-		"common/locroom": "./static/js/common/locroom"
+		"common/locroom": "./static/js/common/locroom",
+		"common/lnglat": "./static/js/common/lnglat"
 	}
 });
 
@@ -34,8 +35,8 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 	});
 
 	function startDemo(lng, lat) {
-		lng = lng || 48.742323;
-		lat = lat || 9.308228;
+		lng = lng || 9.308228;
+		lat = lat || 48.742323;
 		jsonrpchandler.handle({
 			method: "demo:start",
 			params: [{lng: lng, lat: lat}, 5.0],
@@ -79,8 +80,8 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 
 	function addBoard(title, lng, lat, expireIn) {
 		title = title || "Hello";
-		lng = lng || 48.742323;
-		lat = lat || 9.308228;
+		lng = lng || 9.308228;
+		lat = lat || 48.742323;
 		jsonrpchandler.handle({
 			method: "board:create",
 			params: [{title: title, expireIn: expireIn, loc: {lng: lng, lat: lat}}, {type:"happy", value: "1476961015"}],
@@ -98,8 +99,8 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 	}
 
 	function getBoards(lng, lat) {
-		lng = lng || 48.742323;
-		lat = lat || 9.308228;
+		lng = lng || 9.308228;
+		lat = lat || 48.742323;
 		jsonrpchandler.handle({
 			method: "board:getall",
 			params: [{lng: lng, lat: lat}, 5.0],
@@ -115,11 +116,11 @@ requirejs(["server", "pubsub", "cache", "common/logger", "jsonrpchandler"], func
 	}
 
 	function setUpDB() {
-		addBoard("Coworking", 48.771309, 9.157273);
-		addBoard("S-Bahn", 48.770268, 9.156514);
-		addBoard("REWE", 48.770901,9.15778);
-		addBoard("Farbenhaus", 48.772235, 9.15686);
-		addBoard("MG-Fitness", 48.772067,9.159118);
+		addBoard("Coworking", 9.157273, 48.771309);
+		addBoard("S-Bahn", 9.156514, 48.770268);
+		addBoard("REWE", 9.15778, 48.770901);
+		addBoard("Farbenhaus", 9.15686, 48.772235);
+		addBoard("MG-Fitness", 9.159118, 48.772067);
 	}
 
 	pubsub.start(function(err) {

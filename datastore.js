@@ -1,4 +1,4 @@
-define(["config", "common/logger", "mongoose", "pubsub"], function(config, logger, mongoose, pubsub) {
+define(["config", "common/logger", "common/lnglat", "mongoose", "pubsub"], function(config, logger, lnglat, mongoose, pubsub) {
     "use strict";
 
     var db = mongoose.createConnection(config["mongo.url"]);
@@ -49,10 +49,6 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 		};
 	}
 
-	function distanc(locA, locB) {
-		return Math.sqrt(Math.pow(locA.lng - locB.lng, 2) + Math.pow(locA.lat - locB.lat, 2));
-	}
-
 	function removeBoard(board) {
 		board.remove(function(err) {
 			if (err) {
@@ -78,7 +74,7 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
    return {
        /**
         * @param loc Loc
-        * @param distance in km
+        * @param distance in miles
 		* @param callback Callback(err, res)
         */
        getBoards: function(loc, distance, callback) {
@@ -92,7 +88,7 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 					   var view = [];
 						res.forEach(function(board) {
 							var b = boardView(board);
-							b._distance = distanc(loc, b.loc) / 1.609344 / 0.0090053796;
+							b._distance = lnglat.distance(loc, b.loc);
 							if (b.expireAt && b.expireAt.getTime() < time) {
 								removeBoard(board);
 							} else {

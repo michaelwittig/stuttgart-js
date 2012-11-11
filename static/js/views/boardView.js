@@ -7,7 +7,7 @@ define(
     el: '#board-view',
 
     initialize: function(options) {
-	this.commentView = options.commentView;
+    this.commentView = options.commentView;
         this.messages = undefined;
         this.board = undefined;
         registry.state.on('route:board', this.load, this);
@@ -17,22 +17,23 @@ define(
         registry.boards.loading.done(_.bind(function() {
             this.board = registry.boards.get(boardId);
             this.messages = new Messages(boardId);
-    	    this.messages.on('update', this.render, this);
+            this.messages.on('update', this.render, this);
         }, this));
 
-	this.commentView.load(boardId);
+    this.commentView.load(boardId);
     },
 
     render: function() {
         this.$el.html(boardTemplate({
             board: this.board.toJSON(),
             messages: this.messages.toJSON()
-	})).show();
+        })).show();
 
+        registry.state.trigger('messages:updated');
     },
 
     show: function() {
-	// this.$el.show();
+    // this.$el.show();
     },
 
     hide: function() {

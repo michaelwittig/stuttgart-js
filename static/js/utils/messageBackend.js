@@ -1,12 +1,12 @@
-define(['underscore', 'backbone', 'utils/socket', 'utils/registry', 'common/logger'], function(_, Backbone, socket, registry, logger) {
+define(['underscore', 'backbone', 'utils/socket', 'utils/registry'], function(_, Backbone, socket, registry) {
 
     var DISTANCE = 5;
 
     var messageBackend = _.extend(Backbone.Events, {
 	listen: function() {
 	    socket.on('update', _.bind(function() {
-		    logger('messageBackend trigger update')
-		    this.trigger('update');
+		logger('messageBackend trigger update')
+		this.trigger('update');
 	    }, this));
 	},
 
@@ -18,8 +18,8 @@ define(['underscore', 'backbone', 'utils/socket', 'utils/registry', 'common/logg
 	    case "create":
 		create(model);
 		break;
-	    // case "update":  resp = update(model);                            break;
-	    // case "delete":  resp = destroy(model);                           break;
+		// case "update":  resp = update(model);                            break;
+		// case "delete":  resp = destroy(model);                           break;
 	    }
 	    return model;
 	}
@@ -34,12 +34,12 @@ define(['underscore', 'backbone', 'utils/socket', 'utils/registry', 'common/logg
 	    params: [model.boardId],
 	    id: _.uniqueId()
 	}, function(err, data) {
-	    if (err) {
-	logger('message:getall err', err)
+	    if(err) {
+		logger('message:getall err', err)
 		options.error(err.message);
 	    } else {
-	logger('message:getall success', data.result)
-	options.success(data.result);
+		logger('message:getall success', data.result)
+		options.success(data.result);
 	    }
 	});
 
@@ -49,15 +49,16 @@ define(['underscore', 'backbone', 'utils/socket', 'utils/registry', 'common/logg
     function create(model) {
 	socket.emit('jsonrpc', {
 	    jsonrpc: '2.0',
-	    method: 'board:create',
+	    method: 'message:create',
 	    id: _.uniqueId(),
-	    params: [{
-		title: model.get('title'),
-		loc: model.get('loc')
-	    }, {
-		type: "facebook",
-		value: registry.user.get('fbtoken')
-	    }]
+	    params: [
+		model.get('boardId'),
+		model.get('title'),
+		{
+		    type: "facebook",
+		    value: registry.user.get('fbtoken')
+		}
+	    ]
 	}, function(err, data) {
 	    logger('boardSysnc:create:cb', data);
 	});

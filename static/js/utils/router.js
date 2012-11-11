@@ -28,7 +28,7 @@ define(['backbone', 'utils/registry', 'common/logger', 'utils/viewcontrol', 'jqu
                     registry.user.get('loc'),
                     1
                 ]
-            });
+            }, function(err, data) {});
 
             logger('demo');
             this.navigate('home', {trigger:true, replace:true});

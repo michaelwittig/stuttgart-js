@@ -6,8 +6,9 @@ define(
 
 	model: Message,
 
-	initialize: function() {
-
+	initialize: function(boardId) {
+	    this.boardId = boardId;
+	    this.fetch();
 	    // this.on('fetch', this.loadFacebookData, this);
 	    messageBackend.on('update', this.fetch, this);
 

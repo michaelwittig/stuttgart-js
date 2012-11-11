@@ -1,4 +1,4 @@
-define(['underscore', 'utils/socket', 'utils/registry'], function(_, socket, registry) {
+define(['underscore', 'utils/socket', 'utils/registry', 'common/logger'], function(_, socket, registry, logger) {
 
     function sync(method, model, options) {
         switch(method) {
@@ -40,12 +40,15 @@ define(['underscore', 'utils/socket', 'utils/registry'], function(_, socket, reg
             jsonrpc: '2.0',
             method: 'board:create',
             id: _.uniqueId(),
-            params: [model.toJSON(), {
+            params: [{
+                title: model.get('title'),
+                loc: model.get('loc')
+            }, {
                 type: "facebook",
                 value: registry.user.get('fbtoken')
             }]
         }, function(err, data) {
-            console.log(data);
+            logger('boardSysnc:create:cb', data);
         });
         return model;
     }

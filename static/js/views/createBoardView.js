@@ -1,4 +1,4 @@
-define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board'], function(Backbone, registry, $, socket, Board) {
+define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 'common/logger'], function(Backbone, registry, $, socket, Board, logger) {
 
     var CreateBoardView = Backbone.View.extend({
 
@@ -46,11 +46,17 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board'],
                 return false;
             }
 
+            logger('create new board');
+
             var board = new Board({
                 title: description,
                 loc: registry.user.get('loc'),
                 expirationDate: expires
-            }).save();
+            }).save({
+                success: function() {
+                    logger('new board created');
+                }
+            });
 
             return true;
         }

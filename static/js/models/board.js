@@ -1,4 +1,4 @@
-define(['backbone'], function(Backbone) {
+define(['backbone', 'utils/boardSync'], function(Backbone, sync) {
 
     var Board = Backbone.Model.extend({
 
@@ -15,6 +15,8 @@ define(['backbone'], function(Backbone) {
             creator: ''
             //expirationDate
         },
+
+        sync: sync,
 
         initialize: function() {
 

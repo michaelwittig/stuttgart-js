@@ -21,6 +21,7 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
             ).addTo(this.map);
 
             registry.user.on('change:loc', this.locate, this);
+            registry.user.on('locate:me', this.locate, this);
 
             this.map.on('click', _.bind(this.createBoard, this));
             this.map.on('popupclose', function() {

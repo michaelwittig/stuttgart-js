@@ -37,7 +37,7 @@ define(["common/logger", "datastore", "authhandler"], function(logger, datastore
 		},
 		"demo:start": function(loc, distance, callback) {
 			logger.debug("demo:start", [loc, distance]);
-			// TODO implement
+			// TODO implement #10
 			callback(undefined, true);
 		}
 	};

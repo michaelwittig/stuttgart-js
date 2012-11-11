@@ -84,7 +84,7 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 		* @param callback Callback(err, res)
         */
        addBoard: function(user, title, loc, expireIn, callback) {
-		   // TODO implement expiry of boards
+		   // TODO implement expiry of boards #4
            var b = new Board({
                title: title,
 			   user: {

@@ -90,7 +90,6 @@ define(["config", "common/logger", "mongoose", "pubsub"], function(config, logge
 				   var time = new Date().getTime();
 				   if (Array.isArray(res)) {
 					   var view = [];
-					   logger.debug("modify boards");
 						res.forEach(function(board) {
 							var b = boardView(board);
 							b._distance = distanc(loc, b.loc) / 1.609344 / 0.0090053796;

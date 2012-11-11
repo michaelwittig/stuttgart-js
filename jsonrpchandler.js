@@ -1,7 +1,7 @@
 /**
  * JSON-RPC calls are handled here.
  */
-define(["methodhandler", "common/logger"], function(methodhandler, logger) {
+define(["methodhandler"], function(methodhandler) {
 	"use strict";
 
 	return {

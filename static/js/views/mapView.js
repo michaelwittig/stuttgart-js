@@ -50,7 +50,7 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
                         iconAnchor: [22, 94],
                         popupAnchor: [-3, -76],
                         shadowUrl: 'img/marker-shadow.png',
-                        shadowSize: [68, 95],
+                        shadowSize: [31, 31],
                         shadowAnchor: [22, 94]
                     })
                 }).addTo(this.map);
@@ -81,7 +81,7 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
                         iconAnchor: [22, 94],
                         popupAnchor: [-3, -76],
                         shadowUrl: 'img/marker-shadow.png',
-                        shadowSize: [68, 95],
+                        shadowSize: [31, 31],
                         shadowAnchor: [22, 94]
                     })}
                 );

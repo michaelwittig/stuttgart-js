@@ -12,8 +12,8 @@ define(['backbone', 'utils/boardBackend'], function(Backbone, boardBackend) {
             },
             distance: 0,
             photo: '',
-            creator: ''
-            //expirationDate
+            creator: '',
+            expireIn: 0
         },
 
 	sync: boardBackend.sync,

@@ -4,10 +4,11 @@ define(['underscore', 'backbone', 'utils/socket', 'utils/registry', 'common/logg
 
     var boardBackend = _.extend(Backbone.Events, {
         init: function() {
+
             socket.on('update', _.bind(function() {
                 logger('boardbackend trigger update')
                 this.trigger('update');
-            }, this));
+            },this));
         },
 
         sync: function(method, model, options) {
@@ -16,7 +17,7 @@ define(['underscore', 'backbone', 'utils/socket', 'utils/registry', 'common/logg
                 model.id !== undefined ? find(model, options) : findAll(options);
                 break;
             case "create":
-                create(model);
+                create(model, options);
                 break;
             // case "update":  resp = update(model);                            break;
             // case "delete":  resp = destroy(model);                           break;
@@ -46,20 +47,27 @@ define(['underscore', 'backbone', 'utils/socket', 'utils/registry', 'common/logg
         return [];
     }
 
-    function create(model) {
+    function create(model, options) {
         socket.emit('jsonrpc', {
             jsonrpc: '2.0',
             method: 'board:create',
             id: _.uniqueId(),
             params: [{
                 title: model.get('title'),
-                loc: model.get('loc')
+                loc: model.get('loc'),
+                expireIn: model.get('expireIn')
             }, {
                 type: "facebook",
                 value: registry.user.get('fbtoken')
             }]
         }, function(err, data) {
             logger('boardSysnc:create:cb', data);
+            if (!err && !data.error) {
+                logger('!!!success');
+                options.success && options.success(data);
+            } else {
+                options.error && options.error(err);
+            }
         });
         return model;
     }
@@ -72,7 +80,7 @@ define(['underscore', 'backbone', 'utils/socket', 'utils/registry', 'common/logg
         return model;
     }
 
-    boardBackend.init()
+    boardBackend.init();
 
     return boardBackend;
 });

@@ -6,7 +6,7 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
 
         events: {
             'click #create-board': 'createBoard',
-            'click #create-expire li': 'updateExpire'
+            'click #create-expire li a': 'updateExpire'
         },
 
         initialize: function() {
@@ -35,8 +35,9 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
         },
 
         updateExpire: function(ev) {
+            ev.preventDefault();
             this.$('#create-expire li').removeClass('current');
-            $(ev.target).addClass('current');
+            $(ev.target).parent().addClass('current');
         },
 
         createBoard: function(ev) {
@@ -49,15 +50,18 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
                 return false;
             }
 
-            logger('create new board');
-
             var board = new Board({
                 title: description,
-                loc: registry.user.get('createloc') || registry.user.get('loc'),
+                loc: registry.state.get('createloc') || registry.user.get('loc'),
                 expirationDate: expires
-            }).save({
+            }).save(null, {
                 success: function() {
                     logger('new board created');
+                    registry.router.navigate('home', {trigger:true});
+                    registry.state.trigger('closepopups');
+                },
+                error: function(err) {
+                    logger('new board created error', err);
                 }
             });
 

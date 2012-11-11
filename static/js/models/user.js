@@ -1,4 +1,4 @@
-define(['backbone', 'jquery'], function(Backbone, $) {
+define(['backbone', 'jquery', 'utils/registry', 'common/logger'], function(Backbone, $, registry, logger) {
 
     var User = Backbone.Model.extend({
         defaults: {
@@ -12,13 +12,18 @@ define(['backbone', 'jquery'], function(Backbone, $) {
     	    //TODO: get data from FB
         },
 
-        setPosition: function() {
+        setPosition: function(loc) {
             var fallback = _.bind(function() {
                 this.set('loc', {
                     lat: 51,
                     lng: -0.1
                 });
             }, this);
+
+            if (typeof loc !== 'undefined') {
+                this.set('loc', loc);
+                return;
+            }
 
             if (!navigator.geolocation) {
                 fallback();
@@ -32,8 +37,6 @@ define(['backbone', 'jquery'], function(Backbone, $) {
                 });
             }, this), fallback);
         }
-
-
     });
 
     return User;

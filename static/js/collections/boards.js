@@ -1,6 +1,6 @@
 define(
-    ['underscore', 'backbone', 'models/board', 'utils/boardSync', 'utils/registry'],
-    function(_, Backbone, Board, sync, registry) {
+    ['underscore', 'backbone', 'models/board', 'utils/boardBackend', 'utils/registry'],
+    function(_, Backbone, Board, boardBackend, registry) {
 
     var Boards = Backbone.Collection.extend({
 
@@ -16,9 +16,11 @@ define(
                 }
             }, this);
 
+            boardBackend.on('update', this.fetch, this);
+
         },
 
-        sync: sync,
+        sync: boardBackend.sync,
 
         loadFacebookData: function() {
             var ids = this.map(function(board,i) {

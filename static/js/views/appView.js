@@ -10,8 +10,6 @@ define(
             this.headerView = new HeaderView();
             this.mapView = new MapView();
             this.containerView = new ContainerView();
-
-            registry.user.setPosition();
         }
     });
 

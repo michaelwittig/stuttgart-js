@@ -1,18 +1,29 @@
-define(['underscore', 'utils/socket', 'utils/registry', 'common/logger'], function(_, socket, registry, logger) {
+define(['underscore', 'backbone', 'utils/socket', 'utils/registry', 'common/logger'], function(_, Backbone, socket, registry, logger) {
 
-    function sync(method, model, options) {
-        switch(method) {
-        case "read":
-            model.id !== undefined ? find(model, options) : findAll(options);
-            break;
-        case "create":
-            create(model);
-            break;
-        // case "update":  resp = update(model);                            break;
-        // case "delete":  resp = destroy(model);                           break;
+    var DISTANCE = 5;
+
+    var boardBackend = _.extend(Backbone.Events, {
+        init: function() {
+            socket.on('update', function() {
+                logger('boardbackend trigger update')
+                this.trigger('update');
+            });
+        },
+
+        sync: function(method, model, options) {
+            switch(method) {
+            case "read":
+                model.id !== undefined ? find(model, options) : findAll(options);
+                break;
+            case "create":
+                create(model);
+                break;
+            // case "update":  resp = update(model);                            break;
+            // case "delete":  resp = destroy(model);                           break;
+            }
+            return model;
         }
-        return model;
-    }
+    });
 
 
     function find(model) {}
@@ -20,7 +31,7 @@ define(['underscore', 'utils/socket', 'utils/registry', 'common/logger'], functi
     function findAll(options) {
         socket.emit('jsonrpc', {
             method: 'board:getall',
-            params: [registry.user.get('loc'), 50],
+            params: [registry.user.get('loc'), DISTANCE],
             id: _.uniqueId()
         }, function(err, data) {
             if (err) {
@@ -61,7 +72,7 @@ define(['underscore', 'utils/socket', 'utils/registry', 'common/logger'], functi
         return model;
     }
 
+    boardBackend.init()
 
-
-    return sync;
+    return boardBackend;
 });

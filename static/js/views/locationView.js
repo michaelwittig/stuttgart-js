@@ -41,7 +41,7 @@ define(['backbone', 'underscore', 'utils/geo', 'utils/registry'], function(Backb
         updateInput: function() {
             var loc = registry.user.get('loc');
             geo.coordsToAddress(loc.lat, loc.lng, _.bind(function(err, address) {
-                registry.state.trigger('notice', 'Your location changed');
+		// registry.state.trigger('notice', 'Your location changed to: ' + address);
                 this.$input.val('');
                 this.$input.attr('placeholder', address);
             }, this));

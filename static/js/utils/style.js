@@ -25,11 +25,6 @@ define(['jquery'], function() {
 	var inputCommentWidth = $(window).width()-86+'px';
 	$('#footer').find('#sub-comment input').css('width',inputCommentWidth);
 
-    //  Hide Top @ iPhone
-	setTimeout(function () {
-	    window.scrollTo(0, 1);
-	}, 1000);
-
     });
 
     $(window).resize();

@@ -24,12 +24,12 @@ define(
     },
 
     render: function() {
-        this.$el.html(boardTemplate({
-            board: this.board.toJSON(),
-            messages: this.messages.toJSON()
-	}))
+	this.$el.html(boardTemplate({
+	    board: this.board.toJSON(),
+	    messages: this.messages.toJSON()
+	}));
 
-        registry.state.trigger('messages:updated');
+	registry.state.trigger('messages:updated');
     },
 
     show: function() {

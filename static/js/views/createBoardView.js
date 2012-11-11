@@ -76,7 +76,7 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
                 expireIn: expires
             }).save(null, {
                 success: function() {
-                    logger('new board created');
+                    registry.state.trigger('notice', 'Your board is ready to use.');
                     registry.router.navigate('home', {trigger:true});
                     registry.state.trigger('closepopups');
                     $textarea.val('');

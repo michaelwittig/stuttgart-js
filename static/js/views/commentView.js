@@ -1,4 +1,4 @@
-define(['backbone', 'models/message'], function(Backbone, Message) {
+define(['backbone', 'models/message', 'utils/registry'], function(Backbone, Message, registry) {
 
     var CommentView = Backbone.View.extend({
 
@@ -56,9 +56,13 @@ define(['backbone', 'models/message'], function(Backbone, Message) {
 		title: comment,
 		boardId: this.boardId
 	    }).save(null, {
-		success: _.bind(function() {
-		    this.$input.val('');
-		}, this)
+            success: _.bind(function() {
+                this.$input.val('');
+                registry.state.trigger('notice', 'Message has been added');
+            }, this),
+            error: function() {
+                registry.state.trigger('notice', 'Adding the Message failed');
+            }
 	    });
 	}
     });

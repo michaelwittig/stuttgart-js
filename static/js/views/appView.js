@@ -1,6 +1,6 @@
 define(
-    ['backbone', 'views/headerView', 'views/layerInitView', 'views/layerVoteView', 'views/containerView', 'views/mapView', 'utils/registry', 'utils/style'],
-    function (Backbone, HeaderView, LayerInitView, LayerVoteView, ContainerView, MapView, registry) {
+    ['backbone', 'views/headerView', 'views/notificationView', 'views/layerInitView', 'views/layerVoteView', 'views/containerView', 'views/mapView', 'utils/registry', 'utils/style'],
+    function (Backbone, HeaderView, NotificationView, LayerInitView, LayerVoteView, ContainerView, MapView, registry) {
 
     var AppView = Backbone.View.extend({
 
@@ -12,6 +12,7 @@ define(
             this.containerView = new ContainerView();
             this.layerInitView = new LayerInitView();
             this.layerVoteView = new LayerVoteView();
+            this.notificationView = new NotificationView();
         }
     });
 

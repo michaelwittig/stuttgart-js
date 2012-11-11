@@ -6,12 +6,12 @@ define(['backbone', 'hbs!templates/boardsListTemplate', 'utils/registry'], funct
 
     initialize: function() {
         //TODO: reduce the re-rendering of the list
-        registry.boards.on('change', this.render, this);
         registry.boards.on('reset', this.render, this);
-        registry.boards.on('facebook:loaded', this.render, this);
+        registry.boards.loading.done(_.bind(this.render, this));
     },
 
     render: function() {
+        logger('render')
         this.$el.html(template(registry.boards.toJSON()));
     },
 

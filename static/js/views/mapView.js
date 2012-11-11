@@ -34,8 +34,6 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
             registry.user.on('locate:me', this.locate, this);
 
             this.map.on('click', _.bind(this.createBoard, this));
-            $(window).on('resize', _.bind(this.windowResize, this));
-            this.windowResize();
 
             registry.boards.on('reset', this.updateBoardMarkers, this);
 
@@ -104,18 +102,15 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
 
         hide: function() {
             this.$el.hide();
+	       $('#content,#map').attr('style','');
+
         },
 
         show: function() {
             this.$el.show();
-            this.map.invalidateSize(true);
-        },
-
-        windowResize: function() {
             var mapHeight = ($(window).height()-$('#header').height()-$('#footer').height())+100;
-            if (registry.state.get('route') !== 'board' && registry.state.get('route') !== 'boards') {
-                $('#content,#map').css('height',mapHeight);
-            }
+	    $('#content,#map').css('height',mapHeight);
+	    this.map.invalidateSize(true);
         }
 
 

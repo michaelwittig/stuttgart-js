@@ -62,7 +62,6 @@ define(['underscore', 'backbone', 'utils/socket', 'utils/registry'], function(_,
 	}, function(err, data) {
 	logger('messageBackend:create:cb', data);
 	if (!err && !data.error) {
-	    logger('!!!success');
 	    options.success && options.success(data);
 	} else {
 	    options.error && options.error(err);

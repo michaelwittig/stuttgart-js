@@ -1,7 +1,7 @@
 define(['handlebars', 'libs/moment'], function (Handlebars, moment) {
 
       function timeago(time, options) {
-	    return moment(time).fromNow();
+	    return time ? moment(time).fromNow() : 'never';
       }
 
       Handlebars.registerHelper('timeago', timeago);

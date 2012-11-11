@@ -2,17 +2,17 @@ define(['backbone', 'underscore', 'utils/geo', 'utils/registry'], function(Backb
 
     var LocationView = Backbone.View.extend({
 
-        el: '#location-view',
+        el: '#sub-position',
 
         initialize: function() {
-            this.$input = this.$('#location-input');
+            this.$input = this.$('input');
             registry.user.on('change:loc', this.updateInput, this);
         },
 
         events: {
             'submit #location-form': 'searchLocation',
-            'click #location-update': 'searchLocation',
-            'click #location-mylocation': 'currentLocation'
+            'click #updatepos': 'searchLocation',
+            'click #getpos': 'currentLocation'
         },
 
         searchLocation: function(e) {

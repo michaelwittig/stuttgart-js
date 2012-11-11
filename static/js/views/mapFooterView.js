@@ -2,8 +2,6 @@ define(['backbone', 'views/locationView', 'views/createBoardView', 'utils/regist
 
     var MapFooterView = Backbone.View.extend({
 
-        el: '#map-footer',
-
         initialize: function() {
             this.locationView = new LocationView();
             this.createBoardView = new CreateBoardView();
@@ -18,6 +16,7 @@ define(['backbone', 'views/locationView', 'views/createBoardView', 'utils/regist
         },
 
         showLocationView: function() {
+            logger('show location view');
             this.locationView.show();
             this.createBoardView.hide();
         }

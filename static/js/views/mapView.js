@@ -9,10 +9,10 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
         boardMarkers: [],
 
         initialize: function() {
-	    this.map = L.map('map', {
-		zoomControl: false,
-		attributionControl: false
-	    });
+            this.map = L.map('map', {
+                zoomControl: false,
+                attributionControl: false
+            });
             this.mapFooterView = new MapFooterView();
 
             L.tileLayer(
@@ -35,11 +35,6 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
 
             registry.boards.on('reset', this.updateBoardMarkers, this);
             $(window).on('resize', this.updateMapSize);
-
-            registry.state.on('route:boards', this.hide, this);
-            registry.state.on('route:board', this.hide, this);
-            registry.state.on('route:home', this.show, this);
-            registry.state.on('route:home', this.show, this);
 
             this.updateMapSize();
         },

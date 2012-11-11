@@ -7,9 +7,11 @@ define([
     'utils/router',
     'utils/facebook',
     'views/appView',
-    'collections/boards'
+    'collections/boards',
+    'common/logger',
+    'utils/viewcontrol'
     ],
-    function ($, Backbone, registry, AppState, User, Router, Facebook, AppView, Boards) {
+    function ($, Backbone, registry, AppState, User, Router, Facebook, AppView, Boards, logger, ViewControl) {
 
     var app = {};
 
@@ -32,7 +34,8 @@ define([
         registry.state.on('change:route', cb);
 
         $(function() {
-            new AppView();
+            registry.appView = new AppView();
+            registry.viewControl = new ViewControl();
             Backbone.history.start();
         });
     };

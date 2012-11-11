@@ -1,4 +1,4 @@
-define(['backbone', 'utils/registry', 'common/logger'], function (Backbone, registry, logger) {
+define(['backbone', 'utils/registry', 'common/logger', 'utils/viewcontrol', 'jquery'], function (Backbone, registry, logger, viewcontrol, $) {
 
     var Router = Backbone.Router.extend({
         routes:{
@@ -21,18 +21,29 @@ define(['backbone', 'utils/registry', 'common/logger'], function (Backbone, regi
             } else {
                 this.setRoute('home');
             }
+
+            //
+            registry.viewControl.showViews(['mapView', 'locationView']);
+            $('#footer').show();
         },
 
         boards:function () {
             this.setRoute('boards');
+            registry.viewControl.showViews(['boardsListView']);
+            $('#footer').hide();
         },
 
         board:function (id) {
             this.setRoute('board', id);
+            registry.viewControl.showViews(['boardView', 'commentView']);
+            $('#footer').show();
         },
 
         create:function () {
             this.setRoute('create');
+
+            registry.viewControl.showViews(['mapView', 'createBoardView']);
+            $('#footer').show();
         },
 
         setRoute: function(name, params) {
@@ -42,6 +53,7 @@ define(['backbone', 'utils/registry', 'common/logger'], function (Backbone, regi
                 params: params
             });
         }
+
     });
 
     return Router;

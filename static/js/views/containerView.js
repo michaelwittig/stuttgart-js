@@ -6,17 +6,6 @@ define(['backbone', 'utils/registry', 'views/boardsListView', 'views/boardView']
             this.isHidden = true;
             this.boardsListView = new BoardsListView();
             this.boardView = new BoardView();
-
-            //TODO: hide container for other views too
-            registry.state.on('route:home', this.hide, this);
-
-            registry.state.on('route:boards', function() {
-                this.displayView('boardsListView');
-            }, this);
-
-            registry.state.on('route:board', function() {
-                this.displayView('boardView');
-            }, this);
         },
 
         displayView: function(view) {

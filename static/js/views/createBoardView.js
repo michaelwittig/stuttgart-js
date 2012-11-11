@@ -49,11 +49,11 @@ define(['backbone', 'utils/registry', 'jquery', 'utils/socket', 'models/board', 
 			if (cnt <= 0) {
 				cnt = 0;
 				this.$textareaCnt.removeClass();
-				this.$textareaCnt.addClass("count count-red");
+				this.$textareaCnt.addClass("count red");
 				this.$textarea.val(this.$textarea.val().substring(0, 140));
 			} else if(cnt <= 10) {
 				this.$textareaCnt.removeClass();
-				this.$textareaCnt.addClass("count count-yellow");
+				this.$textareaCnt.addClass("count yellow");
 			} else {
 				this.$textareaCnt.removeClass();
 				this.$textareaCnt.addClass("count");

@@ -5,7 +5,7 @@ define(["node-static", "socket.io", "redis", "http", "common/logger", "config", 
 	function(nodestatic, socketio, redis, http, logger, config, wshandler, pubsub, cache, locroom) {
 	"use strict";
 
-    var fileServer = new(nodestatic.Server)('./static');
+    var fileServer = new(nodestatic.Server)(config["fileServer.dir"]);
     var webServer;
     var websocketServer;
 

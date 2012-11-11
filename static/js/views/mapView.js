@@ -12,7 +12,7 @@ define(['backbone', 'underscore', 'jquery', 'leaflet', 'utils/registry', 'utils/
 	    iconSize: [27, 37],
 	    // shadowUrl: 'img/marker-shadow.png',
 	    // shadowSize: [31, 31],
-	    iconAnchor: [12, 37],
+	    iconAnchor: [12, 37]
 	    // popupAnchor: [-3, -76]
 	    // shadowAnchor: [22, 94]
 	},
